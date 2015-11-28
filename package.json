@@ -1,0 +1,25 @@
+{
+  "name": "punk",
+  "version": "0.0.1",
+  "description": "Alternative Steam client",
+  "main": "main.js",
+  "author": {
+    "name": "Michael Scholtz",
+    "email": "michael.scholtz@outlook.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "babel-preset-react": "^6.1.18",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sass": "^2.1.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "vapor": "^0.13.0"
+  },
+  "scripts": {
+    "build": "node_modules/.bin/gulp",
+    "watch": "node_modules/.bin/gulp watch"
+  }
+}
