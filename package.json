@@ -1,25 +1,33 @@
 {
   "name": "punk",
+  "productName": "Punk",
   "version": "0.0.1",
-  "description": "Alternative Steam client",
+  "description": "Alternative cross-platform Steam client",
   "main": "main.js",
   "author": {
     "name": "Michael Scholtz",
     "email": "michael.scholtz@outlook.com"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scholtzm/punk.git"
+  },
   "dependencies": {
     "babel-preset-react": "^6.1.18",
+    "eslint": "^1.10.2",
+    "eslint-plugin-react": "^3.10.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-rimraf": "^0.2.0",
     "gulp-sass": "^2.1.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "vapor": "^0.13.0"
+    "vapor": "^0.13.1"
   },
   "scripts": {
     "build": "node_modules/.bin/gulp",
     "watch": "node_modules/.bin/gulp watch"
-  }
+  },
+  "private": true
 }

@@ -1,0 +1,22 @@
+{
+  "env": {
+      "browser": true,
+      "node": true
+  },
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "eqeqeq": 2,
+    "curly": 2,
+    "quotes": [2, "single"],
+    "no-unused-vars": 2,
+    "no-undef": 2,
+
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1
+  }
+}
