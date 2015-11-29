@@ -1,10 +1,23 @@
+var fs = require('fs');
 var React = require('react');
+var ReactDOM = require('react-dom');
+
+var Loader = require('./loader.js');
 
 var Login = React.createClass({
   _proceedLogin: function(event) {
     event.preventDefault();
 
-    punk.init(this.state.username, this.state.password);
+    var username = this.state.username;
+    var password = this.state.password;
+
+    if(this.state.rememberMe) {
+      fs.writeFileSync(punk.configFile, JSON.stringify({username: username, password: password}, null, 2));
+    }
+
+    ReactDOM.render(<Loader />, document.getElementById('main'));
+
+    punk.init(username, password);
     punk.loadPlugins();
     punk.connect();
   },
@@ -17,10 +30,15 @@ var Login = React.createClass({
     this.setState({password: event.target.value});
   },
 
+  _handleRememberMeChanged: function(event) {
+    this.setState({rememberMe: event.target.value});
+  },
+
   getInitialState: function() {
     return {
       username: '',
-      password: ''
+      password: '',
+      rememberMe: false
     };
   },
 
@@ -36,6 +54,11 @@ var Login = React.createClass({
           <div className="form-group">
             <label>Password</label>
             <input type="password" name="password" value={this.state.password} onChange={this._handlePasswordChange} className="form-control" placeholder="Password"/>
+          </div>
+          <div className="checkbox">
+            <label>
+              <input type="checkbox" checked={this.state.rememberMe} onChange={this._handleRememberMeChanged} /> Remember Me
+            </label>
           </div>
           <button className="btn btn-large btn-default" onClick={this._proceedLogin} >Login</button>
         </form>

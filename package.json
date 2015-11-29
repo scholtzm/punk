@@ -27,7 +27,8 @@
   },
   "scripts": {
     "build": "node_modules/.bin/gulp",
-    "watch": "node_modules/.bin/gulp watch"
+    "watch": "node_modules/.bin/gulp watch",
+    "lint": "node_modules/.bin/eslint ."
   },
   "private": true
 }

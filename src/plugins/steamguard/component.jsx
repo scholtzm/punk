@@ -19,14 +19,14 @@ var SteamGuard = React.createClass({
 
   render: function() {
     return (
-      <div className="centered">
+      <div className='centered'>
         <center><h1>Punk</h1></center>
         <form>
-          <div className="form-group">
+          <div className='form-group'>
             <label>SteamGuard Auth Code</label>
-            <input type="text" name="steamguard" value={this.state.authCode} onChange={this._handleAuthCodeChange} className="form-control" placeholder="XXXXX"/>
+            <input type='text' name='steamguard' value={this.state.authCode} onChange={this._handleAuthCodeChange} className='form-control' placeholder='XXXXX'/>
           </div>
-          <button className="btn btn-large btn-default" onClick={this._proceedSteamGuard}>Continue</button>
+          <button className='btn btn-large btn-default' onClick={this._proceedSteamGuard}>Continue</button>
         </form>
       </div>
     );

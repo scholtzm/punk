@@ -23,6 +23,10 @@ gulp.task('clean', function () {
 gulp.task('transpile-js', function() {
   return gulp.src(jsPath)
     .pipe(babel())
+    .on('error', function(error) {
+      console.log(error);
+      this.emit('end');
+    })
     .pipe(gulp.dest('dist/js'));
 });
 
