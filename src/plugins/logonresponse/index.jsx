@@ -1,8 +1,3 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-var Main = require('../../components/main.js');
-
 exports.name = 'punk-logonresponse';
 
 exports.plugin = function(API) {
@@ -13,7 +8,7 @@ exports.plugin = function(API) {
     event: 'logOnResponse'
   }, function(response) {
     if(response.eresult === Steam.EResult.OK) {
-      ReactDOM.render(<Main />, document.getElementById('main'));
+      punk.render();
     }
   });
 };
