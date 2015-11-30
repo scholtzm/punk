@@ -5,7 +5,7 @@ var vapor = require('vapor');
 
 var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
-var Main = require('./components/main.js');
+var Window = require('./components/window.js');
 
 var steamGuard = require('./plugins/steamguard');
 var logOnResponse = require('./plugins/logonresponse');
@@ -26,18 +26,17 @@ Punk.prototype.start = function() {
   try {
     config = JSON.parse(fs.readFileSync(this.userConfig));
   } catch (error) {
-    console.log(error);
     // doesn't exist or unparsable
   }
 
   if (config && config.username && config.password) {
-    ReactDOM.render(<Loader />, document.getElementById('main'));
+    ReactDOM.render(<Loader />, document.getElementById('app'));
 
     this.init(config.username, config.password);
     this.loadPlugins();
     this.connect();
   } else {
-    ReactDOM.render(<Login />, document.getElementById('main'));
+    ReactDOM.render(<Login />, document.getElementById('app'));
   }
 };
 
@@ -64,7 +63,7 @@ Punk.prototype.connect = function() {
 };
 
 Punk.prototype.render = function() {
-  ReactDOM.render(<Main users={punk.friendsList} chats={punk.chats}/>, document.getElementById('main'));
+  ReactDOM.render(<Window />, document.getElementById('app'));
 };
 
 module.exports = Punk;
