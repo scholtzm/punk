@@ -13,7 +13,7 @@ var personaState = require('./plugins/personastate');
 var friendMsg = require('./plugins/friendmsg');
 
 function Punk() {
-  this.configFile = './config.json';
+  this.userConfig = './user.json';
 
   this.client = vapor();
 
@@ -24,7 +24,7 @@ function Punk() {
 Punk.prototype.start = function() {
   var config;
   try {
-    config = JSON.parse(fs.readFileSync(this.configFile));
+    config = JSON.parse(fs.readFileSync(this.userConfig));
   } catch (error) {
     console.log(error);
     // doesn't exist or unparsable

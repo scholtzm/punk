@@ -12,7 +12,7 @@ var Login = React.createClass({
     var password = this.state.password;
 
     if(this.state.rememberMe) {
-      fs.writeFileSync(punk.configFile, JSON.stringify({username: username, password: password}, null, 2));
+      fs.writeFileSync(punk.userConfig, JSON.stringify({username: username, password: password}, null, 2));
     }
 
     ReactDOM.render(<Loader />, document.getElementById('main'));
