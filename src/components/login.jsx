@@ -8,10 +8,11 @@ var Login = React.createClass({
   _proceedLogin: function(event) {
     event.preventDefault();
 
-    var username = this.state.username;
-    var password = this.state.password;
+    var username = this.refs.username.value;
+    var password = this.refs.password.value;
+    var rememberMe = this.refs.rememberMe.checked;
 
-    if(this.state.rememberMe) {
+    if(rememberMe) {
       fs.writeFileSync(punk.userConfig, JSON.stringify({username: username, password: password}, null, 2));
     }
 
@@ -22,26 +23,6 @@ var Login = React.createClass({
     punk.connect();
   },
 
-  _handleUsernameChange: function(event) {
-    this.setState({username: event.target.value});
-  },
-
-  _handlePasswordChange: function(event) {
-    this.setState({password: event.target.value});
-  },
-
-  _handleRememberMeChanged: function(event) {
-    this.setState({rememberMe: event.target.value});
-  },
-
-  getInitialState: function() {
-    return {
-      username: '',
-      password: '',
-      rememberMe: false
-    };
-  },
-
   render: function() {
     return (
       <div className="centered">
@@ -49,15 +30,15 @@ var Login = React.createClass({
         <form>
           <div className="form-group">
             <label>Username</label>
-            <input type="email" name="username" value={this.state.username} onChange={this._handleUsernameChange} className="form-control" placeholder="Username"/>
+            <input type="email" name="username" ref="username" className="form-control" placeholder="Username"/>
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input type="password" name="password" value={this.state.password} onChange={this._handlePasswordChange} className="form-control" placeholder="Password"/>
+            <input type="password" name="password" ref="password" className="form-control" placeholder="Password"/>
           </div>
           <div className="checkbox">
             <label>
-              <input type="checkbox" checked={this.state.rememberMe} onChange={this._handleRememberMeChanged} /> Remember Me
+              <input type="checkbox" ref="rememberMe" /> Remember Me
             </label>
           </div>
           <button className="btn btn-large btn-default" onClick={this._proceedLogin} >Login</button>
