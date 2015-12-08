@@ -1,5 +1,5 @@
 node_modules
-data
+data-*
 dist
 config.json
 user.json

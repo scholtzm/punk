@@ -29,19 +29,5 @@ exports.plugin = function(API) {
 
     // let's ship the object
     FriendsActions.insertOrUpdate(friend);
-
-    // if(!punk.friends[friend.friendid]) {
-    //   punk.friends[friend.friendid] = {};
-    // }
-    //
-    // var hash = friend.avatar_hash.toString('hex');
-    // var avatarUrl = 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/' + hash.substring(0, 2) + '/' + hash + '.jpg';
-    //
-    // punk.friends[friend.friendid].id = friend.friendid;
-    // punk.friends[friend.friendid].username = friend.player_name;
-    // punk.friends[friend.friendid].avatar = avatarUrl;
-    // punk.friends[friend.friendid].state = utils.enumToString(friend.persona_state, Steam.EPersonaState);
-    //
-    // punk.render();
   });
 };

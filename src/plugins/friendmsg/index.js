@@ -25,25 +25,6 @@ exports.plugin = function(API) {
       };
 
       ChatActions.newFriendMessage(message);
-
-      // var visible = false;
-      // if(Object.keys(punk.chats).length === 0) {
-      //   visible = true;
-      // }
-      //
-      // if(!punk.chats[user]) {
-      //   punk.chats[user] = {
-      //     id: user,
-      //     visible: visible,
-      //     messages: []
-      //   };
-      // }
-      //
-      // // we overwrite the name
-      // punk.chats[user].name = name;
-      // punk.chats[user].messages.push(message);
-      //
-      // punk.render();
     }
   });
 };

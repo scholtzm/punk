@@ -10,6 +10,6 @@ exports.plugin = function(API) {
     emitter: 'vapor',
     event: 'steamGuard'
   }, function(callback) {
-    ReactDOM.render(<Component callback={callback} />, document.getElementById('main'));
+    ReactDOM.render(<Component callback={callback} />, document.getElementById('app'));
   });
 };

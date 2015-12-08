@@ -54,7 +54,7 @@ var Chat = React.createClass({
       tabs = Object.keys(self.state.chats).map(function(id) {
         return (
           <div className="tab-group">
-            <Tab key={id} chat={self.state.chats[id]} />;
+            <Tab key={id} chat={self.state.chats[id]} />
           </div>
         );
       });
