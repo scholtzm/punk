@@ -5,7 +5,6 @@ var vapor = require('vapor');
 
 var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
-var Main = require('./components/main.js');
 
 var steamGuard = require('./plugins/steamguard');
 var logOnResponse = require('./plugins/logonresponse');
@@ -16,9 +15,6 @@ function Punk() {
   this.userConfig = './user.json';
 
   this.client = vapor();
-
-  this.friends = {};
-  this.chats = {};
 }
 
 Punk.prototype.start = function() {
@@ -60,11 +56,6 @@ Punk.prototype.loadPlugins = function() {
 
 Punk.prototype.connect = function() {
   this.client.connect();
-};
-
-Punk.prototype.render = function() {
-  var self = this;
-  ReactDOM.render(<Main friends={self.friends} chats={self.chats}/>, document.getElementById('app'));
 };
 
 module.exports = Punk;

@@ -1,5 +1,7 @@
 var React = require('react');
 
+var FriendsStore = require('../stores/friends-store.js');
+
 var FriendsListItem = React.createClass({
   render: function() {
     return (
@@ -15,6 +17,22 @@ var FriendsListItem = React.createClass({
 });
 
 var FriendsList = React.createClass({
+  _onChange: function() {
+    this.setState({ friends: FriendsStore.getAll() });
+  },
+
+  getInitialState: function() {
+    return { friends: FriendsStore.getAll() };
+  },
+
+  componentDidMount: function() {
+    FriendsStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    FriendsStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
     var self = this;
     return (
@@ -22,8 +40,8 @@ var FriendsList = React.createClass({
         <li className="list-group-header">
           <input className="form-control" type="text" placeholder="Search by name" />
         </li>
-        {Object.keys(self.props.friends).map(function(id) {
-          return <FriendsListItem key={id} user={self.props.friends[id]} />;
+        {Object.keys(self.state.friends).map(function(id) {
+          return <FriendsListItem key={id} user={self.state.friends[id]} />;
         })}
       </ul>
     );

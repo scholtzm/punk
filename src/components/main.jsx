@@ -29,10 +29,10 @@ var Main = React.createClass({
         <div id="main" className="window-content">
           <div className="pane-group">
             <div className="pane pane-sm sidebar">
-              <FriendsList friends={this.props.friends}/>
+              <FriendsList />
             </div>
             <div className="pane">
-              <Chat chats={this.props.chats}/>
+              <Chat />
             </div>
           </div>
         </div>

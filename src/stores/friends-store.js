@@ -37,7 +37,7 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
 
 FriendsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
-    case Constants.FRIENDS_UPDATE_OR_INSERT:
+    case Constants.FRIENDS_INSERT_OR_UPDATE:
       insertOrUpdate(action.friend);
       FriendsStore.emitChange();
       break;

@@ -1,5 +1,7 @@
 var React = require('react');
 
+var ChatStore = require('../stores/chat-store.js');
+
 var Tab = React.createClass({
   render: function() {
     return (
@@ -40,16 +42,46 @@ var ChatWindow = React.createClass({
 });
 
 var Chat = React.createClass({
-  render: function() {
+  _onChange: function() {
+    this.setState({ chats: ChatStore.getAll() });
+  },
+
+  _createTabs: function() {
     var self = this;
+    var tabs = <div/>;
+
+    if(Object.keys(self.state.chats).length > 0) {
+      tabs = Object.keys(self.state.chats).map(function(id) {
+        return (
+          <div className="tab-group">
+            <Tab key={id} chat={self.state.chats[id]} />;
+          </div>
+        );
+      });
+    }
+
+    return tabs;
+  },
+
+  getInitialState: function() {
+    return { chats: ChatStore.getAll() };
+  },
+
+  componentDidMount: function() {
+    ChatStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    ChatStore.removeChangeListener(this._onChange);
+  },
+
+  render: function() {
+    var tabs = this._createTabs();
+
     return (
       <div className="chat">
-        <div className="tab-group">
-          {Object.keys(self.props.chats).map(function(id) {
-            return <Tab key={id} chat={self.props.chats[id]} />;
-          })}
-        </div>
-        <ChatWindow chats={self.props.chats}/>
+        {tabs}
+        <ChatWindow chats={this.state.chats}/>
       </div>
     );
   }

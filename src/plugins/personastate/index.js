@@ -10,21 +10,21 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'personaState'
-  }, function(personaState) {
+  }, function(persona) {
     // ignore self
-    if(personaState.friendid === client.steamID) {
+    if(persona.friendid === client.steamID) {
       return;
     }
 
     // only Vapor can correctly "decode" the object so we transform it here
-    var hash = friend.avatar_hash.toString('hex');
+    var hash = persona.avatar_hash.toString('hex');
     var avatarUrl = 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/' + hash.substring(0, 2) + '/' + hash + '.jpg';
 
     var friend = {
-      id: personaState.friendid,
-      username: personaState.player_name,
+      id: persona.friendid,
+      username: persona.player_name,
       avatar: avatarUrl,
-      state: utils.enumToString(friend.persona_state, Steam.EPersonaState)
+      state: utils.enumToString(persona.persona_state, Steam.EPersonaState)
     };
 
     // let's ship the object
