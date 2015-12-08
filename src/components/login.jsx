@@ -25,24 +25,32 @@ var Login = React.createClass({
 
   render: function() {
     return (
-      <div className="centered">
-        <center><h1>Punk</h1></center>
-        <form>
-          <div className="form-group">
-            <label>Username</label>
-            <input type="email" name="username" ref="username" className="form-control" placeholder="Username"/>
+      <div className="window">
+        <header className="toolbar toolbar-header">
+          <h1 className="title">Punk</h1>
+        </header>
+
+        <div className="window-content">
+          <div className="centered">
+            <center><h1>Punk</h1></center>
+            <form>
+              <div className="form-group">
+                <label>Username</label>
+                <input type="email" name="username" ref="username" className="form-control" placeholder="Username"/>
+              </div>
+              <div className="form-group">
+                <label>Password</label>
+                <input type="password" name="password" ref="password" className="form-control" placeholder="Password"/>
+              </div>
+              <div className="checkbox">
+                <label>
+                  <input type="checkbox" ref="rememberMe" /> Remember Me
+                </label>
+              </div>
+              <button className="btn btn-large btn-default" onClick={this._proceedLogin} >Login</button>
+            </form>
           </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" name="password" ref="password" className="form-control" placeholder="Password"/>
-          </div>
-          <div className="checkbox">
-            <label>
-              <input type="checkbox" ref="rememberMe" /> Remember Me
-            </label>
-          </div>
-          <button className="btn btn-large btn-default" onClick={this._proceedLogin} >Login</button>
-        </form>
+        </div>
       </div>
     );
   }

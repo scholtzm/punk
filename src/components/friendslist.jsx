@@ -14,7 +14,7 @@ var FriendsListItem = React.createClass({
   }
 });
 
-var Chat = React.createClass({
+var FriendsList = React.createClass({
   render: function() {
     var self = this;
     return (
@@ -22,12 +22,12 @@ var Chat = React.createClass({
         <li className="list-group-header">
           <input className="form-control" type="text" placeholder="Search by name" />
         </li>
-        {Object.keys(self.props.users).map(function(id) {
-          return <FriendsListItem key={id} user={self.props.users[id]} />;
+        {Object.keys(self.props.friends).map(function(id) {
+          return <FriendsListItem key={id} user={self.props.friends[id]} />;
         })}
       </ul>
     );
   }
 });
 
-module.exports = Chat;
+module.exports = FriendsList;

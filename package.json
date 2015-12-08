@@ -17,6 +17,7 @@
     "babel-preset-react": "^6.1.18",
     "eslint": "^1.10.2",
     "eslint-plugin-react": "^3.10.0",
+    "flux": "^2.1.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-rimraf": "^0.2.0",

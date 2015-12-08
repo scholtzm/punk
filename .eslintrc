@@ -18,7 +18,6 @@
     "no-undef": 2,
     "comma-dangle": [2, "never"],
     "semi": [2, "always"],
-    "space-after-keywords": [2, "never"],
 
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
