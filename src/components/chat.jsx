@@ -4,8 +4,9 @@ var ChatStore = require('../stores/chat-store.js');
 
 var Tab = React.createClass({
   render: function() {
+    var className = this.props.chat.visible ? 'tab-item active': 'tab-item';
     return (
-      <div className="tab-item">
+      <div className={className}>
         <span className="icon icon-cancel icon-close-tab"></span>
         {this.props.chat.name}
       </div>
@@ -26,17 +27,27 @@ var ChatWindow = React.createClass({
     var chat = this._findVisibleChat();
 
     if(!chat) {
-      return <div clasName="chat-window"></div>;
+      return <div id="chat-window"></div>;
     }
 
     return (
-      <div className="chat-window">
+      <div id="chat-window">
         <ul>
           {chat.messages.map(function(message) {
             return <li>{message}</li>;
           })}
         </ul>
       </div>
+    );
+  }
+});
+
+var MessageComposer = React.createClass({
+  render: function() {
+    return (
+    <div id="message-composer">
+      <textarea className="form-control" rows="3"></textarea>
+    </div>
     );
   }
 });
@@ -82,6 +93,7 @@ var Chat = React.createClass({
       <div className="chat">
         {tabs}
         <ChatWindow chats={this.state.chats}/>
+        <MessageComposer />
       </div>
     );
   }

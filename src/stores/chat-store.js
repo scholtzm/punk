@@ -8,20 +8,18 @@ var CHANGE_EVENT = 'change';
 var _chats = {};
 
 function newFriendMessage(message) {
-  var visible = false;
-
-  if(Object.keys(_chats).length === 0) {
-    visible = true;
-  }
-
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
     _chats[message.sender].messages = [];
+    _chats[message.sender].visible = false;
   }
 
-  _chats[message.sender].visible = visible;
   _chats[message.sender].name = message.name;
   _chats[message.sender].messages.push(message.text);
+
+  if(Object.keys(_chats).length === 1) {
+    _chats[message.sender].visible = true;
+  }
 }
 
 var ChatStore = assign({}, EventEmitter.prototype, {

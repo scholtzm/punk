@@ -2,3 +2,17 @@
   display: inline-block;
   margin: auto;
 }
+
+#chat-window {
+  margin-bottom: 87px;
+  margin-top: 25px;
+}
+
+#message-composer {
+  background-color: #fff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 5px;
+  height: 87px;
+}
