@@ -7,7 +7,7 @@ var CHANGE_EVENT = 'change';
 
 var _chats = {};
 
-function newFriendMessage(message) {
+function newIncomingMessage(message) {
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
     _chats[message.sender].messages = [];
@@ -57,7 +57,7 @@ var ChatStore = assign({}, EventEmitter.prototype, {
 ChatStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case Constants.CHAT_NEW_FRIEND_MESSAGE:
-      newFriendMessage(action.message);
+      newIncomingMessage(action.message);
       ChatStore.emitChange();
       break;
 

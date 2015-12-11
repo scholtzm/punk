@@ -24,7 +24,7 @@ exports.plugin = function(API) {
         text: message
       };
 
-      ChatActions.newFriendMessage(message);
+      ChatActions.newIncomingMessage(message);
     }
   });
 };
