@@ -26,6 +26,8 @@ var Main = React.createClass({
           </div>
         </header>
 
+        <div class="divider"></div>
+
         <div id="main" className="window-content">
           <div className="pane-group">
             <div className="pane pane-sm sidebar">

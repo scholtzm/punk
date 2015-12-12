@@ -27,11 +27,11 @@ var ChatWindow = React.createClass({
     var chat = this._findVisibleChat();
 
     if(!chat) {
-      return <div id="chat-window"></div>;
+      return <div class="chat-window"></div>;
     }
 
     return (
-      <div id="chat-window">
+      <div class="chat-window">
         <ul>
           {chat.messages.map(function(message) {
             return <li>{message}</li>;
@@ -45,7 +45,7 @@ var ChatWindow = React.createClass({
 var MessageComposer = React.createClass({
   render: function() {
     return (
-    <div id="message-composer">
+    <div class="message-composer">
       <textarea className="form-control" rows="3"></textarea>
     </div>
     );
@@ -59,19 +59,20 @@ var Chat = React.createClass({
 
   _createTabs: function() {
     var self = this;
-    var tabs = <div/>;
 
     if(Object.keys(self.state.chats).length > 0) {
-      tabs = Object.keys(self.state.chats).map(function(id) {
-        return (
-          <div className="tab-group">
-            <Tab key={id} chat={self.state.chats[id]} />
-          </div>
-        );
+      var tabs = Object.keys(self.state.chats).map(function(id) {
+        return <Tab key={id} chat={self.state.chats[id]} />;
       });
+
+      return (
+        <div className="tab-group">
+          {tabs}
+        </div>
+      );
     }
 
-    return tabs;
+    return <div/>;
   },
 
   getInitialState: function() {

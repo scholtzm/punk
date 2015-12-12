@@ -3,12 +3,16 @@
   margin: auto;
 }
 
-#chat-window {
+.divider {
+  border-bottom: 1px solid #989698;
+}
+
+.chat-window {
   margin-bottom: 87px;
   margin-top: 25px;
 }
 
-#message-composer {
+.message-composer {
   background-color: #fff;
   position: absolute;
   bottom: 0;
