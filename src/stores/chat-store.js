@@ -7,15 +7,44 @@ var CHANGE_EVENT = 'change';
 
 var _chats = {};
 
+function _findVisibleChat() {
+  for(var id in _chats) {
+    if(_chats[id].visible) {
+      return _chats[id];
+    }
+  }
+}
+
+function openChat(user) {
+  var id = user.id;
+  var username = user.username;
+
+  var visibleChat = _findVisibleChat();
+  if(visibleChat) {
+    visibleChat.visible = false;
+  }
+
+  if(!_chats[id]) {
+    _chats[id] = {};
+    _chats[id] = id;
+    _chats[id].messages = [];
+  }
+
+  _chats[id].username = username;
+  _chats[id].visible = true;
+  _chats[id].tabbed = true;
+}
+
 function newIncomingMessage(message) {
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
+    _chats[message.sender].id = message.sender;
     _chats[message.sender].messages = [];
     _chats[message.sender].visible = false;
   }
 
   _chats[message.sender].tabbed = true;
-  _chats[message.sender].name = message.name;
+  _chats[message.sender].username = message.username;
   _chats[message.sender].messages.push({
     type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
     date: new Date(),
@@ -74,6 +103,11 @@ var ChatStore = assign({}, EventEmitter.prototype, {
 
 ChatStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
+    case Constants.ChatActions.CHAT_OPEN:
+      openChat(action.user);
+      ChatStore.emitChange();
+      break;
+
     case Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE:
       newIncomingMessage(action.message);
       ChatStore.emitChange();

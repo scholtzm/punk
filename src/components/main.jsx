@@ -26,7 +26,7 @@ var Main = React.createClass({
           </div>
         </header>
 
-        <div class="divider"></div>
+        <div className="divider"></div>
 
         <div id="main" className="window-content">
           <div className="pane-group">

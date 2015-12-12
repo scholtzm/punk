@@ -13,17 +13,17 @@ exports.plugin = function(API) {
     event: 'friendMsg'
   }, function(user, message, type) {
     if(type === Steam.EChatEntryType.ChatMsg) {
-      var name = user;
+      var username = user;
 
       // should we ignore ghost messages?
       var persona = steamFriends.personaStates[user];
       if(persona) {
-        name = persona.player_name;
+        username = persona.player_name;
       }
 
       var message = {
-        sender: user, // SteamID64 string
-        name: name,   // display name if possible
+        sender: user,           // SteamID64 string
+        username: username, // display name if possible
         text: message
       };
 

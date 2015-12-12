@@ -6,12 +6,14 @@ var ChatStore = require('../stores/chat-store.js');
 var ENTER_KEY = 13;
 
 var Tab = React.createClass({
+  
+
   render: function() {
     var className = this.props.chat.visible ? 'tab-item active': 'tab-item';
     return (
-      <div className={className}>
+      <div className={className} onClick={this._onClick}>
         <span className="icon icon-cancel icon-close-tab"></span>
-        {this.props.chat.name}
+        {this.props.chat.username}
       </div>
     );
   }
@@ -30,7 +32,7 @@ var ChatWindow = React.createClass({
     var chat = this._findVisibleChat();
 
     if(!chat) {
-      return <div class="chat-window"></div>;
+      return <div className="chat-window"></div>;
     }
 
     return (

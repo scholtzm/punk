@@ -15,6 +15,13 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE,
       message: message
     });
+  },
+
+  openChat: function(user) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_OPEN,
+      user: user
+    });
   }
 
 };

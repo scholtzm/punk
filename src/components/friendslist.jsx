@@ -1,11 +1,16 @@
 var React = require('react');
 
+var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
 
 var FriendsListItem = React.createClass({
+  _onDoubleClick: function() {
+    ChatActions.openChat(this.props.user);
+  },
+
   render: function() {
     return (
-      <li className="list-group-item">
+      <li className="list-group-item" onDoubleClick={this._onDoubleClick}>
         <img className="img-circle media-object pull-left" src={this.props.user.avatar} width="32" height="32" />
         <div className="media-body">
           <strong>{this.props.user.username}</strong>
