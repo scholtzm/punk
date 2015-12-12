@@ -6,7 +6,9 @@ var ChatStore = require('../stores/chat-store.js');
 var ENTER_KEY = 13;
 
 var Tab = React.createClass({
-  
+  _onClick: function() {
+    ChatActions.switchChat(this.props.chat);
+  },
 
   render: function() {
     var className = this.props.chat.visible ? 'tab-item active': 'tab-item';

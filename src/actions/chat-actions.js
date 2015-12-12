@@ -22,6 +22,13 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_OPEN,
       user: user
     });
+  },
+
+  switchChat: function(chat) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_SWITCH,
+      chat: chat
+    });
   }
 
 };
