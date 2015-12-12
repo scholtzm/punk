@@ -31,12 +31,14 @@ var ChatWindow = React.createClass({
     }
 
     return (
-      <div class="chat-window">
-        <ul>
-          {chat.messages.map(function(message) {
-            return <li>{message}</li>;
-          })}
-        </ul>
+      <div className="chat-window">
+        <div className="chat-window-content">
+          <ul>
+            {chat.messages.map(function(message) {
+              return <li className="their-message"><span>{message}</span></li>;
+            })}
+          </ul>
+        </div>
       </div>
     );
   }
@@ -45,7 +47,7 @@ var ChatWindow = React.createClass({
 var MessageComposer = React.createClass({
   render: function() {
     return (
-    <div class="message-composer">
+    <div className="message-composer">
       <textarea className="form-control" rows="3"></textarea>
     </div>
     );
