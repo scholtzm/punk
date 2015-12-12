@@ -7,13 +7,11 @@ var ENTER_KEY = 13;
 
 var Tab = React.createClass({
   _onClick: function(event) {
-    console.log('switch');
     event.stopPropagation();
     ChatActions.switchChat(this.props.chat);
   },
 
   _onClose: function(event) {
-    console.log('close');
     event.stopPropagation();
     ChatActions.closeChat(this.props.chat);
   },
@@ -42,7 +40,7 @@ var ChatWindow = React.createClass({
     var chat = this._findVisibleChat();
 
     if(!chat) {
-      return <div className="chat-window"></div>;
+      return <div/>;
     }
 
     return (
@@ -93,6 +91,12 @@ var MessageComposer = React.createClass({
   },
 
   render: function() {
+    var visible = this._findVisibleChat();
+
+    if(!visible) {
+      return <div/>;
+    }
+
     return (
     <div className="message-composer">
       <textarea
@@ -108,6 +112,18 @@ var MessageComposer = React.createClass({
 });
 
 var Chat = React.createClass({
+  _tabbedCount: function() {
+    var count = 0;
+
+    for(var id in this.state.chats) {
+      if(this.state.chats[id].tabbed) {
+        count++;
+      }
+    }
+
+    return count;
+  },
+
   _onChange: function() {
     this.setState({ chats: ChatStore.getAll() });
   },
@@ -115,9 +131,9 @@ var Chat = React.createClass({
   _createTabs: function() {
     var self = this;
 
-    if(Object.keys(self.state.chats).length > 0) {
+    if(self._tabbedCount() > 0) {
       var tabs = Object.keys(self.state.chats).map(function(id) {
-        if(self.state.chats[id].tabbed === true) {
+        if(self.state.chats[id].tabbed) {
           return <Tab key={id} chat={self.state.chats[id]} />;
         }
       });
