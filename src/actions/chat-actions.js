@@ -5,14 +5,14 @@ var ChatActions = {
 
   newIncomingMessage: function(message) {
     Dispatcher.dispatch({
-      type: Constants.CHAT_NEW_INCOMING_MESSAGE,
+      type: Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE,
       message: message
     });
   },
 
   newOutgoingMessage: function(message) {
     Dispatcher.dispatch({
-      type: Constants.CHAT_NEW_OUTGOING_MESSAGE,
+      type: Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE,
       message: message
     });
   }

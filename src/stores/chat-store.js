@@ -74,12 +74,12 @@ var ChatStore = assign({}, EventEmitter.prototype, {
 
 ChatStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
-    case Constants.CHAT_NEW_INCOMING_MESSAGE:
+    case Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE:
       newIncomingMessage(action.message);
       ChatStore.emitChange();
       break;
 
-    case Constants.CHAT_NEW_OUTGOING_MESSAGE:
+    case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
       newOutgoingMessage(action.message);
       ChatStore.emitChange();
       break;

@@ -5,7 +5,7 @@ var FriendsActions = {
 
   insertOrUpdate: function(friend) {
     Dispatcher.dispatch({
-      type: Constants.FRIENDS_INSERT_OR_UPDATE,
+      type: Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE,
       friend: friend
     });
   }

@@ -33,7 +33,7 @@ exports.plugin = function(API) {
 
   Dispatcher.register(function(action) {
     switch(action.type) {
-      case Constants.CHAT_NEW_OUTGOING_MESSAGE:
+      case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
         steamFriends.sendMessage(action.message.target, action.message.text);
         break;
 
