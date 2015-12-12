@@ -29,6 +29,13 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_SWITCH,
       chat: chat
     });
+  },
+
+  closeChat: function(chat) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_CLOSE,
+      chat: chat
+    });
   }
 
 };

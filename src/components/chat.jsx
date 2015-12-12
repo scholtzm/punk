@@ -6,15 +6,23 @@ var ChatStore = require('../stores/chat-store.js');
 var ENTER_KEY = 13;
 
 var Tab = React.createClass({
-  _onClick: function() {
+  _onClick: function(event) {
+    console.log('switch');
+    event.stopPropagation();
     ChatActions.switchChat(this.props.chat);
+  },
+
+  _onClose: function(event) {
+    console.log('close');
+    event.stopPropagation();
+    ChatActions.closeChat(this.props.chat);
   },
 
   render: function() {
     var className = this.props.chat.visible ? 'tab-item active': 'tab-item';
     return (
       <div className={className} onClick={this._onClick}>
-        <span className="icon icon-cancel icon-close-tab"></span>
+        <span className="icon icon-cancel icon-close-tab" onClick={this._onClose}></span>
         {this.props.chat.username}
       </div>
     );
@@ -109,7 +117,9 @@ var Chat = React.createClass({
 
     if(Object.keys(self.state.chats).length > 0) {
       var tabs = Object.keys(self.state.chats).map(function(id) {
-        return <Tab key={id} chat={self.state.chats[id]} />;
+        if(self.state.chats[id].tabbed === true) {
+          return <Tab key={id} chat={self.state.chats[id]} />;
+        }
       });
 
       return (

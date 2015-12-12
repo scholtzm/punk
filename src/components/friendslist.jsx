@@ -4,7 +4,8 @@ var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
 
 var FriendsListItem = React.createClass({
-  _onDoubleClick: function() {
+  _onDoubleClick: function(event) {
+    event.preventDefault();
     ChatActions.openChat(this.props.user);
   },
 

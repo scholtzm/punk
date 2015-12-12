@@ -22,6 +22,14 @@ function _toggleVisibleChat() {
   }
 }
 
+function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
+  for(var id in _chats) {
+    if(id !== cannotBeMadeVisibleId && _chats[id].tabbed === true) {
+      return _chats[id];
+    }
+  }
+}
+
 function openChat(user) {
   var id = user.id;
   var username = user.username;
@@ -46,6 +54,21 @@ function switchChat(chat) {
 
   _chats[id].visible = true;
 }
+
+function closeChat(chat) {
+  var id = chat.id;
+
+  _chats[id].tabbed = false;
+
+  if(_chats[id].visible === true) {
+    _chats[id].visible = false;
+
+    var toBeMadeVisible = _findFirstToMakeVisible(id);
+    if(toBeMadeVisible) {
+      toBeMadeVisible.visible = true;
+    }
+  }
+};
 
 function newIncomingMessage(message) {
   if(!_chats[message.sender]) {
@@ -122,6 +145,11 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_SWITCH:
       switchChat(action.chat);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.ChatActions.CHAT_CLOSE:
+      closeChat(action.chat);
       ChatStore.emitChange();
       break;
 
