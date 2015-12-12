@@ -1,6 +1,9 @@
 var React = require('react');
 
+var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
+
+var ENTER_KEY = 13;
 
 var Tab = React.createClass({
   render: function() {
@@ -35,7 +38,7 @@ var ChatWindow = React.createClass({
         <div className="chat-window-content">
           <ul>
             {chat.messages.map(function(message) {
-              return <li className="their-message"><span>{message}</span></li>;
+              return <li className={message.type}><span>{message.text}</span></li>;
             })}
           </ul>
         </div>
@@ -45,10 +48,48 @@ var ChatWindow = React.createClass({
 });
 
 var MessageComposer = React.createClass({
+  _findVisibleChat: function() {
+    for(var id in this.props.chats) {
+      if(this.props.chats[id].visible) {
+        return { id: id, chat: this.props.chats[id] };
+      }
+    }
+  },
+
+  _onChange: function(event) {
+    this.setState({text: event.target.value});
+  },
+
+  _onKeyDown: function(event) {
+    if(event.keyCode === ENTER_KEY) {
+      event.preventDefault();
+      var text = this.state.text.trim();
+      if(text) {
+        var targetChat = this._findVisibleChat();
+
+        ChatActions.newOutgoingMessage({
+          target: targetChat.id,
+          text: text
+        });
+      }
+      this.setState({text: ''});
+    }
+  },
+
+  getInitialState: function() {
+    return {text: ''};
+  },
+
   render: function() {
     return (
     <div className="message-composer">
-      <textarea className="form-control" rows="3"></textarea>
+      <textarea
+        rows="3"
+        className="form-control"
+        name="message"
+        value={this.state.text}
+        onChange={this._onChange}
+        onKeyDown={this._onKeyDown} />
     </div>
     );
   }
@@ -96,7 +137,7 @@ var Chat = React.createClass({
       <div className="chat">
         {tabs}
         <ChatWindow chats={this.state.chats}/>
-        <MessageComposer />
+        <MessageComposer chats={this.state.chats}/>
       </div>
     );
   }

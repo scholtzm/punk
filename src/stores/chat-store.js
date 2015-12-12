@@ -14,12 +14,30 @@ function newIncomingMessage(message) {
     _chats[message.sender].visible = false;
   }
 
+  _chats[message.sender].tabbed = true;
   _chats[message.sender].name = message.name;
-  _chats[message.sender].messages.push(message.text);
+  _chats[message.sender].messages.push({
+    type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
+    date: new Date(),
+    text: message.text
+  });
 
   if(Object.keys(_chats).length === 1) {
     _chats[message.sender].visible = true;
   }
+}
+
+function newOutgoingMessage(message) {
+  // chat must exist at this point
+  if(!_chats[message.target]) {
+    return;
+  }
+
+  _chats[message.target].messages.push({
+    type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
+    date: new Date(),
+    text: message.text
+  });
 }
 
 var ChatStore = assign({}, EventEmitter.prototype, {
@@ -56,8 +74,13 @@ var ChatStore = assign({}, EventEmitter.prototype, {
 
 ChatStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
-    case Constants.CHAT_NEW_FRIEND_MESSAGE:
+    case Constants.CHAT_NEW_INCOMING_MESSAGE:
       newIncomingMessage(action.message);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.CHAT_NEW_OUTGOING_MESSAGE:
+      newOutgoingMessage(action.message);
       ChatStore.emitChange();
       break;
 
