@@ -11,6 +11,10 @@ module.exports = {
     CHAT_NEW_OUTGOING_MESSAGE: 'CHAT_NEW_OUTGOING_MESSAGE'
   },
 
+  UserActions: {
+    USER_UPDATE: 'USER_UPDATE'
+  },
+
   MessageTypes: {
     CHAT_OUR_MESSAGE: 'our-message',
     CHAT_THEIR_MESSAGE: 'their-message'

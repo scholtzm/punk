@@ -2,6 +2,7 @@ var React = require('react');
 
 var FriendsList = require('./friendslist.js');
 var Chat = require('./chat.js');
+var Toolbar = require('./toolbar.js');
 
 var Main = React.createClass({
   render: function() {
@@ -10,20 +11,7 @@ var Main = React.createClass({
         <header className="toolbar toolbar-header">
           <h1 className="title">Punk</h1>
 
-          <div className="toolbar-actions">
-            <div className="btn-group">
-              <button className="btn btn-default">
-                <span className="icon icon-user-add"></span>
-              </button>
-              <button className="btn btn-default">
-                <span className="icon icon-cog"></span>
-              </button>
-            </div>
-
-            <button className="btn btn-default pull-right">
-              <span className="icon icon-cancel-circled"></span>
-            </button>
-          </div>
+          <Toolbar />
         </header>
 
         <div className="divider"></div>

@@ -1,3 +1,31 @@
+$online-color: #57cbde;
+$offline-color: #6a6a6a;
+$in-game-color: #90ba3c;
+
+.online {
+  color: $online-color !important;
+}
+
+.offline {
+  color: $offline-color !important;
+}
+
+.in-game {
+  color: $in-game-color !important;
+}
+
+.online-border {
+  border: 1px solid $online-color;
+}
+
+.offline-border {
+  border: 1px solid $offline-color;
+}
+
+.in-game-border {
+  border: 1px solid $in-game-color;
+}
+
 .centered {
   display: inline-block;
   margin: auto;
