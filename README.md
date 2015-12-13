@@ -1,6 +1,10 @@
 # Punk
 
-Punk is a cross-platform Steam client for desktop and is build on top of Vapor and Electron. The UI is powered by React, Flux and Photon.
+Punk is a cross-platform Steam client for desktop and is build on top of [Vapor](https://github.com/scholtzm/vapor) and [Electron](http://electron.atom.io/).
+
+The UI is powered by [React](https://facebook.github.io/react/), [Flux](https://facebook.github.io/flux/) and the visuals are handled by [Photon](http://photonkit.com/).
+
+Punk is currently under development and as such isn't recommended for day-to-day usage.
 
 ## Build & develop
 
