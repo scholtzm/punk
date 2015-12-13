@@ -24,7 +24,7 @@ function _toggleVisibleChat() {
 
 function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
   for(var id in _chats) {
-    if(id !== cannotBeMadeVisibleId && _chats[id].tabbed === true) {
+    if(id !== cannotBeMadeVisibleId && _chats[id].tabbed) {
       return _chats[id];
     }
   }
@@ -60,7 +60,7 @@ function closeChat(chat) {
 
   _chats[id].tabbed = false;
 
-  if(_chats[id].visible === true) {
+  if(_chats[id].visible) {
     _chats[id].visible = false;
 
     var toBeMadeVisible = _findFirstToMakeVisible(id);

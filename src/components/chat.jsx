@@ -36,6 +36,11 @@ var ChatWindow = React.createClass({
     }
   },
 
+  componentDidUpdate: function() {
+    var node = this.refs.content;
+    node.scrollTop = node.scrollHeight;
+  },
+
   render: function() {
     var chat = this._findVisibleChat();
 
@@ -45,7 +50,7 @@ var ChatWindow = React.createClass({
 
     return (
       <div className="chat-window">
-        <div className="chat-window-content">
+        <div className="chat-window-content" ref="content">
           <ul>
             {chat.messages.map(function(message) {
               return <li className={message.type}><span>{message.text}</span></li>;
@@ -98,15 +103,15 @@ var MessageComposer = React.createClass({
     }
 
     return (
-    <div className="message-composer">
-      <textarea
-        rows="3"
-        className="form-control"
-        name="message"
-        value={this.state.text}
-        onChange={this._onChange}
-        onKeyDown={this._onKeyDown} />
-    </div>
+      <div className="message-composer">
+        <textarea
+          rows="3"
+          className="form-control"
+          name="message"
+          value={this.state.text}
+          onChange={this._onChange}
+          onKeyDown={this._onKeyDown} />
+      </div>
     );
   }
 });
