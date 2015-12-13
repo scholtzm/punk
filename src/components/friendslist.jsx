@@ -4,15 +4,30 @@ var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
 
 var FriendsListItem = React.createClass({
+  _getClassName: function() {
+    if(this.props.user.inGame) {
+      return 'in-game-border';
+    }
+
+    switch (this.props.user.stateEnum) {
+      case 0:
+        return 'offline-border';
+      default:
+        return 'online-border';
+    }
+  },
+
   _onDoubleClick: function(event) {
     event.preventDefault();
     ChatActions.openChat(this.props.user);
   },
 
   render: function() {
+    var className = 'img-circle media-object pull-left ' + this._getClassName();
+
     return (
       <li className="list-group-item" onDoubleClick={this._onDoubleClick}>
-        <img className="img-circle media-object pull-left" src={this.props.user.avatar} width="32" height="32" />
+        <img className={className} src={this.props.user.avatar} width="32" height="32" />
         <div className="media-body">
           <strong>{this.props.user.username}</strong>
           <p>{this.props.user.state}</p>
