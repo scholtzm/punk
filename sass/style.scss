@@ -40,12 +40,12 @@
     display: block;
     margin-bottom: 10px;
     padding: 5px;
-    /*background-color: #333;*/
 
     > span {
       color: #fff;
       border-radius: 10px;
       padding: 5px;
+      -webkit-user-select: text;
     }
 
     &.their-message {
