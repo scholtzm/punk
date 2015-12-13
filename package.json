@@ -14,23 +14,27 @@
     "url": "https://github.com/scholtzm/punk.git"
   },
   "dependencies": {
-    "babel-preset-react": "^6.3.13",
-    "eslint": "^1.10.3",
-    "eslint-plugin-react": "^3.11.3",
     "flux": "^2.1.1",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1",
-    "gulp-rimraf": "^0.2.0",
-    "gulp-sass": "^2.1.0",
     "object-assign": "^4.0.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "vapor": "^1.0.0"
   },
+  "devDependencies": {
+    "babel-preset-react": "^6.3.13",
+    "electron-prebuilt": "^0.35.4",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.11.3",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sass": "^2.1.0"
+  },
   "scripts": {
     "build": "node_modules/.bin/gulp",
-    "watch": "node_modules/.bin/gulp watch",
-    "lint": "node_modules/.bin/eslint ."
+    "lint": "node_modules/.bin/eslint .",
+    "start": "node_modules/.bin/electron .",
+    "watch": "node_modules/.bin/gulp watch"
   },
   "private": true
 }

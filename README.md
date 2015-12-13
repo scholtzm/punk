@@ -2,7 +2,7 @@
 
 Punk is a cross-platform Steam client for desktop and is build on top of Vapor and Electron. The UI is powered by React, Flux and Photon.
 
-## Build
+## Build & develop
 
 After cloning the repo, run:
 
@@ -14,13 +14,10 @@ npm run watch
 
 A `dist` folder should be also created.
 
-## Run
-
-You can use `electron-prebuilt` for now. After building, run:
+## Running the application
 
 ```sh
-npm install -g electron-prebuilt
-electron .
+npm run start
 ```
 
 ## LICENSE
