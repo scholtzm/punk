@@ -38,6 +38,11 @@ var ChatWindow = React.createClass({
 
   componentDidUpdate: function() {
     var node = this.refs.content;
+
+    if(!node) {
+      return;
+    }
+
     node.scrollTop = node.scrollHeight;
   },
 
@@ -52,8 +57,8 @@ var ChatWindow = React.createClass({
       <div className="chat-window">
         <div className="chat-window-content" ref="content">
           <ul>
-            {chat.messages.map(function(message) {
-              return <li className={message.type}><div><small>{message.date.toTimeString()}</small>{message.text}</div></li>;
+            {chat.messages.map(function(message, index) {
+              return <li key={chat.id + '-' + index} className={message.type}><div><small>{message.date.toTimeString()}</small>{message.text}</div></li>;
             })}
           </ul>
         </div>

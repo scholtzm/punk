@@ -8,6 +8,25 @@ exports.plugin = function(API) {
   var Steam = API.getSteam();
   var steamFriends = API.getHandler('steamFriends');
 
+  var token = Dispatcher.register(function(action) {
+    switch(action.type) {
+      case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
+        steamFriends.sendMessage(action.message.target, action.message.text);
+        break;
+
+      default:
+        // ignore
+    }
+  });
+
+  API.registerHandler({
+    emitter: 'plugin',
+    plugin: 'punk-logout',
+    event: 'logout'
+  }, function() {
+    Dispatcher.unregister(token);
+  });
+
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'friendMsg'
@@ -30,16 +49,4 @@ exports.plugin = function(API) {
       ChatActions.newIncomingMessage(message);
     }
   });
-
-  Dispatcher.register(function(action) {
-    switch(action.type) {
-      case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
-        steamFriends.sendMessage(action.message.target, action.message.text);
-        break;
-
-      default:
-        // ignore
-    }
-  });
-
 };
