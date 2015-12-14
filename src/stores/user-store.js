@@ -11,6 +11,10 @@ function update(user) {
   _user = user;
 }
 
+function clear() {
+  _user = {};
+}
+
 var UserStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
@@ -35,6 +39,11 @@ UserStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case Constants.UserActions.USER_UPDATE:
       update(action.user);
+      UserStore.emitChange();
+      break;
+
+    case Constants.UIActions.LOGOUT:
+      clear();
       UserStore.emitChange();
       break;
 

@@ -10,6 +10,7 @@ var steamGuard = require('./plugins/steamguard');
 var ready = require('./plugins/ready');
 var personaState = require('./plugins/personastate');
 var friendMsg = require('./plugins/friendmsg');
+var logout = require('./plugins/logout');
 
 function Punk() {
   this.userConfig = './user.json';
@@ -52,6 +53,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(ready);
   this.client.use(personaState);
   this.client.use(friendMsg);
+  this.client.use(logout);
 };
 
 Punk.prototype.connect = function() {

@@ -11,6 +11,10 @@ function insertOrUpdate(friend) {
   _friends[friend.id] = friend;
 }
 
+function clear() {
+  _friends = {};
+}
+
 var FriendsStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
@@ -39,6 +43,11 @@ FriendsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE:
       insertOrUpdate(action.friend);
+      FriendsStore.emitChange();
+      break;
+
+    case Constants.UIActions.LOGOUT:
+      clear();
       FriendsStore.emitChange();
       break;
 

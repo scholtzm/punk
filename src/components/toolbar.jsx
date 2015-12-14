@@ -1,10 +1,16 @@
 var React = require('react');
 
+var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
 
 var Toolbar = React.createClass({
   _onChange: function() {
     this.setState({ user: UserStore.get() });
+  },
+
+  _onLogout: function(event) {
+    event.stopPropagation();
+    UIActions.logout();
   },
 
   _getClassName: function() {
@@ -57,7 +63,7 @@ var Toolbar = React.createClass({
           </button>
         </div>
 
-        <button className="btn btn-default pull-right">
+        <button className="btn btn-default pull-right" onClick={this._onLogout}>
           <i className="fa fa-sign-out"></i>
         </button>
       </div>

@@ -15,6 +15,10 @@ module.exports = {
     USER_UPDATE: 'USER_UPDATE'
   },
 
+  UIActions: {
+    LOGOUT: 'LOGOUT'
+  },
+
   MessageTypes: {
     CHAT_OUR_MESSAGE: 'our-message',
     CHAT_THEIR_MESSAGE: 'their-message'

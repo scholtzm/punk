@@ -104,6 +104,10 @@ function newOutgoingMessage(message) {
   });
 }
 
+function clear() {
+  _chats = {};
+}
+
 var ChatStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
@@ -160,6 +164,11 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
       newOutgoingMessage(action.message);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.UIActions.LOGOUT:
+      clear();
       ChatStore.emitChange();
       break;
 
