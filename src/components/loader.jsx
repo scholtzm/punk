@@ -7,11 +7,11 @@ var Loader = React.createClass({
         <header className="toolbar toolbar-header">
           <h1 className="title">Punk</h1>
         </header>
-        
+
         <div className="window-content">
           <div className="centered">
             <center>
-              <h1>Punk</h1><br/>
+              <h1 className="brand logo">Punk</h1><br/>
               <h3><span className="icon icon-arrows-ccw"></span> Loading...</h3>
             </center>
           </div>

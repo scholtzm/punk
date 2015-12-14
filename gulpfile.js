@@ -4,10 +4,11 @@ var sass = require('gulp-sass');
 var rimraf = require('gulp-rimraf');
 
 var jsPath = ['src/**/*.js', 'src/**/*.jsx'];
-var sassPath = 'sass/**/*.scss';
+var sassPath = 'css/**/*.scss';
+var fontPath = 'css/fonts/*.*';
 
 gulp.task('default', ['clean'], function() {
-  gulp.start('transpile-js', 'transpile-sass');
+  gulp.start('transpile-js', 'transpile-sass', 'copy-fonts');
 });
 
 gulp.task('watch', function () {
@@ -34,4 +35,9 @@ gulp.task('transpile-sass', function () {
   gulp.src(sassPath)
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('copy-fonts', function() {
+  gulp.src(fontPath)
+    .pipe(gulp.dest('dist/css/fonts'));
 });

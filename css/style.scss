@@ -2,6 +2,23 @@ $online-color: #57cbde;
 $offline-color: #6a6a6a;
 $in-game-color: #90ba3c;
 
+@font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lobster'), local('Lobster-Regular'), url(fonts/Lobster.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+h1 {
+  &.logo {
+    font-size: 80px;
+    overflow: visible;
+    color: #EB4432;
+    text-shadow: 2px 2px 0 #888888;
+  }
+}
+
 .online {
   color: $online-color !important;
 }
@@ -24,6 +41,10 @@ $in-game-color: #90ba3c;
 
 .in-game-border {
   border: 2px solid $in-game-color;
+}
+
+.brand {
+  font-family: 'Lobster', cursive;
 }
 
 .centered {
