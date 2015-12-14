@@ -12,7 +12,7 @@ var Loader = React.createClass({
           <div className="centered">
             <center>
               <h1 className="brand logo">Punk</h1><br/>
-              <h3><span className="icon icon-arrows-ccw"></span> Loading...</h3>
+              <h2><i className="fa fa-refresh fa-spin"></i></h2>
             </center>
           </div>
         </div>

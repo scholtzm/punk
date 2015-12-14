@@ -39,26 +39,26 @@ var Toolbar = React.createClass({
   },
 
   render: function() {
-    var className = 'icon icon-record icon-text ' + this._getClassName();
+    var className = 'fa fa-circle ' + this._getClassName();
 
     return (
       <div className="toolbar-actions">
         <button className="btn btn-default">
-          <span className={className}></span>
+          <i className={className}></i>&nbsp;
           {this.state.user.username || 'Loading...'}
         </button>
 
         <div className="btn-group">
           <button className="btn btn-default">
-            <span className="icon icon-user-add"></span>
+            <i className="fa fa-user-plus"></i>
           </button>
           <button className="btn btn-default">
-            <span className="icon icon-cog"></span>
+            <i className="fa fa-cog"></i>
           </button>
         </div>
 
         <button className="btn btn-default pull-right">
-          <span className="icon icon-cancel-circled"></span>
+          <i className="fa fa-sign-out"></i>
         </button>
       </div>
     );
