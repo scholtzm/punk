@@ -53,7 +53,7 @@ var ChatWindow = React.createClass({
         <div className="chat-window-content" ref="content">
           <ul>
             {chat.messages.map(function(message) {
-              return <li className={message.type}><span>{message.text}</span></li>;
+              return <li className={message.type}><div><small>{message.date.toTimeString()}</small>{message.text}</div></li>;
             })}
           </ul>
         </div>

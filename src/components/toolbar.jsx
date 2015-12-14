@@ -8,6 +8,10 @@ var Toolbar = React.createClass({
   },
 
   _getClassName: function() {
+    if(!this.state.user.stateEnum) {
+      return 'offline';
+    }
+
     if(this.state.user.inGame) {
       return 'in-game';
     }
@@ -35,7 +39,7 @@ var Toolbar = React.createClass({
   },
 
   render: function() {
-    var className = 'icon icon-user icon-text ' + this._getClassName();
+    var className = 'icon icon-record icon-text ' + this._getClassName();
 
     return (
       <div className="toolbar-actions">

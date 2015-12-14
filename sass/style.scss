@@ -69,28 +69,35 @@ $in-game-color: #90ba3c;
     margin-bottom: 10px;
     padding: 5px;
 
-    > span {
+    > div {
+      display: inline-block;
       color: #fff;
       border-radius: 10px;
       padding: 5px;
       -webkit-user-select: text;
+
+      > small {
+        display: block;
+      }
     }
 
     &.their-message {
       text-align: left;
 
-      > span {
+      > div {
         background-color: #03c03c;
         margin-left: 20px;
+        margin-right: 60px;
       }
     }
 
     &.our-message {
       text-align: right;
 
-      > span {
+      > div {
         background-color: #779ecb;
         margin-right: 20px;
+        margin-left: 60px;
       }
     }
   }

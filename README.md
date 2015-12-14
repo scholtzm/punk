@@ -21,7 +21,7 @@ A `dist` folder should be also created.
 ## Running the application
 
 ```sh
-npm run start
+npm start
 ```
 
 ## LICENSE
