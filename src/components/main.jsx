@@ -19,7 +19,11 @@ var Main = React.createClass({
         <div id="main" className="window-content">
           <div className="pane-group">
             <div className="pane pane-sm sidebar">
-              <FriendsList />
+              <div className="friendslist">
+                <div className="friendslist-content">
+                  <FriendsList />
+                </div>
+              </div>
             </div>
             <div className="pane">
               <Chat />
