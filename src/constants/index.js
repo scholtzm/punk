@@ -12,7 +12,8 @@ module.exports = {
   },
 
   UserActions: {
-    USER_UPDATE: 'USER_UPDATE'
+    USER_UPDATE: 'USER_UPDATE',
+    CHANGE_STATE: 'CHANGE_STATE'
   },
 
   UIActions: {

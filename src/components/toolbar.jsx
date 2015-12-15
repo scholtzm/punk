@@ -1,7 +1,11 @@
+var remote = require('remote');
+
 var React = require('react');
 
 var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
+
+var CurrentUserMenu = require('./menus/current-user.js');
 
 var CurrentUser = React.createClass({
   _getClassName: function() {
@@ -21,11 +25,16 @@ var CurrentUser = React.createClass({
     }
   },
 
+  _onClick: function() {
+    event.preventDefault();
+    CurrentUserMenu.popup(remote.getCurrentWindow());
+  },
+
   render: function() {
     var className = 'fa fa-circle ' + this._getClassName();
 
     return (
-      <button className="btn btn-default btn-dropdown">
+      <button className="btn btn-default btn-dropdown" onClick={this._onClick}>
         <i className={className}></i>&nbsp;
         {this.props.user.username || 'Loading...'}
       </button>

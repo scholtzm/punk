@@ -8,6 +8,13 @@ var UserActions = {
       type: Constants.UserActions.USER_UPDATE,
       user: user
     });
+  },
+
+  changeState: function(state) {
+    Dispatcher.dispatch({
+      type: Constants.UserActions.CHANGE_STATE,
+      state: state
+    });
   }
 
 };
