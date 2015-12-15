@@ -3,6 +3,36 @@ var React = require('react');
 var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
 
+var CurrentUser = React.createClass({
+  _getClassName: function() {
+    if(!this.props.user.stateEnum) {
+      return 'offline';
+    }
+
+    if(this.props.user.inGame) {
+      return 'in-game';
+    }
+
+    switch (this.props.user.stateEnum) {
+      case 0:
+        return 'offline';
+      default:
+        return 'online';
+    }
+  },
+
+  render: function() {
+    var className = 'fa fa-circle ' + this._getClassName();
+
+    return (
+      <button className="btn btn-default btn-dropdown">
+        <i className={className}></i>&nbsp;
+        {this.props.user.username || 'Loading...'}
+      </button>
+    );
+  }
+});
+
 var Toolbar = React.createClass({
   _onChange: function() {
     this.setState({ user: UserStore.get() });
@@ -11,23 +41,6 @@ var Toolbar = React.createClass({
   _onLogout: function(event) {
     event.stopPropagation();
     UIActions.logout();
-  },
-
-  _getClassName: function() {
-    if(!this.state.user.stateEnum) {
-      return 'offline';
-    }
-
-    if(this.state.user.inGame) {
-      return 'in-game';
-    }
-
-    switch (this.state.user.stateEnum) {
-      case 0:
-        return 'offline';
-      default:
-        return 'online';
-    }
   },
 
   getInitialState: function() {
@@ -45,14 +58,9 @@ var Toolbar = React.createClass({
   },
 
   render: function() {
-    var className = 'fa fa-circle ' + this._getClassName();
-
     return (
       <div className="toolbar-actions">
-        <button className="btn btn-default">
-          <i className={className}></i>&nbsp;
-          {this.state.user.username || 'Loading...'}
-        </button>
+        <CurrentUser user={this.state.user}/>
 
         <div className="btn-group">
           <button className="btn btn-default">
