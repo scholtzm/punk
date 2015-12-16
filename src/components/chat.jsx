@@ -66,7 +66,10 @@ var ChatWindow = React.createClass({
         <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
           <ul>
             {chat.messages.map(function(message, index) {
-              return <li key={chat.id + '-' + index} className={message.type}><div><small>{message.date.toTimeString()}</small>{message.text}</div></li>;
+              var text = message.text.split('\n').map(function(line, indexLine) {
+                return (<p key={indexLine}>{line}</p>);
+              });
+              return <li key={index} className={message.type}><div><small>{message.date.toTimeString()}</small>{text}</div></li>;
             })}
           </ul>
         </div>
@@ -89,7 +92,7 @@ var MessageComposer = React.createClass({
   },
 
   _onKeyDown: function(event) {
-    if(event.keyCode === ENTER_KEY) {
+    if(event.keyCode === ENTER_KEY && !event.shiftKey) {
       event.preventDefault();
       var text = this.state.text.trim();
       if(text) {

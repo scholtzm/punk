@@ -7,7 +7,6 @@ exports.name = 'punk-friendmsg';
 exports.plugin = function(API) {
   var Steam = API.getSteam();
   var steamFriends = API.getHandler('steamFriends');
-  var log = API.getLogger();
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
