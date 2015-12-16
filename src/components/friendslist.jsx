@@ -1,3 +1,5 @@
+var remote = require('remote');
+
 var React = require('react');
 
 var ChatActions = require('../actions/chat-actions.js');
@@ -22,11 +24,17 @@ var FriendsListItem = React.createClass({
     ChatActions.openChat(this.props.user);
   },
 
+  _onContextMenu: function(event) {
+    event.preventDefault();
+    var menu = require('./menus/friends-menu.js')(this.props.user);
+    menu.popup(remote.getCurrentWindow());
+  },
+
   render: function() {
     var className = 'img-circle media-object pull-left ' + this._getClassName();
 
     return (
-      <li className="list-group-item" onDoubleClick={this._onDoubleClick}>
+      <li className="list-group-item" onDoubleClick={this._onDoubleClick} onContextMenu={this._onContextMenu}>
         <img className={className} src={this.props.user.avatar} width="32" height="32" />
         <div className="media-body">
           <strong>{this.props.user.username}</strong>

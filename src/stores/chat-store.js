@@ -104,6 +104,19 @@ function newOutgoingMessage(message) {
   });
 }
 
+function remove(id) {
+  if(_chats[id].visible) {
+    _chats[id].visible = false;
+
+    var toBeMadeVisible = _findFirstToMakeVisible(id);
+    if(toBeMadeVisible) {
+      toBeMadeVisible.visible = true;
+    }
+  }
+
+  delete _chats[id];
+}
+
 function clear() {
   _chats = {};
 }
@@ -164,6 +177,11 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
       newOutgoingMessage(action.message);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.FriendsActions.REMOVE:
+      remove(action.friend.id);
       ChatStore.emitChange();
       break;
 

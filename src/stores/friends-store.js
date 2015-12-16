@@ -11,6 +11,10 @@ function insertOrUpdate(friend) {
   _friends[friend.id] = friend;
 }
 
+function remove(friend) {
+  delete _friends[friend.id];
+}
+
 function clear() {
   _friends = {};
 }
@@ -43,6 +47,11 @@ FriendsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
     case Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE:
       insertOrUpdate(action.friend);
+      FriendsStore.emitChange();
+      break;
+
+    case Constants.FriendsActions.REMOVE:
+      remove(action.friend);
       FriendsStore.emitChange();
       break;
 
