@@ -36,6 +36,13 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_CLOSE,
       chat: chat
     });
+  },
+
+  clearChat: function(chat) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_CLEAR,
+      chat: chat
+    });
   }
 
 };

@@ -7,6 +7,7 @@ exports.name = 'punk-friendmsg';
 exports.plugin = function(API) {
   var Steam = API.getSteam();
   var steamFriends = API.getHandler('steamFriends');
+  var log = API.getLogger();
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
@@ -31,7 +32,9 @@ exports.plugin = function(API) {
     emitter: 'steamFriends',
     event: 'friendMsg'
   }, function(user, message, type) {
-    if(type === Steam.EChatEntryType.ChatMsg) {
+    if(type === Steam.EChatEntryType.Typing) {
+      // TODO implement 'is typing' recognition
+    } else if(type === Steam.EChatEntryType.ChatMsg) {
       var username = user;
 
       // should we ignore ghost messages?

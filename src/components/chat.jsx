@@ -1,3 +1,5 @@
+var remote = require('remote');
+
 var React = require('react');
 
 var ChatActions = require('../actions/chat-actions.js');
@@ -36,6 +38,12 @@ var ChatWindow = React.createClass({
     }
   },
 
+  _onContextMenu: function(event) {
+    event.preventDefault();
+    var menu = require('./menus/chat-menu.js')(this._findVisibleChat());
+    menu.popup(remote.getCurrentWindow());
+  },
+
   componentDidUpdate: function() {
     var node = this.refs.content;
 
@@ -55,7 +63,7 @@ var ChatWindow = React.createClass({
 
     return (
       <div className="chat-window">
-        <div className="chat-window-content" ref="content">
+        <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
           <ul>
             {chat.messages.map(function(message, index) {
               return <li key={chat.id + '-' + index} className={message.type}><div><small>{message.date.toTimeString()}</small>{message.text}</div></li>;

@@ -70,6 +70,14 @@ function closeChat(chat) {
   }
 };
 
+function clearChat(chat) {
+  var id = chat.id;
+
+  if(_chats[id]) {
+    _chats[id].messages = [];
+  }
+}
+
 function newIncomingMessage(message) {
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
@@ -167,6 +175,11 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_CLOSE:
       closeChat(action.chat);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.ChatActions.CHAT_CLEAR:
+      clearChat(action.chat);
       ChatStore.emitChange();
       break;
 
