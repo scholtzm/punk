@@ -6,54 +6,22 @@ var UserActions = require('../../actions/user-actions.js');
 
 var menu = new Menu();
 
-menu.append(new MenuItem({
-  label: 'Online',
-  click: function() {
-    UserActions.changeState(1);
-  }
-}));
+function appendStateOptionToMenu(label, state) {
+  menu.append(new MenuItem({
+    label: label,
+    click: function() {
+      UserActions.changeState(state);
+    }
+  }));
+}
 
-menu.append(new MenuItem({
-  label: 'Away',
-  click: function() {
-    UserActions.changeState(3);
-  }
-}));
-
-menu.append(new MenuItem({
-  label: 'Busy',
-  click: function() {
-    UserActions.changeState(2);
-  }
-}));
-
-menu.append(new MenuItem({
-  label: 'Looking to Play',
-  click: function() {
-    UserActions.changeState(6);
-  }
-}));
-
-menu.append(new MenuItem({
-  label: 'Looking to Trade',
-  click: function() {
-    UserActions.changeState(5);
-  }
-}));
-
-menu.append(new MenuItem({
-  label: 'Snooze',
-  click: function() {
-    UserActions.changeState(4);
-  }
-}));
-
-menu.append(new MenuItem({
-  label: 'Offline',
-  click: function() {
-    UserActions.changeState(0);
-  }
-}));
+appendStateOptionToMenu('Online', 1);
+appendStateOptionToMenu('Away', 3);
+appendStateOptionToMenu('Busy', 2);
+appendStateOptionToMenu('Looking to Play', 6);
+appendStateOptionToMenu('Looking to Trade', 5);
+appendStateOptionToMenu('Snooze', 4);
+appendStateOptionToMenu('Offline', 0);
 
 menu.append(new MenuItem({ type: 'separator' }));
 
