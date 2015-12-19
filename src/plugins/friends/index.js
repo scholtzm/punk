@@ -10,6 +10,11 @@ exports.plugin = function(API) {
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
+      case Constants.FriendsActions.ADD:
+        steamFriends.addFriend(action.id);
+        log.info('User %s has been sent a friend request.', action.id);
+        break;
+
       case Constants.FriendsActions.REMOVE:
         steamFriends.removeFriend(action.friend.id);
         log.info('User %s has been removed from friends.', action.friend.id);

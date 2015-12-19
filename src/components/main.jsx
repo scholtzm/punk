@@ -3,13 +3,16 @@ var React = require('react');
 var FriendsList = require('./friendslist.js');
 var Chat = require('./chat.js');
 var Toolbar = require('./toolbar.js');
+
 var ChangeNameDialog = require('./dialogs/change-name.js');
+var AddFriendDialog = require('./dialogs/add-friend.js');
 
 var Main = React.createClass({
   render: function() {
     return (
       <div className="window">
         <ChangeNameDialog />
+        <AddFriendDialog />
 
         <header className="toolbar toolbar-header">
           <h1 className="title">Punk</h1>

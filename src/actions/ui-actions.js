@@ -15,6 +15,18 @@ var UIActions = {
     });
   },
 
+  addFriendOpenDialog: function() {
+    Dispatcher.dispatch({
+      type: Constants.UIActions.ADD_FRIEND_OPEN_DIALOG
+    });
+  },
+
+  addFriendCloseDialog: function() {
+    Dispatcher.dispatch({
+      type: Constants.UIActions.ADD_FRIEND_CLOSE_DIALOG
+    });
+  },
+
   logout: function() {
     Dispatcher.dispatch({
       type: Constants.UIActions.LOGOUT

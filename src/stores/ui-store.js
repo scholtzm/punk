@@ -6,7 +6,8 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _state = {
-  isChangeNameDialogOpen: false
+  isChangeNameDialogOpen: false,
+  isAddFriendDialogOpen: false
 };
 
 function set(key, value) {
@@ -42,6 +43,16 @@ UIStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.UIActions.CHANGE_NAME_CLOSE_DIALOG:
       set('isChangeNameDialogOpen', false);
+      UIStore.emitChange();
+      break;
+
+    case Constants.UIActions.ADD_FRIEND_OPEN_DIALOG:
+      set('isAddFriendDialogOpen', true);
+      UIStore.emitChange();
+      break;
+
+    case Constants.UIActions.ADD_FRIEND_CLOSE_DIALOG:
+      set('isAddFriendDialogOpen', false);
       UIStore.emitChange();
       break;
 

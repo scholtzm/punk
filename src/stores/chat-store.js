@@ -113,6 +113,10 @@ function newOutgoingMessage(message) {
 }
 
 function remove(id) {
+  if(!_chats[id]) {
+    return;
+  }
+
   if(_chats[id].visible) {
     _chats[id].visible = false;
 

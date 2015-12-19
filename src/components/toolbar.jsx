@@ -51,6 +51,10 @@ var Toolbar = React.createClass({
     UIActions.logout();
   },
 
+  _onAddFriend: function() {
+    UIActions.addFriendOpenDialog();
+  },
+
   getInitialState: function() {
     return {
       user: UserStore.get()
@@ -71,7 +75,7 @@ var Toolbar = React.createClass({
         <CurrentUser user={this.state.user}/>
 
         <div className="btn-group">
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick={this._onAddFriend}>
             <i className="fa fa-user-plus"></i>
           </button>
           <button className="btn btn-default">

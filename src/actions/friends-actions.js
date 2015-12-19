@@ -22,6 +22,13 @@ var FriendsActions = {
       type: Constants.FriendsActions.BLOCK,
       friend: friend
     });
+  },
+
+  add: function(id) {
+    Dispatcher.dispatch({
+      type: Constants.FriendsActions.ADD,
+      id: id
+    });
   }
 
 };
