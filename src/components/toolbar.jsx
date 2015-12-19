@@ -5,8 +5,6 @@ var React = require('react');
 var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
 
-var CurrentUserMenu = require('./menus/current-user.js');
-
 var CurrentUser = React.createClass({
   _getClassName: function() {
     if(!this.props.user.stateEnum) {
@@ -27,7 +25,8 @@ var CurrentUser = React.createClass({
 
   _onClick: function() {
     event.preventDefault();
-    CurrentUserMenu.popup(remote.getCurrentWindow());
+    var menu = require('./menus/current-user.js')(UserStore.get());
+    menu.popup(remote.getCurrentWindow());
   },
 
   render: function() {
