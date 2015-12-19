@@ -30,6 +30,10 @@ dialog {
 
     > .content {
       padding: 20px;
+
+      > input {
+        width: 200px;
+      }
     }
 
     &::backdrop {
