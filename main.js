@@ -15,7 +15,9 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    'title-bar-style': 'hidden'
+    minWidth: 800,
+    minHeight: 600,
+    titleBarStyle: 'hidden'
   });
 
   mainWindow.loadURL('file://' + __dirname + '/static/index.html');

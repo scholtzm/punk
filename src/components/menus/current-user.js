@@ -3,6 +3,7 @@ var Menu = remote.require('menu');
 var MenuItem = remote.require('menu-item');
 
 var UserActions = require('../../actions/user-actions.js');
+var UIActions = require('../../actions/ui-actions.js');
 
 module.exports = function(user) {
   var menu = new Menu();
@@ -34,7 +35,7 @@ module.exports = function(user) {
   menu.append(new MenuItem({
     label: 'Change name',
     click: function() {
-      window.alert('Not implemented yet.');
+      UIActions.changeNameOpenDialog();
     }
   }));
 

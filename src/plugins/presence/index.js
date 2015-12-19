@@ -1,7 +1,7 @@
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 
-exports.name = 'punk-changestate';
+exports.name = 'punk-presence';
 
 exports.plugin = function(API) {
   var steamFriends = API.getHandler('steamFriends');
@@ -10,6 +10,10 @@ exports.plugin = function(API) {
     switch(action.type) {
       case Constants.UserActions.CHANGE_STATE:
         steamFriends.setPersonaState(action.state);
+        break;
+
+      case Constants.UserActions.CHANGE_NAME:
+        steamFriends.setPersonaName(action.name);
         break;
 
       default:

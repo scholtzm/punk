@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "babel-preset-react": "^6.3.13",
-    "electron-prebuilt": "^0.35.4",
+    "electron-prebuilt": "0.35.4",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.11.3",
     "gulp": "^3.9.0",

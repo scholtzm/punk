@@ -19,6 +19,24 @@ h1 {
   }
 }
 
+dialog {
+    padding: 0;
+    border: 1px solid #bebebe;
+    border-radius: 6px;
+    box-shadow: 0 0 30px rgba(0,0,0,.1);
+    overflow: hidden;
+    z-index: 9001;
+    margin-top: 100px;
+
+    > .content {
+      padding: 20px;
+    }
+
+    &::backdrop {
+        background: rgba(0,0,0,0.2);
+    }
+}
+
 .online {
   color: $online-color !important;
 }

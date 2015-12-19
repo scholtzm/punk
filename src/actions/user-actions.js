@@ -15,6 +15,13 @@ var UserActions = {
       type: Constants.UserActions.CHANGE_STATE,
       state: state
     });
+  },
+
+  changeName: function(name) {
+    Dispatcher.dispatch({
+      type: Constants.UserActions.CHANGE_NAME,
+      name: name
+    });
   }
 
 };
