@@ -32,12 +32,18 @@ exports.plugin = function(API) {
 
   if(API.hasHandler('readFile')) {
     API.emitEvent('readFile', CACHE_FILE_NAME, function(error, data) {
+      console.log(data.toString());
       if(error) {
         log.error('Error while retrieving friends list cache.');
         log.error(error);
       } else {
-        var friends = JSON.parse(data);
-        FriendsActions.init(friends);
+        try {
+          var friends = JSON.parse(data);
+          FriendsActions.init(friends);
+        } catch(e) {
+          log.error('Failed to parse friends list cache data.');
+          log.error(e);
+        }
       }
     });
   }
@@ -46,23 +52,26 @@ exports.plugin = function(API) {
     emitter: 'steamFriends',
     event: 'relationships'
   }, function() {
-    log.info(steamFriends.friends);
-    // for(var id in steamFriends.friends) {
-    //   if(id === client.steamID) {
-    //     continue;
-    //   }
-    //
-    //   var user = {
-    //     id: id,
-    //     username: id,
-    //     // missing avatar
-    //     state: 'Offline',
-    //     stateEnum: Steam.EPersonaState.Offline,
-    //     inGame: false
-    //   };
-    //
-    //   FriendsActions.insertOrUpdate(user);
-    // }
+    var toBeRequested = [];
+
+    for(var id in steamFriends.friends) {
+      if(id === client.steamID) {
+        continue;
+      }
+
+      if(steamFriends.friends[id] !== Steam.EFriendRelationship.Friend) {
+        continue;
+      }
+
+      // at this point, we just check FriendsStore
+      var friend = FriendsStore.getById(id);
+      if(!friend) {
+        toBeRequested.push(id);
+      }
+    }
+
+    // we send a single request
+    steamFriends.requestFriendData(toBeRequested);
   });
 
   API.registerHandler({
@@ -70,6 +79,10 @@ exports.plugin = function(API) {
     event: 'personaState'
   }, function(persona) {
     log.info('personaState: %s', persona.player_name);
+
+    // fix persona since not all fields are sent by Steam
+    persona.persona_state = persona.persona_state || 0;
+    persona.game_name = persona.game_name || '';
 
     // only Vapor can correctly "decode" the object so we transform it here
     var hash = persona.avatar_hash.toString('hex');

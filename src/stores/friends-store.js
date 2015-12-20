@@ -65,7 +65,7 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
     var existingIndex = getIndexById(id);
 
     if(existingIndex !== undefined) {
-      _friends[existingIndex];
+      return _friends[existingIndex];
     }
   },
 
