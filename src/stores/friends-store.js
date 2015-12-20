@@ -7,6 +7,10 @@ var CHANGE_EVENT = 'change';
 
 var _friends = [];
 
+function init(friends) {
+  _friends = friends;
+}
+
 function insertOrUpdate(friend) {
   var existingIndex = getIndexById(friend.id);
 
@@ -73,6 +77,11 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
 
 FriendsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
+    case Constants.FriendsActions.FRIENDS_INIT:
+      init(action.friends);
+      FriendsStore.emitChange();
+      break;
+
     case Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE:
       insertOrUpdate(action.friend);
       FriendsStore.emitChange();

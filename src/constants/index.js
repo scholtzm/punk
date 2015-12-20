@@ -1,5 +1,6 @@
 module.exports = {
   FriendsActions: {
+    FRIENDS_INIT: 'FRIENDS_INIT',
     FRIENDS_INSERT_OR_UPDATE: 'FRIENDS_INSERT_OR_UPDATE',
     REMOVE: 'REMOVE',
     BLOCK: 'BLOCK',

@@ -47,6 +47,7 @@ Punk.prototype.init = function(username, password) {
 };
 
 Punk.prototype.loadPlugins = function() {
+  // load these 3 plugins ASAP (order matters)
   this.client.use(vapor.plugins.consoleLogger);
   this.client.use(vapor.plugins.fs);
   this.client.use(vapor.plugins.essentials);

@@ -3,6 +3,13 @@ var Constants = require('../constants');
 
 var FriendsActions = {
 
+  init: function(friends) {
+    Dispatcher.dispatch({
+      type: Constants.FriendsActions.FRIENDS_INIT,
+      friends: friends
+    });
+  },
+
   insertOrUpdate: function(friend) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE,
