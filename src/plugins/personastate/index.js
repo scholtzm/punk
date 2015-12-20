@@ -7,11 +7,39 @@ exports.plugin = function(API) {
   var utils = API.getUtils();
   var Steam = API.getSteam();
   var client = API.getClient();
+  var log = API.getLogger();
+
+  var steamFriends = API.getHandler('steamFriends');
+
+  API.registerHandler({
+    emitter: 'steamFriends',
+    event: 'relationships'
+  }, function() {
+    log.info(steamFriends.friends);
+    // for(var id in steamFriends.friends) {
+    //   if(id === client.steamID) {
+    //     continue;
+    //   }
+    //
+    //   var user = {
+    //     id: id,
+    //     username: id,
+    //     // missing avatar
+    //     state: 'Offline',
+    //     stateEnum: Steam.EPersonaState.Offline,
+    //     inGame: false
+    //   };
+    //
+    //   FriendsActions.insertOrUpdate(user);
+    // }
+  });
 
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'personaState'
   }, function(persona) {
+    log.info('personaState: %s', persona.player_name);
+
     // only Vapor can correctly "decode" the object so we transform it here
     var hash = persona.avatar_hash.toString('hex');
     var avatarUrl = 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/' + hash.substring(0, 2) + '/' + hash + '.jpg';

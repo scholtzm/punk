@@ -5,18 +5,38 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _friends = {};
+var _friends = [];
 
 function insertOrUpdate(friend) {
-  _friends[friend.id] = friend;
+  var existingIndex = getIndexById(friend.id);
+
+  if(existingIndex !== undefined) {
+    _friends[existingIndex] = friend;
+  } else {
+    _friends.push(friend);
+  }
 }
 
 function remove(friend) {
-  delete _friends[friend.id];
+  var existingIndex = getIndexById(friend.id);
+
+  if(existingIndex !== undefined) {
+    _friends.splice(existingIndex, 1);
+  }
 }
 
 function clear() {
-  _friends = {};
+  _friends = [];
+}
+
+function getIndexById(id) {
+  for(var i = 0; i < _friends.length; i++) {
+    if(_friends[i].id === id) {
+      // returns number >= 0
+      return i;
+    }
+  }
+  // returns undefined if no match
 }
 
 var FriendsStore = assign({}, EventEmitter.prototype, {
@@ -33,8 +53,16 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  get: function(id) {
-    return _friends[id];
+  getByIndex: function(index) {
+    return _friends[index];
+  },
+
+  getById: function(id) {
+    var existingIndex = getIndexById(id);
+
+    if(existingIndex !== undefined) {
+      _friends[existingIndex];
+    }
   },
 
   getAll: function() {

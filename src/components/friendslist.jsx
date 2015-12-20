@@ -102,9 +102,9 @@ var FriendsList = React.createClass({
             value={this.state.searchTerm}
             onChange={this._onSearch} />
         </li>
-        {Object.keys(self.state.friends).map(function(id) {
-          if(self._userMatchesSearchTerm(self.state.friends[id])) {
-            return <FriendsListItem key={id} user={self.state.friends[id]} />;
+        {self.state.friends.map(function(friend) {
+          if(self._userMatchesSearchTerm(friend)) {
+            return <FriendsListItem key={friend.id} user={friend} />;
           }
         })}
       </ul>
