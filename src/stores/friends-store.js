@@ -71,6 +71,30 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
 
   getAll: function() {
     return _friends;
+  },
+
+  // this is probably slow af
+  getAllSorted: function() {
+    _friends = _friends.sort(function(a, b) {
+      if(a.inGame && b.inGame) {
+        return a.username.localeCompare(b.username);
+      } else if(a.inGame) {
+        return -1;
+      } else if(b.inGame) {
+        return 1;
+      }
+
+      if(a.stateEnum !== 0 && b.stateEnum !== 0) {
+        return a.username.localeCompare(b.username);
+      } else if(a.stateEnum !== 0) {
+        return -1;
+      } else if(b.stateEnum !== 0){
+        return 1;
+      }
+
+      return a.username.localeCompare(b.username);
+    });
+    return _friends;
   }
 
 });

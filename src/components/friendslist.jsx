@@ -47,7 +47,11 @@ var FriendsListItem = React.createClass({
 
 var FriendsList = React.createClass({
   _onChange: function() {
-    this.setState({ friends: FriendsStore.getAll() });
+    var newFriends = FriendsStore.getAllSorted();
+    var newState = this.state;
+
+    newState.friends = newFriends;
+    this.setState(newState);
   },
 
   _onSearch: function(event) {
@@ -76,7 +80,7 @@ var FriendsList = React.createClass({
 
   getInitialState: function() {
     return {
-      friends: FriendsStore.getAll(),
+      friends: FriendsStore.getAllSorted(),
       searchTerm: ''
     };
   },

@@ -11,6 +11,10 @@ var SteamGuard = React.createClass({
     ReactDOM.render(<Loader />, document.getElementById('app'));
   },
 
+  componentDidMount: function(){
+    this.refs.authCode.focus();
+  },
+
   render: function() {
     return (
       <div className="window">
