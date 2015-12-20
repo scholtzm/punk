@@ -19,21 +19,21 @@ var FriendsActions = {
 
   remove: function(friend) {
     Dispatcher.dispatch({
-      type: Constants.FriendsActions.REMOVE,
+      type: Constants.FriendsActions.FRIENDS_REMOVE,
       friend: friend
     });
   },
 
   block: function(friend) {
     Dispatcher.dispatch({
-      type: Constants.FriendsActions.BLOCK,
+      type: Constants.FriendsActions.FRIENDS_BLOCK,
       friend: friend
     });
   },
 
   add: function(id) {
     Dispatcher.dispatch({
-      type: Constants.FriendsActions.ADD,
+      type: Constants.FriendsActions.FRIENDS_ADD,
       id: id
     });
   }

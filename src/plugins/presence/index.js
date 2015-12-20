@@ -8,11 +8,11 @@ exports.plugin = function(API) {
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
-      case Constants.UserActions.CHANGE_STATE:
+      case Constants.UserActions.USER_CHANGE_STATE:
         steamFriends.setPersonaState(action.state);
         break;
 
-      case Constants.UserActions.CHANGE_NAME:
+      case Constants.UserActions.USER_CHANGE_NAME:
         steamFriends.setPersonaName(action.name);
         break;
 

@@ -36,22 +36,22 @@ var UIStore = assign({}, EventEmitter.prototype, {
 
 UIStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
-    case Constants.UIActions.CHANGE_NAME_OPEN_DIALOG:
+    case Constants.UIActions.UI_CHANGE_NAME_OPEN_DIALOG:
       set('isChangeNameDialogOpen', true);
       UIStore.emitChange();
       break;
 
-    case Constants.UIActions.CHANGE_NAME_CLOSE_DIALOG:
+    case Constants.UIActions.UI_CHANGE_NAME_CLOSE_DIALOG:
       set('isChangeNameDialogOpen', false);
       UIStore.emitChange();
       break;
 
-    case Constants.UIActions.ADD_FRIEND_OPEN_DIALOG:
+    case Constants.UIActions.UI_ADD_FRIEND_OPEN_DIALOG:
       set('isAddFriendDialogOpen', true);
       UIStore.emitChange();
       break;
 
-    case Constants.UIActions.ADD_FRIEND_CLOSE_DIALOG:
+    case Constants.UIActions.UI_ADD_FRIEND_CLOSE_DIALOG:
       set('isAddFriendDialogOpen', false);
       UIStore.emitChange();
       break;

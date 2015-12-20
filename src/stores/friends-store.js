@@ -87,12 +87,12 @@ FriendsStore.dispatchToken = Dispatcher.register(function(action) {
       FriendsStore.emitChange();
       break;
 
-    case Constants.FriendsActions.REMOVE:
+    case Constants.FriendsActions.FRIENDS_REMOVE:
       remove(action.friend);
       FriendsStore.emitChange();
       break;
 
-    case Constants.UIActions.LOGOUT:
+    case Constants.UIActions.UI_LOGOUT:
       clear();
       FriendsStore.emitChange();
       break;

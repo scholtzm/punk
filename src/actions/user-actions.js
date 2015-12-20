@@ -12,14 +12,14 @@ var UserActions = {
 
   changeState: function(state) {
     Dispatcher.dispatch({
-      type: Constants.UserActions.CHANGE_STATE,
+      type: Constants.UserActions.USER_CHANGE_STATE,
       state: state
     });
   },
 
   changeName: function(name) {
     Dispatcher.dispatch({
-      type: Constants.UserActions.CHANGE_NAME,
+      type: Constants.UserActions.USER_CHANGE_NAME,
       name: name
     });
   }

@@ -42,7 +42,7 @@ UserStore.dispatchToken = Dispatcher.register(function(action) {
       UserStore.emitChange();
       break;
 
-    case Constants.UIActions.LOGOUT:
+    case Constants.UIActions.UI_LOGOUT:
       clear();
       UserStore.emitChange();
       break;

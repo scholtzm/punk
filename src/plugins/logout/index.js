@@ -11,7 +11,7 @@ exports.name = 'punk-logout';
 exports.plugin = function(API) {
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
-      case Constants.UIActions.LOGOUT:
+      case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
         API.emitEvent('logout');

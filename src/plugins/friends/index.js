@@ -10,17 +10,17 @@ exports.plugin = function(API) {
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
-      case Constants.FriendsActions.ADD:
+      case Constants.FriendsActions.FRIENDS_ADD:
         steamFriends.addFriend(action.id);
         log.info('User %s has been sent a friend request.', action.id);
         break;
 
-      case Constants.FriendsActions.REMOVE:
+      case Constants.FriendsActions.FRIENDS_REMOVE:
         steamFriends.removeFriend(action.friend.id);
         log.info('User %s has been removed from friends.', action.friend.id);
         break;
 
-      case Constants.FriendsActions.BLOCK:
+      case Constants.FriendsActions.FRIENDS_BLOCK:
         steamFriends.setIgnoreFriend(action.friend.id, true, function(result) {
           if(result === Steam.EResult.OK) {
             // TODO call FriendsAction which confirms blockage
