@@ -76,6 +76,12 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
   // this is probably slow af
   getAllSorted: function() {
     _friends = _friends.sort(function(a, b) {
+      if(a.relationshipEnum < b.relationshipEnum) {
+        return -1;
+      } else if(a.relationshipEnum > b.relationshipEnum) {
+        return 1;
+      }
+
       if(a.inGame && b.inGame) {
         return a.username.localeCompare(b.username);
       } else if(a.inGame) {

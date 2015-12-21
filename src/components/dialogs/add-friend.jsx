@@ -63,6 +63,7 @@ var AddFriendDialog = React.createClass({
               type="text"
               className="form-control"
               placeholder="SteamID64"
+              ref="friendId"
               value={this.state.friendId}
               onChange={this._onFriendIdChange} />
         </div>

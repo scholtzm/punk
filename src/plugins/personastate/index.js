@@ -120,6 +120,8 @@ exports.plugin = function(API) {
   }, function(user, type) {
     if(type === Steam.EFriendRelationship.None) {
       FriendsActions.purge(user);
+    } else if(type === Steam.EFriendRelationship.RequestInitiator) {
+      steamFriends.requestFriendData([user]);
     }
   });
 
@@ -136,7 +138,7 @@ exports.plugin = function(API) {
     var requestNewData = persona.avatar_hash === undefined;
 
     // fix persona since not all fields are sent by Steam
-    persona.persona_state = persona.persona_state || currentFriend.persona.persona_state || 0;
+    persona.persona_state = persona.persona_state || currentFriend.persona.persona_state || Steam.EPersonaState.Offline;
     persona.game_name = persona.game_name || currentFriend.persona.game_name || '';
     persona.avatar_hash = persona.avatar_hash || currentFriend.persona.avatar_hash || EMPTY_AVATAR_HASH;
 
@@ -149,6 +151,7 @@ exports.plugin = function(API) {
 
     // relationship
     var relationship = steamFriends.friends[persona.friendid];
+    log.debug(relationship);
 
     var user = {
       id: persona.friendid,

@@ -59,7 +59,7 @@ var ChangeNameDialog = React.createClass({
         </header>
 
         <div className="content">
-            <input type="text" className="form-control" value={this.state.displayName} onChange={this._onDisplayNameChange} />
+            <input type="text" className="form-control" ref="displayName" value={this.state.displayName} onChange={this._onDisplayNameChange} />
         </div>
 
         <footer className="toolbar toolbar-footer">
