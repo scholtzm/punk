@@ -36,7 +36,6 @@ exports.plugin = function(API) {
     } else if(type === Steam.EChatEntryType.ChatMsg) {
       var username = user;
 
-      // should we ignore ghost messages?
       var persona = steamFriends.personaStates[user];
       if(persona) {
         username = persona.player_name;

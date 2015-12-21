@@ -21,8 +21,8 @@ function insertOrUpdate(friend) {
   }
 }
 
-function remove(friend) {
-  var existingIndex = getIndexById(friend.id);
+function remove(id) {
+  var existingIndex = getIndexById(id);
 
   if(existingIndex !== undefined) {
     _friends.splice(existingIndex, 1);
@@ -112,7 +112,12 @@ FriendsStore.dispatchToken = Dispatcher.register(function(action) {
       break;
 
     case Constants.FriendsActions.FRIENDS_REMOVE:
-      remove(action.friend);
+      remove(action.friend.id);
+      FriendsStore.emitChange();
+      break;
+
+    case Constants.FriendsActions.FRIENDS_PURGE:
+      remove(action.id);
       FriendsStore.emitChange();
       break;
 

@@ -36,6 +36,13 @@ var FriendsActions = {
       type: Constants.FriendsActions.FRIENDS_ADD,
       id: id
     });
+  },
+
+  purge: function(id) {
+    Dispatcher.dispatch({
+      type: Constants.FriendsActions.FRIENDS_PURGE,
+      id: id
+    });
   }
 
 };
