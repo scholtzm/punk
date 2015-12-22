@@ -41,6 +41,12 @@ dialog {
     }
 }
 
+button {
+  .fa {
+    color: #737475;
+  }
+}
+
 .online {
   color: $online-color !important;
 }
@@ -67,6 +73,16 @@ dialog {
 
 .brand {
   font-family: 'Lobster', cursive;
+}
+
+.badge {
+  margin-left: 5px;
+  font-size: 11px;
+  background-color: $in-game-color;
+  border-radius: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #fff;
 }
 
 .centered {
@@ -100,6 +116,13 @@ dialog {
   position: relative;
   overflow-y: auto;
   flex: 1;
+}
+
+.tab-item {
+  height: 25px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .chat-window {

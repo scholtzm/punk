@@ -4,6 +4,7 @@ var React = require('react');
 
 var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
+var NotificationStore = require('../stores/notification-store.js');
 
 var CurrentUser = React.createClass({
   _getClassName: function() {
@@ -36,6 +37,85 @@ var CurrentUser = React.createClass({
       <button className="btn btn-default btn-dropdown" onClick={this._onClick}>
         <i className={className}></i>&nbsp;
         {this.props.user.username || 'Loading...'}
+      </button>
+    );
+  }
+});
+
+var PendingTradeOffers = React.createClass({
+  _onClick: function() {
+  },
+
+  _onChange: function() {
+    this.setState({ notifications: NotificationStore.get() });
+  },
+
+  getInitialState: function() {
+    return {
+      notifications: NotificationStore.get()
+    };
+  },
+
+  componentDidMount: function() {
+    NotificationStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    NotificationStore.removeChangeListener(this._onChange);
+  },
+
+  render: function() {
+    var tradeOffers = this.state.notifications.tradeOffers;
+    var badge = <span/>;
+
+    if(tradeOffers && tradeOffers > 0) {
+      badge = <span className="badge">{tradeOffers}</span>;
+    }
+
+    return (
+      <button className="btn btn-default" title="Pending trade offers" onClick={this._onClick}>
+        <i className="fa fa-exchange"></i>
+        {badge}
+      </button>
+    );
+  }
+});
+
+var Notifications = React.createClass({
+  _onClick: function() {
+  },
+
+  _onChange: function() {
+    this.setState({ notifications: NotificationStore.get() });
+  },
+
+  getInitialState: function() {
+    return {
+      notifications: NotificationStore.get()
+    };
+  },
+
+  componentDidMount: function() {
+    NotificationStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    NotificationStore.removeChangeListener(this._onChange);
+  },
+
+  render: function() {
+    var count = this.state.notifications.unreadComments +
+      this.state.notifications.unreadMessages;
+    var badge = <span/>;
+
+    if(count && count > 0) {
+      badge = <span className="badge">{count}</span>;
+    }
+
+    return (
+      <button className="btn btn-default" title="Steam notifications" onClick={this._onClick}>
+        <i className="fa fa-envelope-o"></i>
+        {badge}
       </button>
     );
   }
@@ -82,6 +162,9 @@ var Toolbar = React.createClass({
             <i className="fa fa-cog"></i>
           </button>
         </div>
+
+        <PendingTradeOffers />
+        <Notifications />
 
         <button className="btn btn-default pull-right" onClick={this._onLogout}>
           <i className="fa fa-sign-out"></i>

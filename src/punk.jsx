@@ -13,6 +13,7 @@ var friendMsg = require('./plugins/friendmsg');
 var logout = require('./plugins/logout');
 var presence = require('./plugins/presence');
 var friends = require('./plugins/friends');
+var notifications = require('./plugins/notifications');
 
 function Punk() {
   this.userConfig = './user.json';
@@ -59,6 +60,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(logout);
   this.client.use(presence);
   this.client.use(friends);
+  this.client.use(notifications);
 };
 
 Punk.prototype.connect = function() {
