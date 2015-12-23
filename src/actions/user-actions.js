@@ -22,6 +22,14 @@ var UserActions = {
       type: Constants.UserActions.USER_CHANGE_NAME,
       name: name
     });
+  },
+
+  setCookies: function(cookies, sessionid) {
+    Dispatcher.dispatch({
+      type: Constants.UserActions.USER_SET_COOKIES,
+      cookies: cookies,
+      sessionid: sessionid
+    });
   }
 
 };

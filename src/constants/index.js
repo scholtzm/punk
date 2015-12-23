@@ -20,7 +20,8 @@ module.exports = {
   UserActions: {
     USER_UPDATE: 'USER_UPDATE',
     USER_CHANGE_STATE: 'USER_CHANGE_STATE',
-    USER_CHANGE_STATE: 'USER_CHANGE_NAME'
+    USER_CHANGE_STATE: 'USER_CHANGE_NAME',
+    USER_SET_COOKIES: 'USER_SET_COOKIES'
   },
 
   NotificationActions: {

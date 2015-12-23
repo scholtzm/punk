@@ -14,6 +14,7 @@ var logout = require('./plugins/logout');
 var presence = require('./plugins/presence');
 var friends = require('./plugins/friends');
 var notifications = require('./plugins/notifications');
+var cookies = require('./plugins/cookies');
 
 function Punk() {
   this.userConfig = './user.json';
@@ -61,6 +62,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(presence);
   this.client.use(friends);
   this.client.use(notifications);
+  this.client.use(cookies);
 };
 
 Punk.prototype.connect = function() {

@@ -6,6 +6,8 @@ var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
 var NotificationStore = require('../stores/notification-store.js');
 
+var SteamCommunityWindow = require('./windows/steam-community.js');
+
 var CurrentUser = React.createClass({
   _getClassName: function() {
     if(!this.props.user.stateEnum) {
@@ -44,6 +46,16 @@ var CurrentUser = React.createClass({
 
 var PendingTradeOffers = React.createClass({
   _onClick: function() {
+    var cookies = UserStore.getCookies();
+
+    // if we don't have cookies, abort
+    if(cookies.cookies.length === 0) {
+      return;
+    }
+
+    var win = SteamCommunityWindow.create(cookies.cookies);
+    win.loadURL('https://steamcommunity.com/my/tradeoffers/');
+    win.show();
   },
 
   _onChange: function() {
