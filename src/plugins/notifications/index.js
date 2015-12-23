@@ -31,10 +31,11 @@ exports.plugin = function(API) {
       }
 
       var notifications = {
-        // TODO: need to figure out the rest, especially pending items
+        // TODO: need to figure out the rest, e.g. gifts
         tradeOffers: body.notifications[1],
-        unreadComments: body.notifications[4],
-        unreadMessages: body.notifications[9]
+        comments: body.notifications[4],
+        items: body.notifications[5],
+        messages: body.notifications[9]
       };
 
       NotificationActions.updateAll(notifications);

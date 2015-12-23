@@ -104,8 +104,9 @@ var Notifications = React.createClass({
   },
 
   render: function() {
-    var count = this.state.notifications.unreadComments +
-      this.state.notifications.unreadMessages;
+    var count = this.state.notifications.comments +
+      this.state.notifications.items +
+      this.state.notifications.messages;
     var badge = <span/>;
 
     if(count && count > 0) {
