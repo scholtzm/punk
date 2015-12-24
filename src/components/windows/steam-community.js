@@ -1,7 +1,13 @@
 var BrowserWindow = require('electron').remote.BrowserWindow;
 
+var win;
+
 function create(cookies) {
-  var win = new BrowserWindow({
+  if(win) {
+    return win;
+  }
+
+  win = new BrowserWindow({
     width: 1024,
     height: 768,
     show: false,
@@ -11,6 +17,10 @@ function create(cookies) {
     webPreferences: {
       nodeIntegration: false
     }
+  });
+
+  win.on('closed', function() {
+    win = null;
   });
 
   win.webContents.on('new-window', function(event, url) {
