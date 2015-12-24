@@ -148,6 +148,32 @@ var Toolbar = React.createClass({
     UIActions.addFriendOpenDialog();
   },
 
+  _openStore: function() {
+    var cookies = UserStore.getCookies();
+
+    // if we don't have cookies, abort
+    if(cookies.cookies.length === 0) {
+      return;
+    }
+
+    var win = SteamCommunityWindow.create(cookies.cookies);
+    win.loadURL('https://store.steampowered.com');
+    win.show();
+  },
+
+  _openProfile: function() {
+    var cookies = UserStore.getCookies();
+
+    // if we don't have cookies, abort
+    if(cookies.cookies.length === 0) {
+      return;
+    }
+
+    var win = SteamCommunityWindow.create(cookies.cookies);
+    win.loadURL('https://steamcommunity.com/my/');
+    win.show();
+  },
+
   getInitialState: function() {
     return {
       user: UserStore.get()
@@ -176,8 +202,19 @@ var Toolbar = React.createClass({
           </button>
         </div>
 
-        <PendingTradeOffers />
-        <Notifications />
+        <div className="btn-group">
+          <PendingTradeOffers />
+          <Notifications />
+        </div>
+
+        <div className="btn-group">
+          <button className="btn btn-default" title="Store" onClick={this._openStore}>
+            <i className="fa fa-shopping-cart"></i>
+          </button>
+          <button className="btn btn-default" title="Profile" onClick={this._openProfile}>
+            <i className="fa fa-user"></i>
+          </button>
+        </div>
 
         <button className="btn btn-default pull-right" onClick={this._onLogout}>
           <i className="fa fa-sign-out"></i>

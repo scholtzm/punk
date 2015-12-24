@@ -7,7 +7,7 @@ function create(cookies) {
     show: false,
     center: true,
     skipTaskbar: true,
-    title: 'Loading steamcommunity.com ...',
+    title: 'Loading...',
     webPreferences: {
       nodeIntegration: false
     }
@@ -25,6 +25,14 @@ function create(cookies) {
 
     win.webContents.session.cookies.set({
       url : 'https://steamcommunity.com',
+      name : split[0],
+      value : split[1],
+      session: split[0].indexOf('steamLogin') > -1 ? true : false,
+      secure: split[0] === 'steamLoginSecure'
+    }, function(){});
+
+    win.webContents.session.cookies.set({
+      url : 'https://store.steampowered.com',
       name : split[0],
       value : split[1],
       session: split[0].indexOf('steamLogin') > -1 ? true : false,
