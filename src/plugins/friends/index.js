@@ -1,6 +1,8 @@
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 
+var FriendsActions = require('../../actions/friends-actions.js');
+
 exports.name = 'punk-friends';
 
 exports.plugin = function(API) {
@@ -23,7 +25,7 @@ exports.plugin = function(API) {
       case Constants.FriendsActions.FRIENDS_BLOCK:
         steamFriends.setIgnoreFriend(action.friend.id, true, function(result) {
           if(result === Steam.EResult.OK) {
-            // TODO call FriendsAction which confirms blockage
+            FriendsActions.purge(action.friend.id);
             log.info('User %s has been blocked.', action.friend.id);
           } else {
             log.warn('Failed to block %s with EResult %d.', action.friend.id, result);
