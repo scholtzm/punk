@@ -16,7 +16,7 @@ var Login = React.createClass({
       fs.writeFileSync(punk.userConfig, JSON.stringify({username: username, password: password}, null, 2));
     }
 
-    ReactDOM.render(<Loader />, document.getElementById('app'));
+    ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
     punk.init(username, password);
     punk.loadPlugins();

@@ -13,6 +13,7 @@ var Loader = React.createClass({
             <center>
               <h1 className="brand logo">Punk</h1><br/>
               <h2><i className="fa fa-refresh fa-spin"></i></h2>
+              <h4>{this.props.message}</h4>
             </center>
           </div>
         </div>

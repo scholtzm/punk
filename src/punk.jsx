@@ -15,6 +15,7 @@ var presence = require('./plugins/presence');
 var friends = require('./plugins/friends');
 var notifications = require('./plugins/notifications');
 var cookies = require('./plugins/cookies');
+var disconnected = require('./plugins/disconnected');
 
 function Punk() {
   this.userConfig = './user.json';
@@ -31,7 +32,7 @@ Punk.prototype.start = function() {
   }
 
   if (config && config.username && config.password) {
-    ReactDOM.render(<Loader />, document.getElementById('app'));
+    ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
     this.init(config.username, config.password);
     this.loadPlugins();
@@ -63,6 +64,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(friends);
   this.client.use(notifications);
   this.client.use(cookies);
+  this.client.use(disconnected);
 };
 
 Punk.prototype.connect = function() {

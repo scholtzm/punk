@@ -8,7 +8,7 @@ var SteamGuard = React.createClass({
     event.preventDefault();
 
     this.props.callback(this.refs.authCode.value);
-    ReactDOM.render(<Loader />, document.getElementById('app'));
+    ReactDOM.render(<Loader message="Connecting..." />, document.getElementById('app'));
   },
 
   componentDidMount: function(){
