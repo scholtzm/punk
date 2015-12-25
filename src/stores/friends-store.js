@@ -74,6 +74,7 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
   },
 
   // this is probably slow af
+  // perhaps prioritized sorting might be faster
   getAllSorted: function() {
     _friends = _friends.sort(function(a, b) {
       if(a.relationshipEnum < b.relationshipEnum) {
