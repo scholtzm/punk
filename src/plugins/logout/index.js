@@ -14,7 +14,7 @@ exports.plugin = function(API) {
       case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
-        API.emitEvent('logout');
+        API.emitEvent('shutdown');
         API.disconnect();
 
         ReactDOM.render(<Login />, document.getElementById('app'));

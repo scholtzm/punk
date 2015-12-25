@@ -9,6 +9,7 @@ exports.name = 'punk-disconnected';
 exports.plugin = function(API) {
   var log = API.getLogger();
   var Steam = API.getSteam();
+  var utils = API.getUtils();
 
   var logOnDetailsAreCorrect = false;
 
@@ -27,12 +28,17 @@ exports.plugin = function(API) {
   }, function(error) {
     log.warn('Got disconnected. EResult: %d', error.eresult);
     if(error.eresult === Steam.EResult.InvalidPassword && !logOnDetailsAreCorrect) {
-      ReactDOM.render(<Login />, document.getElementById('app'));
+      var enumString = utils.enumToString(error.eresult, Steam.EResult);
+      var message = 'Login error: ' + enumString;
+
+      // need to emit this for other plugins to unregister their dispatcher callbacks
+      API.emitEvent('shutdown');
+      ReactDOM.render(<Login message={message} />, document.getElementById('app'));
     } else {
       setTimeout(function() {
         API.connect();
       }, 3000);
-      ReactDOM.render(<Loader message="Got disconnected. Connecting back..."/>, document.getElementById('app'));
+      ReactDOM.render(<Loader message="Got disconnected. Connecting back..." />, document.getElementById('app'));
     }
   });
 };

@@ -185,8 +185,8 @@ exports.plugin = function(API) {
 
   API.registerHandler({
     emitter: 'plugin',
-    plugin: 'punk-logout',
-    event: 'logout'
+    plugin: '*',
+    event: 'shutdown'
   }, function() {
     FriendsStore.removeChangeListener(persistFriendsList);
   });
