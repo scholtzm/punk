@@ -6,7 +6,7 @@ var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
 
 var FriendsListItem = React.createClass({
-  _getClassName: function() {
+  _getOnlineStateClassName: function() {
     if(this.props.user.inGame) {
       return 'in-game-border';
     }
@@ -17,6 +17,10 @@ var FriendsListItem = React.createClass({
       default:
         return 'online-border';
     }
+  },
+
+  _getRelationshipStateClassName: function() {
+    return 'relationship-' + this.props.user.relationshipEnum;
   },
 
   _onDoubleClick: function(event) {
@@ -31,11 +35,12 @@ var FriendsListItem = React.createClass({
   },
 
   render: function() {
-    var className = 'img-circle media-object pull-left ' + this._getClassName();
+    var classNameItem = 'list-group-item ' + this._getRelationshipStateClassName();
+    var classNameAvatar = 'img-circle media-object pull-left ' + this._getOnlineStateClassName();
 
     return (
-      <li className="list-group-item" onDoubleClick={this._onDoubleClick} onContextMenu={this._onContextMenu}>
-        <img className={className} src={this.props.user.avatar} width="32" height="32" />
+      <li className={classNameItem} onDoubleClick={this._onDoubleClick} onContextMenu={this._onContextMenu}>
+        <img className={classNameAvatar} src={this.props.user.avatar} width="32" height="32" />
         <div className="media-body">
           <strong>{this.props.user.username}</strong>
           <p>{this.props.user.state}</p>

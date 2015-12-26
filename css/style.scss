@@ -1,3 +1,5 @@
+$brand-color-red: #eb4432;
+$brand-color-yellow: #ebaa32;
 $online-color: #57cbde;
 $offline-color: #6a6a6a;
 $in-game-color: #90ba3c;
@@ -14,7 +16,7 @@ h1 {
   &.logo {
     font-size: 80px;
     overflow: visible;
-    color: #EB4432;
+    color: $brand-color-red;
     text-shadow: 2px 2px 0 #888888;
   }
 }
@@ -110,6 +112,20 @@ button {
   bottom: 0;
   left: 0;
   display: flex;
+
+  .relationship-2 {
+    border-right: 5px solid $brand-color-red;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: lighten(#f5f5f4, 10%);
+  }
+
+  .relationship-4 {
+    border-right: 5px solid $brand-color-yellow;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: lighten(#f5f5f4, 10%);
+  }
 }
 
 .friendslist-content {
