@@ -31,7 +31,7 @@ exports.plugin = function(API) {
       }
 
       // abort if Steam goes full retard
-      if(body.indexOf('An error occurred while processing your request.') > -1) {
+      if(typeof body === 'string') {
         return;
       }
 
