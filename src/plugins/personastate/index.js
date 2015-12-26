@@ -186,7 +186,7 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'plugin',
     plugin: '*',
-    event: 'shutdown'
+    event: 'logout'
   }, function() {
     FriendsStore.removeChangeListener(persistFriendsList);
   });

@@ -1,8 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Login = require('../../components/login.js');
 var Loader = require('../../components/loader.js');
+
+var UIActions = require('../../actions/ui-actions.js');
 
 exports.name = 'punk-disconnected';
 
@@ -31,13 +32,10 @@ exports.plugin = function(API) {
       var enumString = utils.enumToString(error.eresult, Steam.EResult);
       var message = 'Login error: ' + enumString;
 
-      // need to emit this for other plugins to unregister their dispatcher callbacks
-      API.emitEvent('shutdown');
-      ReactDOM.render(<Login message={message} />, document.getElementById('app'));
+      UIActions.logout(message);
     } else {
-      setTimeout(function() {
-        API.connect();
-      }, 3000);
+      setTimeout(function() { API.connect(); }, 3000);
+
       ReactDOM.render(<Loader message="Got disconnected. Connecting back..." />, document.getElementById('app'));
     }
   });

@@ -14,10 +14,10 @@ exports.plugin = function(API) {
       case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
-        API.emitEvent('shutdown');
+        API.emitEvent('logout');
         API.disconnect();
 
-        ReactDOM.render(<Login />, document.getElementById('app'));
+        ReactDOM.render(<Login message={action.message} />, document.getElementById('app'));
         break;
 
       default:

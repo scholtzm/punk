@@ -27,9 +27,10 @@ var UIActions = {
     });
   },
 
-  logout: function() {
+  logout: function(message) {
     Dispatcher.dispatch({
-      type: Constants.UIActions.UI_LOGOUT
+      type: Constants.UIActions.UI_LOGOUT,
+      message: message
     });
   }
 

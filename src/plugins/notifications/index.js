@@ -22,11 +22,16 @@ exports.plugin = function(API) {
     };
 
     req.get(options, function(error, response, body) {
-      // if cookies are dead, error will be null and body will be null as well
+      // if cookies are dead, error will be null and body will be null as well, wut
       if(body === null) {
         clearInterval(interval);
         // Vapor will keep repeating until successful
         API.webLogOn();
+        return;
+      }
+
+      // abort if Steam goes full retard
+      if(body.indexOf('An error occurred while processing your request.') > -1) {
         return;
       }
 
@@ -61,5 +66,13 @@ exports.plugin = function(API) {
   }, function(count) {
     log.debug('Pending trade offer count: %d.', count);
     NotificationActions.updateTradeOfferCount(count);
+  });
+
+  API.registerHandler({
+    emitter: 'plugin',
+    plugin: '*',
+    event: 'logout'
+  }, function() {
+    clearInterval(interval);
   });
 };
