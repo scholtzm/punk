@@ -3,6 +3,7 @@ var Menu = remote.require('menu');
 var MenuItem = remote.require('menu-item');
 
 var UserStore = require('../../stores/user-store.js');
+var ChatActions = require('../../actions/chat-actions.js');
 var SteamCommunityWindow = require('../windows/steam-community.js');
 
 module.exports = function(notifications) {
@@ -39,6 +40,7 @@ module.exports = function(notifications) {
   menu.append(new MenuItem({
     label: 'Messages: ' + notifications.messages,
     click: function() {
+      ChatActions.requestOfflineMessages();
     }
   }));
 

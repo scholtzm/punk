@@ -90,7 +90,7 @@ function newIncomingMessage(message) {
   _chats[message.sender].username = message.username;
   _chats[message.sender].messages.push({
     type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
-    date: new Date(),
+    date: message.date,
     text: message.text
   });
 

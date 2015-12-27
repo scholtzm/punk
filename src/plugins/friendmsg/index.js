@@ -44,6 +44,7 @@ exports.plugin = function(API) {
       var message = {
         sender: user,       // SteamID64 string
         username: username, // display name if possible
+        date: new Date(),
         text: message
       };
 

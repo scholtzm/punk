@@ -43,6 +43,12 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_CLEAR,
       chat: chat
     });
+  },
+
+  requestOfflineMessages: function() {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_REQUEST_OFFLINE_MESSAGES
+    });
   }
 
 };

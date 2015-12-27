@@ -16,6 +16,7 @@ var friends = require('./plugins/friends');
 var notifications = require('./plugins/notifications');
 var cookies = require('./plugins/cookies');
 var disconnected = require('./plugins/disconnected');
+var offlineMessages = require('./plugins/offline-messages');
 
 function Punk() {
   this.userConfig = './user.json';
@@ -65,6 +66,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(notifications);
   this.client.use(cookies);
   this.client.use(disconnected);
+  this.client.use(offlineMessages);
 };
 
 Punk.prototype.connect = function() {
