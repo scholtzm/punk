@@ -1,4 +1,5 @@
 {
+  "name": "punk",
   "dependencies": {
     "font-awesome": "fontawesome#~4.5.0"
   }
