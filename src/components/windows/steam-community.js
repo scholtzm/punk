@@ -16,7 +16,8 @@ function create(cookies) {
     title: 'Loading...',
     webPreferences: {
       nodeIntegration: false
-    }
+    },
+    autoHideMenuBar: true
   });
 
   win.on('closed', function() {

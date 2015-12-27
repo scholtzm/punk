@@ -15,8 +15,6 @@ var Main = React.createClass({
         <AddFriendDialog />
 
         <header className="toolbar toolbar-header">
-          <h1 className="title">Punk</h1>
-
           <Toolbar />
         </header>
 

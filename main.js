@@ -17,7 +17,7 @@ app.on('ready', function() {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden'
+    autoHideMenuBar: true
   });
 
   mainWindow.loadURL('file://' + __dirname + '/static/index.html');
