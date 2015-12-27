@@ -27,8 +27,7 @@ var CurrentUser = React.createClass({
   },
 
   _onClick: function() {
-    event.preventDefault();
-    var menu = require('./menus/current-user.js')(UserStore.get());
+    var menu = require('./menus/current-user-menu.js')(this.props.user);
     menu.popup(remote.getCurrentWindow());
   },
 
@@ -95,6 +94,8 @@ var PendingTradeOffers = React.createClass({
 
 var Notifications = React.createClass({
   _onClick: function() {
+    var menu = require('./menus/notifications-menu.js')(this.state.notifications);
+    menu.popup(remote.getCurrentWindow());
   },
 
   _onChange: function() {
@@ -139,8 +140,7 @@ var Toolbar = React.createClass({
     this.setState({ user: UserStore.get() });
   },
 
-  _onLogout: function(event) {
-    event.stopPropagation();
+  _onLogout: function() {
     UIActions.logout();
   },
 
