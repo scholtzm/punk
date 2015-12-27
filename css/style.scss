@@ -92,12 +92,16 @@ button {
   margin: auto;
 }
 
+.toolbar-header {
+  border-bottom: 1px solid #989698;
+}
+
 .toolbar-actions {
   padding: 3px;
 }
 
-.divider {
-  border-bottom: 1px solid #989698;
+.pane {
+  border-left: 1px solid #989698;
 }
 
 .pane, .pane-sm {
