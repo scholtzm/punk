@@ -79,7 +79,7 @@ function clearChat(chat) {
 }
 
 function newIncomingMessage(message) {
-  // create entry if does't exist
+  // create entry if it does't exist
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
     _chats[message.sender].id = message.sender;

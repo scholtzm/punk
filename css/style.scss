@@ -225,6 +225,16 @@ button {
         margin-left: 60px;
       }
     }
+
+    &.our-trade-request {
+      text-align: right;
+
+      > div {
+        background-color: #800080;
+        margin-left: 20px;
+        margin-right: 60px;
+      }
+    }
   }
 }
 

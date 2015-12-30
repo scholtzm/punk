@@ -29,6 +29,26 @@ var Tab = React.createClass({
   }
 });
 
+var ChatMessage = React.createClass({
+  render: function() {
+    var message = this.props.message;
+
+    var text = message.text.split('\n').map(function(line, indexLine) {
+      return (<p key={indexLine}>{line}</p>);
+    });
+
+    return (
+      <li
+        className={message.type}>
+        <div>
+          <small>{message.date.toTimeString()}</small>
+          {text}
+        </div>
+      </li>
+    );
+  }
+});
+
 var ChatWindow = React.createClass({
   _findVisibleChat: function() {
     for(var id in this.props.chats) {
@@ -66,10 +86,7 @@ var ChatWindow = React.createClass({
         <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
           <ul>
             {chat.messages.map(function(message, index) {
-              var text = message.text.split('\n').map(function(line, indexLine) {
-                return (<p key={indexLine}>{line}</p>);
-              });
-              return <li key={index} className={message.type}><div><small>{message.date.toTimeString()}</small>{text}</div></li>;
+              return <ChatMessage key={index} message={message} />;
             })}
           </ul>
         </div>
