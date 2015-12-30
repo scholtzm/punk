@@ -49,6 +49,14 @@ var ChatActions = {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_REQUEST_OFFLINE_MESSAGES
     });
+  },
+
+  respondToTradeRequest: function(message, response) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST,
+      message: message,
+      response: response
+    });
   }
 
 };

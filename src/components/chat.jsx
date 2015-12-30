@@ -4,6 +4,7 @@ var React = require('react');
 
 var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
+var Constants = require('../constants');
 
 var ENTER_KEY = 13;
 
@@ -30,6 +31,14 @@ var Tab = React.createClass({
 });
 
 var ChatMessage = React.createClass({
+  _onAcceptTradeRequest: function() {
+    ChatActions.respondToTradeRequest(this.props.message, true);
+  },
+
+  _onDeclineTradeRequest: function() {
+    ChatActions.respondToTradeRequest(this.props.message, false);
+  },
+
   render: function() {
     var message = this.props.message;
 
@@ -37,12 +46,30 @@ var ChatMessage = React.createClass({
       return (<p key={indexLine}>{line}</p>);
     });
 
+    var extra;
+    if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST) {
+      if(message.meta.response !== undefined) {
+        extra = (
+          <p><i>You have {message.meta.response ? 'accepted' : 'declined'} the trade request.</i></p>
+        );
+      } else {
+        extra = (
+          <p>
+            <a href="#" onClick={this._onAcceptTradeRequest}>Accept</a>
+            {' or '}
+            <a href="#" onClick={this._onDeclineTradeRequest}>Decline</a>
+          </p>
+        );
+      }
+    }
+
     return (
       <li
         className={message.type}>
         <div>
           <small>{message.date.toTimeString()}</small>
           {text}
+          {extra}
         </div>
       </li>
     );
@@ -86,7 +113,7 @@ var ChatWindow = React.createClass({
         <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
           <ul>
             {chat.messages.map(function(message, index) {
-              return <ChatMessage key={index} message={message} />;
+              return <ChatMessage key={index} chat={chat} message={message} />;
             })}
           </ul>
         </div>

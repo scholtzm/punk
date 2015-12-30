@@ -1,5 +1,9 @@
 var Constants = require('../../constants');
+var Dispatcher = require('../../dispatcher');
 var ChatActions = require('../../actions/chat-actions.js');
+var UserStore = require('../../stores/user-store.js');
+
+var SteamCommunityWindow = require('../../components/windows/steam-community.js');
 
 exports.name = 'punk-trade';
 
@@ -7,6 +11,7 @@ exports.plugin = function(API) {
   var Steam = API.getSteam();
   var log = API.getLogger();
   var steamFriends = API.getHandler('steamFriends');
+  var steamTrading = API.getHandler('steamTrading');
 
   var callbacks = {};
 
@@ -38,13 +43,37 @@ exports.plugin = function(API) {
 
   callbacks[Steam.EMsg.EconTrading_InitiateTradeResult] = function(body) {
     var response = Steam.Internal.CMsgTrading_InitiateTradeResponse.decode(body);
-    log.debug('Trade request response: %d.', response.response);
+    log.debug('Response to our trade request: %d.', response.response);
   };
 
   callbacks[Steam.EMsg.EconTrading_StartSession] = function(body) {
     var response = Steam.Internal.CMsgTrading_StartSession.decode(body);
     log.debug('Trading session with %s has started.', response.other_steamid);
+
+    var cookies = UserStore.getCookies();
+
+    // if we don't have cookies, abort
+    if(cookies.cookies.length === 0) {
+      log.debug('Cannot open trade window. Have not received cookies yet.');
+      return;
+    }
+
+    var win = SteamCommunityWindow.create(cookies.cookies);
+    win.loadURL('http://steamcommunity.com/trade/' + response.other_steamid);
+    win.show();
   };
+
+  var token = Dispatcher.register(function(action) {
+    switch(action.type) {
+      case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
+        steamTrading.respondToTrade(action.message.meta.tradeRequestId, action.response);
+        log.info('Responded to trade request %s.', action.message.meta.tradeRequestId);
+        break;
+
+      default:
+        // ignore
+    }
+  });
 
   API.registerHandler({
     emitter: 'client',
@@ -53,5 +82,13 @@ exports.plugin = function(API) {
     if(header.msg in callbacks) {
       callbacks[header.msg](body);
     }
+  });
+
+  API.registerHandler({
+    emitter: 'plugin',
+    plugin: '*',
+    event: 'logout'
+  }, function() {
+    Dispatcher.unregister(token);
   });
 };

@@ -93,7 +93,8 @@ function newIncomingMessage(message) {
   _chats[message.sender].messages.push({
     type: message.type,
     date: message.date,
-    text: message.text
+    text: message.text,
+    meta: message.meta
   });
 
   // make visible if necessary
@@ -114,6 +115,10 @@ function newOutgoingMessage(message) {
     date: new Date(),
     text: message.text
   });
+}
+
+function respondToTradeRequest(message, response) {
+  message.meta.response = response;
 }
 
 function remove(id) {
@@ -198,6 +203,11 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
       newOutgoingMessage(action.message);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
+      respondToTradeRequest(action.message, action.response);
       ChatStore.emitChange();
       break;
 

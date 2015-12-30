@@ -3,6 +3,8 @@ var BrowserWindow = require('electron').remote.BrowserWindow;
 var win;
 
 function create(cookies) {
+  console.log('SteamCommunityWindow: creating');
+
   if(win) {
     return win;
   }
@@ -12,7 +14,6 @@ function create(cookies) {
     height: 768,
     show: false,
     center: true,
-    skipTaskbar: true,
     title: 'Loading...',
     webPreferences: {
       nodeIntegration: false
@@ -26,6 +27,7 @@ function create(cookies) {
 
   win.webContents.on('new-window', function(event, url) {
     event.preventDefault();
+    console.log('SteamCommunityWindow: opening new url');
     win.loadURL(url);
   });
 
