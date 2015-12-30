@@ -1,6 +1,7 @@
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 var ChatActions = require('../../actions/chat-actions.js');
+var Constants = require('../../constants');
 
 exports.name = 'punk-friendmsg';
 
@@ -42,6 +43,7 @@ exports.plugin = function(API) {
       }
 
       var message = {
+        type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
         sender: user,       // SteamID64 string
         username: username, // display name if possible
         date: new Date(),

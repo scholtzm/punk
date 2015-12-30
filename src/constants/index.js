@@ -40,6 +40,8 @@ module.exports = {
 
   MessageTypes: {
     CHAT_OUR_MESSAGE: 'our-message',
-    CHAT_THEIR_MESSAGE: 'their-message'
+    CHAT_THEIR_MESSAGE: 'their-message',
+    CHAT_OUR_TRADE_REQUEST: 'our-trade-request',
+    CHAT_THEIR_TRADE_REQUEST: 'their-trade-request'
   }
 };

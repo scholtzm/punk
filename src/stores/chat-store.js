@@ -79,6 +79,7 @@ function clearChat(chat) {
 }
 
 function newIncomingMessage(message) {
+  // create entry if does't exist
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
     _chats[message.sender].id = message.sender;
@@ -86,15 +87,18 @@ function newIncomingMessage(message) {
     _chats[message.sender].visible = false;
   }
 
+  // set values
   _chats[message.sender].tabbed = true;
   _chats[message.sender].username = message.username;
   _chats[message.sender].messages.push({
-    type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
+    type: message.type,
     date: message.date,
     text: message.text
   });
 
-  if(Object.keys(_chats).length === 1) {
+  // make visible if necessary
+  var currentVisibleChat = _findVisibleChat();
+  if(!currentVisibleChat) {
     _chats[message.sender].visible = true;
   }
 }

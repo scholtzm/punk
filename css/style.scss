@@ -183,7 +183,7 @@ button {
       display: inline-block;
       color: #fff;
       border-radius: 10px;
-      padding: 5px;
+      padding: 10px;
 
       > p {
         margin: 0;
@@ -201,6 +201,16 @@ button {
 
       > div {
         background-color: #03c03c;
+        margin-left: 20px;
+        margin-right: 60px;
+      }
+    }
+
+    &.their-trade-request {
+      text-align: left;
+
+      > div {
+        background-color: #800080;
         margin-left: 20px;
         margin-right: 60px;
       }
