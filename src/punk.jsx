@@ -6,6 +6,7 @@ var vapor = require('vapor');
 var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
 
+var messageDumper = require('./plugins/message-dumper');
 var steamGuard = require('./plugins/steamguard');
 var ready = require('./plugins/ready');
 var personaState = require('./plugins/personastate');
@@ -57,6 +58,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(vapor.plugins.fs);
   this.client.use(vapor.plugins.essentials);
 
+  this.client.use(messageDumper);
   this.client.use(steamGuard);
   this.client.use(ready);
   this.client.use(personaState);

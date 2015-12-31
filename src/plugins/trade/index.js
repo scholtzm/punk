@@ -10,6 +10,7 @@ exports.name = 'punk-trade';
 exports.plugin = function(API) {
   var Steam = API.getSteam();
   var log = API.getLogger();
+  var utils = API.getUtils();
   var steamFriends = API.getHandler('steamFriends');
   var steamTrading = API.getHandler('steamTrading');
 
@@ -17,7 +18,7 @@ exports.plugin = function(API) {
 
   callbacks[Steam.EMsg.EconTrading_InitiateTradeProposed] = function(body) {
     var response = Steam.Internal.CMsgTrading_InitiateTradeRequest.decode(body);
-    log.debug('Received trade request from %s.', response.other_steamid);
+    log.debug('Received trade request %s from %s.', response.trade_request_id, response.other_steamid);
 
     // response.other_name is always null so we use personaStates if possible
     var username = response.other_steamid;
@@ -41,9 +42,31 @@ exports.plugin = function(API) {
     ChatActions.newIncomingMessage(message);
   };
 
+  // Steam uses this for both incoming (ignored by receiver, cancelled by sender) and outgoing trade requests (accept, decline, etc.)
+  // We will NOT receive this message for trade requests which we explicitly accept/decline
+  // Sometimes when the sender cancels their trade request, we still don't receive this message, thanks Valve
   callbacks[Steam.EMsg.EconTrading_InitiateTradeResult] = function(body) {
     var response = Steam.Internal.CMsgTrading_InitiateTradeResponse.decode(body);
-    log.debug('Response to our trade request: %d.', response.response);
+    var description = utils.enumToString(response.response, Steam.EEconTradeResponse);
+
+    log.debug('Response to trade request %s: %d (%s).', response.trade_request_id, response.response, description);
+
+    var response = {
+      response: response.response,
+      responseEnum: description,
+      tradeRequestId: response.trade_request_id, // this is 0 sometimes -> last trade request from 'id'
+      id: response.other_steamid
+    };
+
+    ChatActions.incomingTradeRequestResponse(response);
+
+    // TODO make use of this info
+    // steamguard_required_days: 15,
+    // new_device_cooldown_days: 7,
+    // default_password_reset_probation_days: 5,
+    // password_reset_probation_days: null,
+    // default_email_change_probation_days: 5,
+    // email_change_probation_days: null
   };
 
   callbacks[Steam.EMsg.EconTrading_StartSession] = function(body) {
@@ -59,6 +82,7 @@ exports.plugin = function(API) {
     }
 
     var win = SteamCommunityWindow.create(cookies.cookies);
+    // must be http otherwise 'tradestatus' (and possibly other stuff) does not work
     win.loadURL('http://steamcommunity.com/trade/' + response.other_steamid);
     win.show();
   };

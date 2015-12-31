@@ -151,7 +151,6 @@ exports.plugin = function(API) {
 
     // relationship
     var relationship = steamFriends.friends[persona.friendid];
-    log.debug(relationship);
 
     var user = {
       id: persona.friendid,

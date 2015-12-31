@@ -30,6 +30,14 @@ function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
   }
 }
 
+function _invalidateTradeRequests(id) {
+  _chats[id].messages.forEach(function(message) {
+    if(message.meta && message.meta.tradeRequestId) {
+      message.meta.response = 'Invalid';
+    }
+  });
+}
+
 function openChat(user) {
   var id = user.id;
   var username = user.username;
@@ -117,8 +125,37 @@ function newOutgoingMessage(message) {
   });
 }
 
-function respondToTradeRequest(message, response) {
-  message.meta.response = response;
+function respondToTradeRequest(chat, message, response) {
+  _invalidateTradeRequests(chat.id);
+  
+  message.meta.response = response ? 'Accepted' : 'Declined';
+}
+
+function incomingTradeRequestResponse(response) {
+  _invalidateTradeRequests(response.id);
+
+  if(response.tradeRequestId === 0) {
+    var tradeRequests = _chats[response.id].messages.filter(function(message) {
+      if(message.meta && message.meta.tradeRequestId) {
+        return true;
+      }
+      return false;
+    });
+
+    // assume this concerns the very last trade request
+    var message = tradeRequests[tradeRequests.length - 1];
+
+    message.meta.response = response.responseEnum;
+  } else {
+    var message = _chats[response.id].messages.filter(function(message) {
+      if(message.meta && message.meta.tradeRequestId === response.tradeRequestId) {
+        return true;
+      }
+      return false;
+    })[0];
+
+    message.meta.response = response.responseEnum;
+  }
 }
 
 function remove(id) {
@@ -207,7 +244,12 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
       break;
 
     case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
-      respondToTradeRequest(action.message, action.response);
+      respondToTradeRequest(action.chat, action.message, action.response);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE:
+      incomingTradeRequestResponse(action.response);
       ChatStore.emitChange();
       break;
 

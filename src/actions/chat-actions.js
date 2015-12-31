@@ -51,10 +51,18 @@ var ChatActions = {
     });
   },
 
-  respondToTradeRequest: function(message, response) {
+  respondToTradeRequest: function(chat, message, response) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST,
+      chat: chat,
       message: message,
+      response: response
+    });
+  },
+
+  incomingTradeRequestResponse: function(response) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE,
       response: response
     });
   }

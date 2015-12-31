@@ -32,11 +32,11 @@ var Tab = React.createClass({
 
 var ChatMessage = React.createClass({
   _onAcceptTradeRequest: function() {
-    ChatActions.respondToTradeRequest(this.props.message, true);
+    ChatActions.respondToTradeRequest(this.props.chat, this.props.message, true);
   },
 
   _onDeclineTradeRequest: function() {
-    ChatActions.respondToTradeRequest(this.props.message, false);
+    ChatActions.respondToTradeRequest(this.props.chat, this.props.message, false);
   },
 
   render: function() {
@@ -48,9 +48,9 @@ var ChatMessage = React.createClass({
 
     var extra;
     if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST) {
-      if(message.meta.response !== undefined) {
+      if(message.meta.response) {
         extra = (
-          <p><i>You have {message.meta.response ? 'accepted' : 'declined'} the trade request.</i></p>
+          <p><i>Trade request state: {message.meta.response}</i></p>
         );
       } else {
         extra = (
