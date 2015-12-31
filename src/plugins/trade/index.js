@@ -1,6 +1,7 @@
 var Constants = require('../../constants');
 var Dispatcher = require('../../dispatcher');
 var ChatActions = require('../../actions/chat-actions.js');
+var ChatStore = require('../../stores/chat-store.js');
 var UserStore = require('../../stores/user-store.js');
 
 var SteamCommunityWindow = require('../../components/windows/steam-community.js');
@@ -51,10 +52,23 @@ exports.plugin = function(API) {
 
     log.debug('Response to trade request %s: %d (%s).', response.trade_request_id, response.response, description);
 
+    if(response.response === Steam.EEconTradeResponse.Cancel) {
+      // we need to decline the trade request for whatever reason
+      // this is also how official Steam client does things
+      if(response.trade_request_id) {
+        steamTrading.respondToTrade(response.trade_request_id, false);
+      } else {
+        var tradeRequestId = ChatStore.getLastIncomingTradeRequestId(response.other_steamid);
+        if(tradeRequestId) {
+          steamTrading.respondToTrade(tradeRequestId, false);
+        }
+      }
+    }
+
     var response = {
       response: response.response,
       responseEnum: description,
-      tradeRequestId: response.trade_request_id, // this is 0 sometimes -> last trade request from 'id'
+      tradeRequestId: response.trade_request_id, // this is 0 sometimes
       id: response.other_steamid
     };
 

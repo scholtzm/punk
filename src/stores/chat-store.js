@@ -32,7 +32,7 @@ function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
 
 function _invalidateTradeRequests(id) {
   _chats[id].messages.forEach(function(message) {
-    if(message.meta && message.meta.tradeRequestId) {
+    if(message.meta && message.meta.tradeRequestId && !message.meta.response) {
       message.meta.response = 'Invalid';
     }
   });
@@ -127,7 +127,7 @@ function newOutgoingMessage(message) {
 
 function respondToTradeRequest(chat, message, response) {
   _invalidateTradeRequests(chat.id);
-  
+
   message.meta.response = response ? 'Accepted' : 'Declined';
 }
 
@@ -206,6 +206,19 @@ var ChatStore = assign({}, EventEmitter.prototype, {
       if(_chats[id].visible) {
         return _chats[id];
       }
+    }
+  },
+
+  getLastIncomingTradeRequestId: function(id) {
+    var incomingTradeRequests = _chats[id].messages.filter(function(message) {
+      if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST && message.meta && message.meta.tradeRequestId) {
+        return true;
+      }
+      return false;
+    });
+
+    if(incomingTradeRequests.length > 0) {
+      return incomingTradeRequests[incomingTradeRequests.length - 1].meta.tradeRequestId;
     }
   }
 
