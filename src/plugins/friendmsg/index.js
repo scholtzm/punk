@@ -21,17 +21,10 @@ exports.plugin = function(API) {
   });
 
   API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, function() {
-    Dispatcher.unregister(token);
-  });
-
-  API.registerHandler({
     emitter: 'steamFriends',
     event: 'friendMsg'
   }, function(user, message, type) {
+    // TODO check if ghost messages are still a thing
     if(type === Steam.EChatEntryType.Typing) {
       // TODO implement 'is typing' recognition
     } else if(type === Steam.EChatEntryType.ChatMsg) {
@@ -52,5 +45,37 @@ exports.plugin = function(API) {
 
       ChatActions.newIncomingMessage(message);
     }
+  });
+
+  API.registerHandler({
+    emitter: 'steamFriends',
+    event: 'friendMsgEchoToSender'
+  }, function(user, message, type) {
+    if(type === Steam.EChatEntryType.ChatMsg) {
+      var username = user;
+
+      var persona = steamFriends.personaStates[user];
+      if(persona) {
+        username = persona.player_name;
+      }
+
+      var message = {
+        type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
+        target: user,
+        username: username,
+        date: new Date(),
+        text: message
+      };
+
+      ChatActions.echoMessage(message);
+    }
+  });
+
+  API.registerHandler({
+    emitter: 'plugin',
+    plugin: '*',
+    event: 'logout'
+  }, function() {
+    Dispatcher.unregister(token);
   });
 };

@@ -143,7 +143,10 @@ var MessageComposer = React.createClass({
         var targetChat = this._findVisibleChat();
 
         ChatActions.newOutgoingMessage({
+          type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
           target: targetChat.id,
+          username: targetChat.username,
+          date: new Date(),
           text: text
         });
       }

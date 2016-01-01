@@ -55,7 +55,7 @@ exports.plugin = function(API) {
     if(response.response === Steam.EEconTradeResponse.Cancel) {
       // we need to decline the trade request for whatever reason
       // this is also how official Steam client does things
-      if(response.trade_request_id) {
+      if(response.trade_request_id !== 0) {
         steamTrading.respondToTrade(response.trade_request_id, false);
       } else {
         var tradeRequestId = ChatStore.getLastIncomingTradeRequestId(response.other_steamid);

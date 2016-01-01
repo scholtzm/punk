@@ -17,6 +17,13 @@ var ChatActions = {
     });
   },
 
+  echoMessage: function(message) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_ECHO_MESSAGE,
+      message: message
+    });
+  },
+
   openChat: function(user) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_OPEN,

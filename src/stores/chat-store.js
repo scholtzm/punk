@@ -113,16 +113,29 @@ function newIncomingMessage(message) {
 }
 
 function newOutgoingMessage(message) {
-  // chat must exist at this point
+  // create entry if it does't exist
   if(!_chats[message.target]) {
-    return;
+    _chats[message.target] = {};
+    _chats[message.target].id = message.target;
+    _chats[message.target].messages = [];
+    _chats[message.target].visible = false;
   }
 
+  // set values
+  _chats[message.target].tabbed = true;
+  _chats[message.target].username = message.username;
   _chats[message.target].messages.push({
-    type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
-    date: new Date(),
-    text: message.text
+    type: message.type,
+    date: message.date,
+    text: message.text,
+    meta: message.meta
   });
+
+  // make visible if necessary
+  var currentVisibleChat = _findVisibleChat();
+  if(!currentVisibleChat) {
+    _chats[message.target].visible = true;
+  }
 }
 
 function respondToTradeRequest(chat, message, response) {
@@ -252,6 +265,7 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
       break;
 
     case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
+    case Constants.ChatActions.CHAT_ECHO_MESSAGE:
       newOutgoingMessage(action.message);
       ChatStore.emitChange();
       break;
