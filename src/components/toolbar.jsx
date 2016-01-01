@@ -45,16 +45,7 @@ var CurrentUser = React.createClass({
 
 var PendingTradeOffers = React.createClass({
   _onClick: function() {
-    var cookies = UserStore.getCookies();
-
-    // if we don't have cookies, abort
-    if(cookies.cookies.length === 0) {
-      return;
-    }
-
-    var win = SteamCommunityWindow.create(cookies.cookies);
-    win.loadURL('https://steamcommunity.com/my/tradeoffers/');
-    win.show();
+    SteamCommunityWindow.open('https://steamcommunity.com/my/tradeoffers/');
   },
 
   _onChange: function() {
@@ -149,29 +140,11 @@ var Toolbar = React.createClass({
   },
 
   _openStore: function() {
-    var cookies = UserStore.getCookies();
-
-    // if we don't have cookies, abort
-    if(cookies.cookies.length === 0) {
-      return;
-    }
-
-    var win = SteamCommunityWindow.create(cookies.cookies);
-    win.loadURL('https://store.steampowered.com');
-    win.show();
+    SteamCommunityWindow.open('https://store.steampowered.com');
   },
 
   _openProfile: function() {
-    var cookies = UserStore.getCookies();
-
-    // if we don't have cookies, abort
-    if(cookies.cookies.length === 0) {
-      return;
-    }
-
-    var win = SteamCommunityWindow.create(cookies.cookies);
-    win.loadURL('https://steamcommunity.com/my/');
-    win.show();
+    SteamCommunityWindow.open('https://steamcommunity.com/my/');
   },
 
   getInitialState: function() {

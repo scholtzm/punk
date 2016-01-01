@@ -87,18 +87,8 @@ exports.plugin = function(API) {
     var response = Steam.Internal.CMsgTrading_StartSession.decode(body);
     log.debug('Trading session with %s has started.', response.other_steamid);
 
-    var cookies = UserStore.getCookies();
-
-    // if we don't have cookies, abort
-    if(cookies.cookies.length === 0) {
-      log.debug('Cannot open trade window. Have not received cookies yet.');
-      return;
-    }
-
-    var win = SteamCommunityWindow.create(cookies.cookies);
     // must be http otherwise 'tradestatus' (and possibly other stuff) does not work
-    win.loadURL('http://steamcommunity.com/trade/' + response.other_steamid);
-    win.show();
+    SteamCommunityWindow.open('http://steamcommunity.com/trade/' + response.other_steamid);
   };
 
   var token = Dispatcher.register(function(action) {

@@ -1,13 +1,25 @@
 var BrowserWindow = require('electron').remote.BrowserWindow;
+var UserStore = require('../../stores/user-store.js');
 
 var win;
 
-function create(cookies) {
-  console.log('SteamCommunityWindow: creating');
+function open(url) {
+  var cookies = UserStore.getCookies();
+  cookies = cookies.cookies;
+
+  // if we don't have cookies, abort
+  if(cookies.length === 0) {
+    console.log('SteamCommunityWindow: cookies are missing');
+    return;
+  }
 
   if(win) {
+    console.log('SteamCommunityWindow: reusing existing instance');
+    win.loadURL(url);
     return win;
   }
+
+  console.log('SteamCommunityWindow: creating');
 
   win = new BrowserWindow({
     width: 1024,
@@ -25,13 +37,11 @@ function create(cookies) {
     win = null;
   });
 
-  win.webContents.on('new-window', function(event, url) {
+  win.webContents.on('new-window', function(event, newUrl) {
     event.preventDefault();
     console.log('SteamCommunityWindow: opening new url');
-    win.loadURL(url);
+    win.loadURL(newUrl);
   });
-
-  cookies = cookies || [];
 
   cookies.forEach(function(cookie) {
     var split = cookie.split('=');
@@ -53,11 +63,12 @@ function create(cookies) {
     }, function(){});
   });
 
-  return win;
+  win.loadURL(url);
+  win.show();
 }
 
 var SteamCommunityWindow = {
-  create: create
+  open: open
 };
 
 module.exports = SteamCommunityWindow;
