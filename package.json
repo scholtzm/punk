@@ -33,6 +33,7 @@
   },
   "scripts": {
     "build": "node_modules/.bin/gulp",
+    "clean": "node_modules/.bin/gulp clean",
     "lint": "node_modules/.bin/eslint --ignore-path .gitignore .",
     "start": "node_modules/.bin/electron .",
     "watch": "node_modules/.bin/gulp watch"
