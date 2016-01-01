@@ -19,7 +19,7 @@ function clear() {
   _sessionid = undefined;
 }
 
-function setCookies(cookies, sessionid) {
+function setWebSession(cookies, sessionid) {
   _cookies = cookies;
   _sessionid = sessionid;
 }
@@ -42,7 +42,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
     return _user;
   },
 
-  getCookies: function() {
+  getWebSession: function() {
     return {
       cookies: _cookies,
       sessionid: _sessionid
@@ -58,8 +58,8 @@ UserStore.dispatchToken = Dispatcher.register(function(action) {
       UserStore.emitChange();
       break;
 
-    case Constants.UserActions.USER_SET_COOKIES:
-      setCookies(action.cookies, action.sessionid);
+    case Constants.UserActions.USER_SET_WEBSESSION:
+      setWebSession(action.cookies, action.sessionid);
       // UserStore.emitChange();
       break;
 

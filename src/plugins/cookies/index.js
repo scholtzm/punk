@@ -10,6 +10,6 @@ exports.plugin = function(API) {
     event: 'cookies'
   }, function(cookies, sessionid) {
     log.debug('Sending cookies to internal storage.');
-    UserActions.setCookies(cookies, sessionid);
+    UserActions.setWebSession(cookies, sessionid);
   });
 };

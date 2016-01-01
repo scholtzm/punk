@@ -4,8 +4,7 @@ var UserStore = require('../../stores/user-store.js');
 var win;
 
 function open(url) {
-  var cookies = UserStore.getCookies();
-  cookies = cookies.cookies;
+  var cookies = UserStore.getWebSession().cookies;
 
   // if we don't have cookies, abort
   if(cookies.length === 0) {

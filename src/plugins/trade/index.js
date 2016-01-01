@@ -2,7 +2,6 @@ var Constants = require('../../constants');
 var Dispatcher = require('../../dispatcher');
 var ChatActions = require('../../actions/chat-actions.js');
 var ChatStore = require('../../stores/chat-store.js');
-var UserStore = require('../../stores/user-store.js');
 
 var SteamCommunityWindow = require('../../components/windows/steam-community.js');
 

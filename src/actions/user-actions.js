@@ -24,9 +24,9 @@ var UserActions = {
     });
   },
 
-  setCookies: function(cookies, sessionid) {
+  setWebSession: function(cookies, sessionid) {
     Dispatcher.dispatch({
-      type: Constants.UserActions.USER_SET_COOKIES,
+      type: Constants.UserActions.USER_SET_WEBSESSION,
       cookies: cookies,
       sessionid: sessionid
     });
