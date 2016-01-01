@@ -2,6 +2,8 @@ var BrowserWindow = require('electron').remote.BrowserWindow;
 var UserStore = require('../../stores/user-store.js');
 
 var win;
+var USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; Valve Steam Client/1451445940; ) ' +
+                 'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.49 Safari/537.36';
 
 function open(url) {
   var cookies = UserStore.getWebSession().cookies;
@@ -62,7 +64,7 @@ function open(url) {
     }, function(){});
   });
 
-  win.loadURL(url);
+  win.loadURL(url, { userAgent: USER_AGENT });
   win.show();
 }
 
