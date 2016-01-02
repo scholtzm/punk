@@ -97,6 +97,11 @@ exports.plugin = function(API) {
         log.info('Responded to trade request %s.', action.message.meta.tradeRequestId);
         break;
 
+      case Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST:
+        steamTrading.trade(action.friend.id);
+        log.info('Sent a trade request to ' + action.friend.username);
+        break;
+
       default:
         // ignore
     }

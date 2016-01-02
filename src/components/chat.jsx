@@ -126,7 +126,7 @@ var MessageComposer = React.createClass({
   _findVisibleChat: function() {
     for(var id in this.props.chats) {
       if(this.props.chats[id].visible) {
-        return { id: id, chat: this.props.chats[id] };
+        return this.props.chats[id];
       }
     }
   },

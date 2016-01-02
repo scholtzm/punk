@@ -38,6 +38,40 @@ function _invalidateTradeRequests(id) {
   });
 }
 
+function _getLastTradeRequest(id, ourRequestsOnly) {
+  ourRequestsOnly = ourRequestsOnly || false;
+
+  var tradeRequests = _chats[id].messages.filter(function(message) {
+    if(message.type === Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST) {
+      return true;
+    }
+
+    if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST && !ourRequestsOnly) {
+      return true;
+    }
+
+    return false;
+  });
+
+  if(tradeRequests.length > 0) {
+    return tradeRequests[tradeRequests.length - 1];
+  }
+}
+
+function _getTradeRequestById(userId, tradeRequestId) {
+  var messages = _chats[userId].messages.filter(function(message) {
+    if(message.meta && message.meta.tradeRequestId === tradeRequestId) {
+      return true;
+    }
+    return false;
+  });
+
+  // this should always match only a single trade request (message)
+  if(messages.length > 0) {
+    return messages[0];
+  }
+}
+
 function openChat(user) {
   var id = user.id;
   var username = user.username;
@@ -148,26 +182,23 @@ function incomingTradeRequestResponse(response) {
   _invalidateTradeRequests(response.id);
 
   if(response.tradeRequestId === 0) {
-    var tradeRequests = _chats[response.id].messages.filter(function(message) {
-      if(message.meta && message.meta.tradeRequestId) {
-        return true;
-      }
-      return false;
-    });
-
     // assume this concerns the very last trade request
-    var message = tradeRequests[tradeRequests.length - 1];
-
-    message.meta.response = response.responseEnum;
+    var message = _getLastTradeRequest(response.id);
+    if(message) {
+      message.meta.response = response.responseEnum;
+    }
   } else {
-    var message = _chats[response.id].messages.filter(function(message) {
-      if(message.meta && message.meta.tradeRequestId === response.tradeRequestId) {
-        return true;
-      }
-      return false;
-    })[0];
+    var message = _getTradeRequestById(response.id, response.tradeRequestId);
 
-    message.meta.response = response.responseEnum;
+    if(message) {
+      message.meta.response = response.responseEnum;
+    } else {
+      // trade request ID did not match, this is probably a trade request which we sent
+      var message = _getLastTradeRequest(response.id, true);
+      if(message) {
+        message.meta.response = response.responseEnum;
+      }
+    }
   }
 }
 
@@ -277,6 +308,22 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE:
       incomingTradeRequestResponse(action.response);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST:
+      var friend = action.friend;
+
+      var message = {
+        type: Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST,
+        target: friend.id,
+        username: friend.username,
+        date: new Date(),
+        text: 'You have sent a trade request to ' + friend.username + '.',
+        meta: {}
+      };
+
+      newOutgoingMessage(message);
       ChatStore.emitChange();
       break;
 

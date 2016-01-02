@@ -38,6 +38,13 @@ var FriendsActions = {
     });
   },
 
+  sendTradeRequest: function(friend) {
+    Dispatcher.dispatch({
+      type: Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST,
+      friend: friend
+    });
+  },
+
   purge: function(id) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_PURGE,

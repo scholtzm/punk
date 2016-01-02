@@ -140,11 +140,11 @@ var Toolbar = React.createClass({
     UIActions.addFriendOpenDialog();
   },
 
-  _openStore: function() {
+  _onOpenStore: function() {
     SteamCommunityWindow.open('https://store.steampowered.com');
   },
 
-  _openProfile: function() {
+  _onOpenProfile: function() {
     SteamCommunityWindow.open('https://steamcommunity.com/my/');
   },
 
@@ -182,10 +182,10 @@ var Toolbar = React.createClass({
         </div>
 
         <div className="btn-group">
-          <button className="btn btn-default" title="Store" onClick={this._openStore}>
+          <button className="btn btn-default" title="Store" onClick={this._onOpenStore}>
             <i className="fa fa-shopping-cart"></i>
           </button>
-          <button className="btn btn-default" title="Profile" onClick={this._openProfile}>
+          <button className="btn btn-default" title="Profile" onClick={this._onOpenProfile}>
             <i className="fa fa-user"></i>
           </button>
         </div>

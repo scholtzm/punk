@@ -31,6 +31,13 @@ module.exports = function(friend) {
     }));
   } else if(friend.relationshipEnum === 3) {
     menu.append(new MenuItem({
+      label: 'Send trade request',
+      click: function() {
+        FriendsActions.sendTradeRequest(friend);
+      }
+    }));
+
+    menu.append(new MenuItem({
       label: 'Remove from friends',
       click: function() {
         FriendsActions.remove(friend);
