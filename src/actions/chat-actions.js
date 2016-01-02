@@ -72,6 +72,13 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE,
       response: response
     });
+  },
+
+  cancelTradeRequest: function(id) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.CHAT_CANCEL_TRADE_REQUEST,
+      id: id
+    });
   }
 
 };

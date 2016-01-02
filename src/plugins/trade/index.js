@@ -59,6 +59,7 @@ exports.plugin = function(API) {
       } else {
         var tradeRequestId = ChatStore.getLastIncomingTradeRequestId(response.other_steamid);
         if(tradeRequestId) {
+          log.debug('Declined cancelled trade request.');
           steamTrading.respondToTrade(tradeRequestId, false);
         }
       }
@@ -94,12 +95,17 @@ exports.plugin = function(API) {
     switch(action.type) {
       case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
         steamTrading.respondToTrade(action.message.meta.tradeRequestId, action.response);
-        log.info('Responded to trade request %s.', action.message.meta.tradeRequestId);
+        log.debug('Responded to trade request %s.', action.message.meta.tradeRequestId);
         break;
 
       case Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST:
         steamTrading.trade(action.friend.id);
-        log.info('Sent a trade request to ' + action.friend.username);
+        log.debug('Sent a trade request to ' + action.friend.username);
+        break;
+
+      case Constants.ChatActions.CHAT_CANCEL_TRADE_REQUEST:
+        steamTrading.cancelTrade(action.id);
+        log.debug('Cancelled trade request sent to %s.', action.id);
         break;
 
       default:

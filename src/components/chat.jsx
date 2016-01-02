@@ -39,6 +39,10 @@ var ChatMessage = React.createClass({
     ChatActions.respondToTradeRequest(this.props.chat, this.props.message, false);
   },
 
+  _onCancelTradeRequest: function() {
+    ChatActions.cancelTradeRequest(this.props.chat.id);
+  },
+
   render: function() {
     var message = this.props.message;
 
@@ -58,6 +62,20 @@ var ChatMessage = React.createClass({
             <a href="#" onClick={this._onAcceptTradeRequest}>Accept</a>
             {' or '}
             <a href="#" onClick={this._onDeclineTradeRequest}>Decline</a>
+          </p>
+        );
+      }
+    }
+
+    if(message.type === Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST) {
+      if(message.meta.response) {
+        extra = (
+          <p><i>Trade request state: {message.meta.response}</i></p>
+        );
+      } else {
+        extra = (
+          <p>
+            <a href="#" onClick={this._onCancelTradeRequest}>Cancel</a>
           </p>
         );
       }

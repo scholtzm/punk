@@ -31,6 +31,10 @@ function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
 }
 
 function _invalidateTradeRequests(id) {
+  if(!_chats[id]) {
+    return;
+  }
+
   _chats[id].messages.forEach(function(message) {
     if(message.meta && message.meta.tradeRequestId && !message.meta.response) {
       message.meta.response = 'Invalid';
@@ -121,6 +125,8 @@ function clearChat(chat) {
 }
 
 function newIncomingMessage(message) {
+  _invalidateTradeRequests(message.sender);
+
   // create entry if it does't exist
   if(!_chats[message.sender]) {
     _chats[message.sender] = {};
