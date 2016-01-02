@@ -3,9 +3,17 @@ var Menu = remote.require('menu');
 var MenuItem = remote.require('menu-item');
 
 var FriendsActions = require('../../actions/friends-actions.js');
+var SteamCommunityWindow = require('../windows/steam-community.js');
 
 module.exports = function(friend) {
   var menu = new Menu();
+
+  menu.append(new MenuItem({
+    label: 'View Steam profile',
+    click: function() {
+      SteamCommunityWindow.open('https://steamcommunity.com/profiles/' + friend.id);
+    }
+  }));
 
   if(friend.relationshipEnum === 2) {
     menu.append(new MenuItem({

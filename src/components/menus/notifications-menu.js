@@ -23,6 +23,13 @@ module.exports = function(notifications) {
   }));
 
   menu.append(new MenuItem({
+    label: 'Invites: ' + notifications.invites,
+    click: function() {
+      SteamCommunityWindow.open('https://steamcommunity.com/my/home/invites');
+    }
+  }));
+
+  menu.append(new MenuItem({
     label: 'Messages: ' + notifications.messages,
     click: function() {
       ChatActions.requestOfflineMessages();

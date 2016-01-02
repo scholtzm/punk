@@ -2,7 +2,9 @@ var BrowserWindow = require('electron').remote.BrowserWindow;
 var UserStore = require('../../stores/user-store.js');
 
 var win;
-var USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; Valve Steam Client/1451445940; ) ' +
+
+// official Steam client uses this as their user agent
+var USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; Valve Steam Client/1451445940; ) ' + // eslint-disable-line no-unused-vars
                  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.49 Safari/537.36';
 
 function open(url) {
@@ -20,7 +22,7 @@ function open(url) {
     return win;
   }
 
-  console.log('SteamCommunityWindow: creating');
+  console.log('SteamCommunityWindow: creating new instance');
 
   win = new BrowserWindow({
     width: 1024,
@@ -64,7 +66,7 @@ function open(url) {
     }, function(){});
   });
 
-  win.loadURL(url, { userAgent: USER_AGENT });
+  win.loadURL(url);
   win.show();
 }
 

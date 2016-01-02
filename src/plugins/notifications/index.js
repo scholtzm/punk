@@ -40,6 +40,7 @@ exports.plugin = function(API) {
         tradeOffers: body.notifications[1],
         comments: body.notifications[4],
         items: body.notifications[5],
+        invites: body.notifications[6],
         messages: body.notifications[9]
       };
 
