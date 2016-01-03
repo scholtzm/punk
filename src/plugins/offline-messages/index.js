@@ -1,6 +1,7 @@
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 var ChatActions = require('../../actions/chat-actions.js');
+var Constants = require('../../constants');
 
 exports.name = 'punk-offline-messages';
 
@@ -55,6 +56,7 @@ exports.plugin = function(API) {
 
         // create message
         var message = {
+          type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
           sender: id,         // SteamID64 string
           username: username, // display name if possible
           date: new Date(message.timestamp * 1000),
