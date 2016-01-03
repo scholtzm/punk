@@ -7,6 +7,31 @@ var CHANGE_EVENT = 'change';
 
 var _chats = {};
 
+function _createChat(id) {
+  if(!_chats[id]) {
+    _chats[id] = {};
+    _chats[id].id = id;
+    _chats[id].messages = [];
+    _chats[id].visible = false;
+    _chats[id].unreadMessageCount = 0;
+  }
+}
+
+function _createChatMessage(id, message) {
+  _chats[id].tabbed = true;
+  _chats[id].username = message.username;
+  _chats[id].messages.push({
+    type: message.type,
+    date: message.date,
+    text: message.text,
+    meta: message.meta
+  });
+}
+
+function _resetUnreadMessageCount(id) {
+  _chats[id].unreadMessageCount = 0;
+}
+
 function _findVisibleChat() {
   for(var id in _chats) {
     if(_chats[id].visible) {
@@ -15,10 +40,14 @@ function _findVisibleChat() {
   }
 }
 
-function _toggleVisibleChat() {
+function _toggleVisibleChat(id) {
   var currentVisibleChat = _findVisibleChat();
   if(currentVisibleChat) {
     currentVisibleChat.visible = false;
+  }
+
+  if(id) {
+    _chats[id].visible = true;
   }
 }
 
@@ -76,29 +105,28 @@ function _getTradeRequestById(userId, tradeRequestId) {
   }
 }
 
+function _playSound() {
+  var beep = new Audio('sounds/beep.mp3');
+  beep.play();
+}
+
 function openChat(user) {
   var id = user.id;
   var username = user.username;
 
-  _toggleVisibleChat();
-
-  if(!_chats[id]) {
-    _chats[id] = {};
-    _chats[id].id = id;
-    _chats[id].messages = [];
-  }
+  _createChat(id);
+  _toggleVisibleChat(id);
+  _resetUnreadMessageCount(id);
 
   _chats[id].username = username;
-  _chats[id].visible = true;
   _chats[id].tabbed = true;
 }
 
 function switchChat(chat) {
   var id = chat.id;
 
-  _toggleVisibleChat();
-
-  _chats[id].visible = true;
+  _toggleVisibleChat(id);
+  _resetUnreadMessageCount(id);
 }
 
 function closeChat(chat) {
@@ -125,51 +153,27 @@ function clearChat(chat) {
 }
 
 function newIncomingMessage(message) {
-  _invalidateTradeRequests(message.sender);
+  _createChat(message.sender);
+  _createChatMessage(message.sender, message);
 
-  // create entry if it does't exist
-  if(!_chats[message.sender]) {
-    _chats[message.sender] = {};
-    _chats[message.sender].id = message.sender;
-    _chats[message.sender].messages = [];
-    _chats[message.sender].visible = false;
-  }
-
-  // set values
-  _chats[message.sender].tabbed = true;
-  _chats[message.sender].username = message.username;
-  _chats[message.sender].messages.push({
-    type: message.type,
-    date: message.date,
-    text: message.text,
-    meta: message.meta
-  });
+  var currentChat = _chats[message.sender];
 
   // make visible if necessary
   var currentVisibleChat = _findVisibleChat();
   if(!currentVisibleChat) {
-    _chats[message.sender].visible = true;
+    currentChat.visible = true;
+  }
+
+  // increase unread count if necessary
+  if(!currentChat.visible) {
+    currentChat.unreadMessageCount++;
+    _playSound();
   }
 }
 
 function newOutgoingMessage(message) {
-  // create entry if it does't exist
-  if(!_chats[message.target]) {
-    _chats[message.target] = {};
-    _chats[message.target].id = message.target;
-    _chats[message.target].messages = [];
-    _chats[message.target].visible = false;
-  }
-
-  // set values
-  _chats[message.target].tabbed = true;
-  _chats[message.target].username = message.username;
-  _chats[message.target].messages.push({
-    type: message.type,
-    date: message.date,
-    text: message.text,
-    meta: message.meta
-  });
+  _createChat(message.target);
+  _createChatMessage(message.target, message);
 
   // make visible if necessary
   var currentVisibleChat = _findVisibleChat();

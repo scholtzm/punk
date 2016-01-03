@@ -21,10 +21,13 @@ var Tab = React.createClass({
 
   render: function() {
     var className = this.props.chat.visible ? 'tab-item active': 'tab-item';
+    var title = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
+    title += this.props.chat.username;
+
     return (
       <div className={className} onClick={this._onClick}>
         <span className="icon icon-cancel icon-close-tab" onClick={this._onClose}></span>
-        {this.props.chat.username}
+        {title}
       </div>
     );
   }
