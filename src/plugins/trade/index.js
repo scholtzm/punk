@@ -20,6 +20,11 @@ exports.plugin = function(API) {
     var response = Steam.Internal.CMsgTrading_InitiateTradeRequest.decode(body);
     log.debug('Received trade request %s from %s.', response.trade_request_id, response.other_steamid);
 
+    // Steam sends us trade requests from anyone, even people who are not on our friends list
+    if(steamFriends.friends[response.other_steamid] !== Steam.EFriendRelationship.Friend) {
+      return;
+    }
+
     // response.other_name is always null so we use personaStates if possible
     var username = response.other_steamid;
     var persona = steamFriends.personaStates[response.other_steamid];

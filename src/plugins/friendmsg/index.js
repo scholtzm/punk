@@ -24,7 +24,11 @@ exports.plugin = function(API) {
     emitter: 'steamFriends',
     event: 'friendMsg'
   }, function(user, message, type) {
-    // TODO check if ghost messages are still a thing
+    // Steam sends us messages from anyone, even people who are not on our friends list
+    if(steamFriends.friends[user] !== Steam.EFriendRelationship.Friend) {
+      return;
+    }
+
     if(type === Steam.EChatEntryType.Typing) {
       // TODO implement 'is typing' recognition
     } else if(type === Steam.EChatEntryType.ChatMsg) {
