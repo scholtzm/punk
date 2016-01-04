@@ -2,16 +2,34 @@ var Dispatcher = require('../dispatcher');
 var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var notifier = require('../components/notifier');
 
 var CHANGE_EVENT = 'change';
 
 var _notifications = {};
 
+function _tradeOfferNotification(newCount) {
+  if(newCount > _notifications.tradeOffers) {
+    var options = {
+      title: 'New trade offer',
+      message: 'You have new pending trade offer!',
+      icon: false,
+      wait: true,
+      sticky: true,
+      url: 'https://steamcommunity.com/my/tradeoffers'
+    };
+
+    notifier.notify(options);
+  }
+}
+
 function updateAll(notifications) {
+  _tradeOfferNotification(notifications.tradeOffers);
   _notifications = notifications;
 }
 
 function updateTradeOfferCount(count) {
+  _tradeOfferNotification(count);
   _notifications.tradeOffers = count;
 }
 

@@ -22,8 +22,7 @@ exports.plugin = function(API) {
     };
 
     req.get(options, function(error, response, body) {
-      // if cookies are dead, error will be null and body will be null as well, wut
-      if(body === null) {
+      if(body === null || body === undefined) {
         clearInterval(interval);
         // Vapor will keep repeating until successful
         API.webLogOn();

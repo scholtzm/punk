@@ -2,11 +2,7 @@ var Dispatcher = require('../dispatcher');
 var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
-var notifier = require('node-notifier');
-
-notifier.on('click', function(notifierObject, options) {
-  console.log(notifierObject, options);
-});
+var notifier = require('../components/notifier');
 
 var CHANGE_EVENT = 'change';
 
@@ -180,7 +176,8 @@ function newIncomingMessage(message) {
       icon: false,
       wait: true,
       sticky: true,
-      type: message.type
+      type: message.type,
+      chat: currentChat
     };
 
     notifier.notify(options);
