@@ -2,6 +2,11 @@ var Dispatcher = require('../dispatcher');
 var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var notifier = require('node-notifier');
+
+notifier.on('click', function(notifierObject, options) {
+  console.log(notifierObject, options);
+});
 
 var CHANGE_EVENT = 'change';
 
@@ -169,9 +174,16 @@ function newIncomingMessage(message) {
     currentChat.unreadMessageCount++;
     _playSound();
 
-    new Notification(message.username + ' says:', {
-      body: message.text
-    });
+    var options = {
+      title: message.username + ' says:',
+      message: message.text,
+      icon: false,
+      wait: true,
+      sticky: true,
+      type: message.type
+    };
+
+    notifier.notify(options);
   }
 }
 
