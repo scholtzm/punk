@@ -121,6 +121,7 @@ button {
   left: 0;
   display: flex;
 
+  // EFriendRelationship.RequestRecipient
   .relationship-2 {
     border-right: 5px solid $brand-color-red;
     border-top-right-radius: 10px;
@@ -128,6 +129,7 @@ button {
     background-color: lighten(#f5f5f4, 10%);
   }
 
+  // EFriendRelationship.RequestInitiator
   .relationship-4 {
     border-right: 5px solid $brand-color-yellow;
     border-top-right-radius: 10px;
@@ -202,7 +204,7 @@ button {
       }
     }
 
-    &.their-message {
+    &.their-message, &.their-trade-request {
       text-align: left;
 
       > div {
@@ -213,16 +215,12 @@ button {
     }
 
     &.their-trade-request {
-      text-align: left;
-
       > div {
         background-color: #800080;
-        margin-left: 20px;
-        margin-right: 60px;
       }
     }
 
-    &.our-message {
+    &.our-message, &.our-trade-request {
       text-align: right;
 
       > div {
@@ -233,12 +231,8 @@ button {
     }
 
     &.our-trade-request {
-      text-align: right;
-
       > div {
         background-color: #800080;
-        margin-right: 20px;
-        margin-left: 60px;
       }
     }
   }

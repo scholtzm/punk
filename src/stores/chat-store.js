@@ -168,6 +168,10 @@ function newIncomingMessage(message) {
   if(!currentChat.visible) {
     currentChat.unreadMessageCount++;
     _playSound();
+
+    new Notification(message.username + ' says:', {
+      body: message.text
+    });
   }
 }
 
