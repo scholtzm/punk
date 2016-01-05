@@ -17,7 +17,6 @@ Punk is currently under development and as such isn't recommended for day-to-day
 After cloning the repo, run:
 
 ```sh
-bower install
 npm install
 npm run build
 npm run watch
