@@ -1,6 +1,7 @@
 var remote = require('remote');
 
 var React = require('react');
+var classNames = require('classnames');
 
 var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
@@ -35,8 +36,8 @@ var FriendsListItem = React.createClass({
   },
 
   render: function() {
-    var classNameItem = 'list-group-item ' + this._getRelationshipStateClassName();
-    var classNameAvatar = 'img-circle media-object pull-left ' + this._getOnlineStateClassName();
+    var classNameItem = classNames('list-group-item', this._getRelationshipStateClassName());
+    var classNameAvatar = classNames('img-circle', 'media-object', 'pull-left', this._getOnlineStateClassName());
 
     return (
       <li className={classNameItem} onDoubleClick={this._onDoubleClick} onContextMenu={this._onContextMenu}>

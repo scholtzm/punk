@@ -3,6 +3,7 @@ var shell = require('electron').shell;
 
 var React = require('react');
 var Linkify = require('react-linkify');
+var classNames = require('classnames');
 
 var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
@@ -23,7 +24,7 @@ var Tab = React.createClass({
   },
 
   render: function() {
-    var className = this.props.chat.visible ? 'tab-item active': 'tab-item';
+    var className = classNames('tab-item', {'active': this.props.chat.visible});
     var title = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
     title += this.props.chat.username;
 

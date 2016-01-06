@@ -1,6 +1,7 @@
 var remote = require('remote');
 
 var React = require('react');
+var classNames = require('classnames');
 
 var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
@@ -9,7 +10,7 @@ var NotificationStore = require('../stores/notification-store.js');
 var SteamCommunityWindow = require('./windows/steam-community.js');
 
 var CurrentUser = React.createClass({
-  _getClassName: function() {
+  _getStateClassName: function() {
     if(!this.props.user.stateEnum) {
       return 'offline';
     }
@@ -32,7 +33,7 @@ var CurrentUser = React.createClass({
   },
 
   render: function() {
-    var className = 'fa fa-circle ' + this._getClassName();
+    var className = classNames('fa', 'fa-circle', this._getStateClassName());
 
     return (
       <button className="btn btn-default btn-dropdown" onClick={this._onClick}>
