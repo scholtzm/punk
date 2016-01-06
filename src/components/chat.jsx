@@ -134,10 +134,18 @@ var ChatWindow = React.createClass({
     menu.popup(remote.getCurrentWindow());
   },
 
+  componentWillUpdate: function() {
+    var node = this.refs.content;
+    if(!node) {
+      return;
+    }
+
+    this._shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+  },
+
   componentDidUpdate: function() {
     var node = this.refs.content;
-
-    if(!node) {
+    if(!this._shouldScrollBottom || !node) {
       return;
     }
 

@@ -193,10 +193,13 @@ button {
       border-radius: 10px;
       padding: 10px;
 
+      * {
+        -webkit-user-select: text;
+      }
+
       > p {
         margin: 0;
         padding: 0;
-        -webkit-user-select: text;
       }
 
       > small {
