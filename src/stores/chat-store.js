@@ -2,6 +2,7 @@ var Dispatcher = require('../dispatcher');
 var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var shortid = require('shortid');
 var notifier = require('../components/notifier');
 
 var CHANGE_EVENT = 'change';
@@ -22,6 +23,7 @@ function _createChatMessage(id, message) {
   _chats[id].tabbed = true;
   _chats[id].username = message.username;
   _chats[id].messages.push({
+    id: shortid.generate(), // each message gets unique ID
     type: message.type,
     date: message.date,
     text: message.text,

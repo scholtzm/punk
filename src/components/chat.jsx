@@ -54,6 +54,7 @@ var ChatMessage = React.createClass({
     var message = this.props.message;
 
     var text = message.text.split('\n').map(function(line, indexLine) {
+      // using index as a key shouldn't be an issue here
       return (
         <p key={indexLine}>
           <Linkify properties={{
@@ -154,8 +155,8 @@ var ChatWindow = React.createClass({
       <div className="chat-window">
         <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
           <ul>
-            {chat.messages.map(function(message, index) {
-              return <ChatMessage key={index} chat={chat} message={message} />;
+            {chat.messages.map(function(message) {
+              return <ChatMessage key={message.id} chat={chat} message={message} />;
             })}
           </ul>
         </div>
@@ -243,6 +244,7 @@ var Chat = React.createClass({
 
     if(self._tabbedCount() > 0) {
       var tabs = Object.keys(self.state.chats).map(function(id) {
+        // 'id' is SteamID64
         if(self.state.chats[id].tabbed) {
           return <Tab key={id} chat={self.state.chats[id]} />;
         }
