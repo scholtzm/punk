@@ -1,8 +1,9 @@
-var fs = require('fs');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Loader = require('./loader.js');
+
+var Storage = require('../storage.js');
 
 var Login = React.createClass({
   _proceedLogin: function(event) {
@@ -13,12 +14,16 @@ var Login = React.createClass({
     var rememberMe = this.refs.rememberMe.checked;
 
     if(rememberMe) {
-      fs.writeFileSync(punk.userConfig, JSON.stringify({username: username, password: password}, null, 2));
+      Storage.set('user.json', JSON.stringify({username: username, password: password}, null, 2));
     }
 
     ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
-    punk.init(username, password);
+    punk.init({
+      username: username,
+      password: password,
+      rememberPassword: rememberMe
+    });
     punk.loadPlugins();
     punk.connect();
   },

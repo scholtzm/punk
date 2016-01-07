@@ -1,6 +1,6 @@
 var Storage = require('../../storage.js');
 
-exports.name = 'punk-fs';
+exports.name = 'punk-file';
 
 exports.plugin = function(API) {
   API.registerHandler({emitter: 'vapor', event: 'readFile'}, Storage.get);

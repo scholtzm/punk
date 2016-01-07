@@ -6,52 +6,54 @@ var vapor = require('vapor');
 var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
 
-var messageDumper = require('./plugins/message-dumper');
-var file = require('./plugins/fs');
-var steamGuard = require('./plugins/steamguard');
-var ready = require('./plugins/ready');
-var personaState = require('./plugins/personastate');
-var friendMsg = require('./plugins/friendmsg');
-var logout = require('./plugins/logout');
-var presence = require('./plugins/presence');
-var friends = require('./plugins/friends');
-var notifications = require('./plugins/notifications');
-var cookies = require('./plugins/cookies');
-var disconnected = require('./plugins/disconnected');
-var offlineMessages = require('./plugins/offline-messages');
-var trade = require('./plugins/trade');
+var Storage = require('./storage.js');
+var plugins = require('./plugins');
+
+var CURRENT_USER = 'user.json';
 
 function Punk() {
-  this.userConfig = './user.json';
-
   this.client = vapor();
 }
 
 Punk.prototype.start = function() {
-  var config;
-  try {
-    config = JSON.parse(fs.readFileSync(this.userConfig));
-  } catch (error) {
-    // doesn't exist or unparsable
-    console.log(error);
-  }
+  var self = this;
 
-  if (config && config.username && config.password) {
-    ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
+  Storage.get(CURRENT_USER, function(error, data) {
+    if(error) {
+      // assume the file does not exist
+      ReactDOM.render(<Login />, document.getElementById('app'));
+    } else {
+      try {
+        var user = JSON.parse(data);
+      } catch(e) {
+        // ignore the data
+        ReactDOM.render(<Login />, document.getElementById('app'));
+        return;
+      }
 
-    this.init(config.username, config.password);
-    this.loadPlugins();
-    this.connect();
-  } else {
-    ReactDOM.render(<Login />, document.getElementById('app'));
-  }
+      var loginKeyFileName = user.username + '-loginkey';
+      var options = {
+        username: user.username,
+        password: user.password
+      };
+
+      Storage.get(loginKeyFileName, function(error, loginKey) {
+        if(!error) {
+          options.loginKey = loginKey.toString();
+        }
+
+        ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
+
+        self.init(options);
+        self.loadPlugins();
+        self.connect();
+      });
+    }
+  });
 };
 
-Punk.prototype.init = function(username, password) {
-  this.client.init({
-    username: username,
-    password: password
-  });
+Punk.prototype.init = function(options) {
+  this.client.init(options);
 };
 
 Punk.prototype.loadPlugins = function() {
@@ -59,20 +61,21 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(vapor.plugins.consoleLogger);
   this.client.use(vapor.plugins.essentials);
 
-  this.client.use(messageDumper);
-  this.client.use(file);
-  this.client.use(steamGuard);
-  this.client.use(ready);
-  this.client.use(personaState);
-  this.client.use(friendMsg);
-  this.client.use(logout);
-  this.client.use(presence);
-  this.client.use(friends);
-  this.client.use(notifications);
-  this.client.use(cookies);
-  this.client.use(disconnected);
-  this.client.use(offlineMessages);
-  this.client.use(trade);
+  this.client.use(plugins.messageDumper);
+  this.client.use(plugins.file);
+  this.client.use(plugins.steamGuard);
+  this.client.use(plugins.ready);
+  this.client.use(plugins.personaState);
+  this.client.use(plugins.friendMsg);
+  this.client.use(plugins.loginKey);
+  this.client.use(plugins.logout);
+  this.client.use(plugins.presence);
+  this.client.use(plugins.friends);
+  this.client.use(plugins.notifications);
+  this.client.use(plugins.cookies);
+  this.client.use(plugins.disconnected);
+  this.client.use(plugins.offlineMessages);
+  this.client.use(plugins.trade);
 };
 
 Punk.prototype.connect = function() {
