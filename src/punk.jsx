@@ -7,6 +7,7 @@ var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
 
 var messageDumper = require('./plugins/message-dumper');
+var file = require('./plugins/fs');
 var steamGuard = require('./plugins/steamguard');
 var ready = require('./plugins/ready');
 var personaState = require('./plugins/personastate');
@@ -32,6 +33,7 @@ Punk.prototype.start = function() {
     config = JSON.parse(fs.readFileSync(this.userConfig));
   } catch (error) {
     // doesn't exist or unparsable
+    console.log(error);
   }
 
   if (config && config.username && config.password) {
@@ -55,10 +57,10 @@ Punk.prototype.init = function(username, password) {
 Punk.prototype.loadPlugins = function() {
   // load these 3 plugins ASAP (order matters)
   this.client.use(vapor.plugins.consoleLogger);
-  this.client.use(vapor.plugins.fs);
   this.client.use(vapor.plugins.essentials);
 
   this.client.use(messageDumper);
+  this.client.use(file);
   this.client.use(steamGuard);
   this.client.use(ready);
   this.client.use(personaState);

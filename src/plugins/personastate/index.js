@@ -24,9 +24,12 @@ exports.plugin = function(API) {
   var Steam = API.getSteam();
   var client = API.getClient();
   var log = API.getLogger();
+  var username = API.getConfig().username;
 
   var steamFriends = API.getHandler('steamFriends');
   var pendingWrite = false;
+
+  CACHE_FILE_NAME = username + '-' + CACHE_FILE_NAME;
 
   function persistFriendsList() {
     if(pendingWrite) {
