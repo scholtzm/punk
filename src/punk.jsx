@@ -1,4 +1,3 @@
-var fs = require('fs');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var vapor = require('vapor');
@@ -44,25 +43,46 @@ Punk.prototype.start = function() {
 
         ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
-        self.init(options);
-        self.loadPlugins();
-        self.connect();
+        self.init(options, function() {
+          self.loadPlugins();
+          self.connect();
+        });
       });
     }
   });
 };
 
-Punk.prototype.init = function(options) {
-  this.client.init(options);
+Punk.prototype.init = function(options, next) {
+  var self = this;
+
+  Storage.get('servers.json', function(error, data) {
+    if(error) {
+      console.log('Failed to load server list from cache. Falling back to built-in cache...');
+    } else {
+      var servers;
+      try {
+        servers = JSON.parse(data);
+      } catch(e) {
+        // ignore
+      }
+
+      if(servers) {
+        self.client.servers = servers;
+      }
+
+      self.client.init(options);
+      next();
+    }
+  });
 };
 
 Punk.prototype.loadPlugins = function() {
   // load these 3 plugins ASAP (order matters)
   this.client.use(vapor.plugins.consoleLogger);
   this.client.use(vapor.plugins.essentials);
+  this.client.use(plugins.file);
 
   this.client.use(plugins.messageDumper);
-  this.client.use(plugins.file);
   this.client.use(plugins.steamGuard);
   this.client.use(plugins.ready);
   this.client.use(plugins.personaState);

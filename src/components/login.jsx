@@ -23,9 +23,10 @@ var Login = React.createClass({
       username: username,
       password: password,
       rememberPassword: rememberMe
+    }, function() {
+      punk.loadPlugins();
+      punk.connect();
     });
-    punk.loadPlugins();
-    punk.connect();
   },
 
   render: function() {
