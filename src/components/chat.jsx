@@ -130,42 +130,46 @@ var ChatWindow = React.createClass({
 
   _onContextMenu: function(event) {
     event.preventDefault();
-    var menu = require('./menus/chat-menu.js')(this._findVisibleChat());
+
+    var chat = this._findVisibleChat();
+
+    if(!chat) {
+      return;
+    }
+
+    var menu = require('./menus/chat-menu.js')(chat);
     menu.popup(remote.getCurrentWindow());
   },
 
   componentWillUpdate: function() {
     var node = this.refs.content;
-    if(!node) {
-      return;
-    }
-
     this._shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
   },
 
   componentDidUpdate: function() {
-    var node = this.refs.content;
-    if(!this._shouldScrollBottom || !node) {
+    if(!this._shouldScrollBottom) {
       return;
     }
 
+    var node = this.refs.content;
     node.scrollTop = node.scrollHeight;
   },
 
   render: function() {
     var chat = this._findVisibleChat();
+    var messages;
 
-    if(!chat) {
-      return <div/>;
+    if(chat) {
+      messages = chat.messages.map(function(message) {
+        return <ChatMessage key={message.id} chat={chat} message={message} />;
+      });
     }
 
     return (
       <div className="chat-window">
         <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
           <ul>
-            {chat.messages.map(function(message) {
-              return <ChatMessage key={message.id} chat={chat} message={message} />;
-            })}
+            {messages}
           </ul>
         </div>
       </div>
