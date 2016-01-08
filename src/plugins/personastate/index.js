@@ -64,7 +64,8 @@ exports.plugin = function(API) {
           // assume everyone is offline
           friends.forEach(function(friend) {
             friend.state = 'Offline';
-            friend.stateEnum = 0;
+            friend.stateEnum = Steam.EPersonaState.Offline;
+            friend.inGame = false;
           });
           FriendsActions.init(friends);
         } catch(e) {
