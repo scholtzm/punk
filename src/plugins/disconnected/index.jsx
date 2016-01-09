@@ -27,11 +27,11 @@ exports.plugin = function(API) {
     emitter: 'vapor',
     event: 'disconnected'
   }, function(error) {
-    log.warn('Got disconnected. EResult: %d', error.eresult);
-    if(error.eresult === Steam.EResult.InvalidPassword && !logOnDetailsAreCorrect) {
-      var enumString = utils.enumToString(error.eresult, Steam.EResult);
-      var message = 'Login error: ' + enumString;
+    var enumString = utils.enumToString(error.eresult, Steam.EResult);
+    log.warn('Got disconnected. EResult: %d (%s)', error.eresult, enumString);
 
+    if(error.eresult === Steam.EResult.InvalidPassword && !logOnDetailsAreCorrect) {
+      var message = 'Login error: ' + enumString;
       UIActions.logout(message);
     } else {
       setTimeout(function() { API.connect(); }, 3000);

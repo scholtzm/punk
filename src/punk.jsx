@@ -75,6 +75,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(plugins.file);
 
   this.client.use(plugins.messageDumper);
+  this.client.use(plugins.chatLogger);
   this.client.use(plugins.steamGuard);
   this.client.use(plugins.ready);
   this.client.use(plugins.personaState);

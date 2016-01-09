@@ -1,6 +1,7 @@
 module.exports = {
   messageDumper: require('./message-dumper'),
   logger: require('./logger'),
+  chatLogger: require('./chat-logger'),
   file: require('./file'),
   steamGuard: require('./steamguard'),
   ready: require('./ready'),
