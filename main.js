@@ -4,6 +4,7 @@ var BrowserWindow = require('browser-window');
 require('crash-reporter').start();
 
 var mainWindow = null;
+var title = app.getName() + ' [v' + app.getVersion() + ']';
 
 app.on('window-all-closed', function() {
   if(process.platform !== 'darwin') {
@@ -24,5 +25,9 @@ app.on('ready', function() {
 
   mainWindow.on('closed', function() {
     mainWindow = null;
+  });
+
+  mainWindow.webContents.on('did-finish-load', function() {
+    mainWindow.setTitle(title);
   });
 });

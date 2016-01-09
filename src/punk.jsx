@@ -8,8 +8,6 @@ var Login = require('./components/login.js');
 var Storage = require('./storage.js');
 var plugins = require('./plugins');
 
-var CURRENT_USER = 'user.json';
-
 function Punk() {
   this.client = vapor();
 }
@@ -17,7 +15,7 @@ function Punk() {
 Punk.prototype.start = function() {
   var self = this;
 
-  Storage.get(CURRENT_USER, function(error, data) {
+  Storage.get('user.json', function(error, data) {
     if(error) {
       // assume the file does not exist
       ReactDOM.render(<Login />, document.getElementById('app'));
@@ -30,23 +28,14 @@ Punk.prototype.start = function() {
         return;
       }
 
-      var loginKeyFileName = user.username + '-loginkey';
-      var options = {
-        username: user.username,
-        password: user.password
-      };
+      // explicitly set this option
+      user.rememberPassword = true;
 
-      Storage.get(loginKeyFileName, function(error, loginKey) {
-        if(!error) {
-          options.loginKey = loginKey.toString();
-        }
+      ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
-        ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
-
-        self.init(options, function() {
-          self.loadPlugins();
-          self.connect();
-        });
+      self.init(user, function() {
+        self.loadPlugins();
+        self.connect();
       });
     }
   });
@@ -71,7 +60,10 @@ Punk.prototype.init = function(options, next) {
       }
 
       self.client.init(options);
-      next();
+
+      if(typeof next === 'function') {
+        next();
+      }
     }
   });
 };

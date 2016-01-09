@@ -3,8 +3,6 @@ var ReactDOM = require('react-dom');
 
 var Loader = require('./loader.js');
 
-var Storage = require('../storage.js');
-
 var Login = React.createClass({
   _proceedLogin: function(event) {
     event.preventDefault();
@@ -12,10 +10,6 @@ var Login = React.createClass({
     var username = this.refs.username.value;
     var password = this.refs.password.value;
     var rememberMe = this.refs.rememberMe.checked;
-
-    if(rememberMe) {
-      Storage.set('user.json', JSON.stringify({username: username, password: password}, null, 2));
-    }
 
     ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
