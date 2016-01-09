@@ -7,6 +7,10 @@ var path = require('path');
 var _dir = 'data';
 var _storage = {};
 
+function getPath(key) {
+  return path.join('.', _dir, key);
+}
+
 if (!fs.existsSync(path.join('.', _dir))){
   fs.mkdirSync(path.join('.', _dir));
 }
@@ -15,10 +19,7 @@ var Storage = {};
 
 Storage.set = function(key, value, callback) {
   _storage[key] = value;
-
-  var filePath = path.join('.', _dir, key);
-
-  fs.writeFile(filePath, value, callback);
+  fs.writeFile(getPath(key), value, callback);
 };
 
 Storage.get = function(key, callback) {
@@ -27,9 +28,21 @@ Storage.get = function(key, callback) {
     return;
   }
 
-  var filePath = path.join('.', _dir, key);
+  fs.readFile(getPath(key), callback);
+};
 
-  fs.readFile(filePath, callback);
+Storage.append = function(key, value, callback) {
+  if(!(key in _storage)) {
+    _storage[key] = [];
+  }
+
+  _storage[key].push(value);
+  fs.appendFile(getPath(key), value, callback);
+};
+
+Storage.delete = function(key, callback) {
+  delete _storage[key];
+  fs.unlink(getPath(key), callback);
 };
 
 module.exports = Storage;
