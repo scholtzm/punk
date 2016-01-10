@@ -1,3 +1,5 @@
+var app = require('remote').app;
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var vapor = require('vapor');
@@ -6,6 +8,7 @@ var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
 
 var Storage = require('./storage.js');
+var Logger = require('./logger.js');
 var plugins = require('./plugins');
 
 function Punk() {
@@ -14,6 +17,8 @@ function Punk() {
 
 Punk.prototype.start = function() {
   var self = this;
+
+  Logger.info('Starting %s v%s', app.getName(), app.getVersion());
 
   Storage.get('user.json', function(error, data) {
     if(error) {
@@ -46,7 +51,7 @@ Punk.prototype.init = function(options, next) {
 
   Storage.get('servers.json', function(error, data) {
     if(error) {
-      console.log('Failed to load server list from cache. Falling back to built-in cache...');
+      Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
     } else {
       var servers;
       try {

@@ -1,5 +1,6 @@
 var BrowserWindow = require('electron').remote.BrowserWindow;
 var UserStore = require('../../stores/user-store.js');
+var Logger = require('../../logger.js');
 
 var win;
 
@@ -12,17 +13,17 @@ function open(url) {
 
   // if we don't have cookies, abort
   if(cookies.length === 0) {
-    console.log('SteamCommunityWindow: cookies are missing');
+    Logger.debug('SteamCommunityWindow: cookies are missing');
     return;
   }
 
   if(win) {
-    console.log('SteamCommunityWindow: reusing existing instance');
+    Logger.debug('SteamCommunityWindow: reusing existing instance');
     win.loadURL(url);
     return win;
   }
 
-  console.log('SteamCommunityWindow: creating new instance');
+  Logger.debug('SteamCommunityWindow: creating new instance');
 
   win = new BrowserWindow({
     width: 1024,
@@ -44,7 +45,7 @@ function open(url) {
 
   win.webContents.on('new-window', function(event, newUrl) {
     event.preventDefault();
-    console.log('SteamCommunityWindow: opening new url');
+    Logger.debug('SteamCommunityWindow: opening new url');
     win.loadURL(newUrl);
   });
 

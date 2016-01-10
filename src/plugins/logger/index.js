@@ -1,3 +1,5 @@
+var Logger = require('../../logger.js');
+
 exports.name = 'punk-logger';
 
 exports.plugin = function(API) {
@@ -5,27 +7,27 @@ exports.plugin = function(API) {
     emitter: '*',
     event: 'message:debug'
   }, function(message) {
-    console.debug(message);
+    Logger.debug(message);
   });
 
   API.registerHandler({
     emitter: '*',
     event: 'message:info'
   }, function(message) {
-    console.info(message);
+    Logger.info(message);
   });
 
   API.registerHandler({
     emitter: '*',
     event: 'message:warn'
   }, function(message) {
-    console.warn(message);
+    Logger.warn(message);
   });
 
   API.registerHandler({
     emitter: '*',
     event: 'message:error'
   }, function(message) {
-    console.error(message);
+    Logger.error(message);
   });
 };
