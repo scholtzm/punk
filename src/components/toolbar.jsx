@@ -168,11 +168,11 @@ var Toolbar = React.createClass({
       <div className="toolbar-actions">
         <CurrentUser user={this.state.user}/>
 
-        <div className="btn-group">
+        <div className="btn-group" title="Add a friend">
           <button className="btn btn-default" onClick={this._onAddFriend}>
             <i className="fa fa-user-plus"></i>
           </button>
-          <button className="btn btn-default">
+          <button className="btn btn-default" title="Not implemented yet.">
             <i className="fa fa-cog"></i>
           </button>
         </div>
@@ -191,7 +191,7 @@ var Toolbar = React.createClass({
           </button>
         </div>
 
-        <button className="btn btn-default pull-right" onClick={this._onLogout}>
+        <button className="btn btn-default pull-right" title="Logout" onClick={this._onLogout}>
           <i className="fa fa-sign-out"></i>
         </button>
       </div>

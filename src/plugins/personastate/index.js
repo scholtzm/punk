@@ -43,7 +43,7 @@ exports.plugin = function(API) {
       API.emitEvent('writeFile', CACHE_FILE_NAME, JSON.stringify(friends, null, 2), function(error) {
         if(error) {
           log.error('Failed to persist friends list to cache.');
-          log.error(error);
+          log.debug(error);
         }
 
         pendingWrite = false;
@@ -57,7 +57,7 @@ exports.plugin = function(API) {
     API.emitEvent('readFile', CACHE_FILE_NAME, function(error, data) {
       if(error) {
         log.error('Error while retrieving friends list cache.');
-        log.error(error);
+        log.debug(error);
       } else {
         try {
           var friends = JSON.parse(data);
@@ -70,7 +70,7 @@ exports.plugin = function(API) {
           FriendsActions.init(friends);
         } catch(e) {
           log.error('Failed to parse friends list cache data.');
-          log.error(e);
+          log.debug(e);
         }
       }
     });

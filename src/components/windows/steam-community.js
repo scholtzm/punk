@@ -31,7 +31,9 @@ function open(url) {
     center: true,
     title: 'Loading...',
     webPreferences: {
-      nodeIntegration: false
+      nodeIntegration: false,
+      allowDisplayingInsecureContent: true,
+      allowRunningInsecureContent: true
     },
     autoHideMenuBar: true
   });
