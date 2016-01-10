@@ -1,28 +1,28 @@
 exports.name = 'punk-logger';
 
-exports.plugin = function(VaporAPI) {
-  VaporAPI.registerHandler({
+exports.plugin = function(API) {
+  API.registerHandler({
     emitter: '*',
     event: 'message:debug'
   }, function(message) {
     console.debug(message);
   });
 
-  VaporAPI.registerHandler({
+  API.registerHandler({
     emitter: '*',
     event: 'message:info'
   }, function(message) {
     console.info(message);
   });
 
-  VaporAPI.registerHandler({
+  API.registerHandler({
     emitter: '*',
     event: 'message:warn'
   }, function(message) {
     console.warn(message);
   });
 
-  VaporAPI.registerHandler({
+  API.registerHandler({
     emitter: '*',
     event: 'message:error'
   }, function(message) {

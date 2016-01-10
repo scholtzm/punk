@@ -58,12 +58,12 @@ Punk.prototype.init = function(options, next) {
       if(servers) {
         self.client.servers = servers;
       }
+    }
 
-      self.client.init(options);
+    self.client.init(options);
 
-      if(typeof next === 'function') {
-        next();
-      }
+    if(typeof next === 'function') {
+      next();
     }
   });
 };
