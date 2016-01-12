@@ -5,6 +5,7 @@ var classNames = require('classnames');
 
 var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
+var Constants = require('../constants');
 
 var FriendsListItem = React.createClass({
   _getOnlineStateClassName: function() {
@@ -26,7 +27,9 @@ var FriendsListItem = React.createClass({
 
   _onDoubleClick: function(event) {
     event.preventDefault();
-    ChatActions.openChat(this.props.user);
+    if(this.props.user.relationshipEnum === Constants.SteamEnums.EFriendRelationship.Friend) {
+      ChatActions.openChat(this.props.user);
+    }
   },
 
   _onContextMenu: function(event) {

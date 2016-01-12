@@ -1,7 +1,8 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
 
-require('crash-reporter').start();
+// get this working later? requires submit URL
+// require('crash-reporter').start();
 
 var mainWindow = null;
 var title = app.getName() + ' [v' + app.getVersion() + ']';
