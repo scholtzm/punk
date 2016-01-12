@@ -133,8 +133,6 @@ exports.plugin = function(API) {
     emitter: 'steamFriends',
     event: 'personaState'
   }, function(persona) {
-    log.debug('personaState: %s', persona.player_name);
-
     // get old data if we have them
     var currentFriend = FriendsStore.getById(persona.friendid) || EMPTY_FRIEND;
 
@@ -142,7 +140,10 @@ exports.plugin = function(API) {
     var requestNewData = persona.avatar_hash === undefined;
 
     // fix persona since not all fields are sent by Steam
-    persona.persona_state = persona.persona_state || currentFriend.persona.persona_state || Steam.EPersonaState.Offline;
+    persona.persona_state = persona.persona_state === undefined
+      ? currentFriend.persona.persona_state || Steam.EPersonaState.Offline
+      : persona.persona_state;
+
     persona.game_name = persona.game_name || currentFriend.persona.game_name || '';
     persona.avatar_hash = persona.avatar_hash || currentFriend.persona.avatar_hash || EMPTY_AVATAR_HASH;
 
