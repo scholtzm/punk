@@ -6,7 +6,7 @@ var Storage = require('../../storage.js');
 
 /**
  * Chat Logger
- * In the future, user should be able to disable plugins like this one.
+ * In the future, users should be able to disable plugins like this one.
  */
 exports.name = 'punk-chat-logger';
 
