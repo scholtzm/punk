@@ -49,6 +49,10 @@ Punk.prototype.start = function() {
 Punk.prototype.init = function(options, next) {
   var self = this;
 
+  // set logonID to something unique
+  // official client obfuscates private IP address but we probably don't want this
+  options.logonID = Math.floor(new Date() / 1000);
+
   Storage.get('servers.json', function(error, data) {
     if(error) {
       Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
@@ -79,7 +83,6 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(vapor.plugins.essentials);
   this.client.use(plugins.file);
 
-  this.client.use(plugins.messageDumper);
   this.client.use(plugins.chatLogger);
   this.client.use(plugins.steamGuard);
   this.client.use(plugins.ready);
