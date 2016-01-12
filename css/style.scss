@@ -190,8 +190,9 @@ button {
     > div {
       display: inline-block;
       color: #fff;
-      border-radius: 10px;
-      padding: 10px;
+      border-radius: 5px;
+      padding: 5px;
+      word-break: break-word;
 
       * {
         -webkit-user-select: text;
