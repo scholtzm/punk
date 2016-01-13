@@ -4,6 +4,7 @@ var shell = require('electron').shell;
 var React = require('react');
 var Linkify = require('react-linkify');
 var classNames = require('classnames');
+var moment = require('moment');
 
 var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
@@ -110,7 +111,7 @@ var ChatMessage = React.createClass({
       <li
         className={message.type}>
         <div>
-          <small>{message.date.toTimeString()}</small>
+          <small>{moment(message.date).format('HH:mm:ss')}</small>
           {text}
           {extra}
         </div>

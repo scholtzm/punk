@@ -1,4 +1,6 @@
 var util = require('util');
+var moment = require('moment');
+
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 var Constants = require('../../constants');
@@ -30,7 +32,7 @@ exports.plugin = function(API) {
 
     var timestamp = new Date();
 
-    return util.format('%s [%s]: %s\n', username, timestamp.toTimeString(), message);
+    return util.format('[%s] %s: %s\n', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), username, message);
   }
 
   function appendCallback(error) {
