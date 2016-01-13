@@ -1,7 +1,11 @@
 var request = require('request');
-
 var NotificationActions = require('../../actions/notification-actions.js');
 
+/**
+ * Notifications
+ * Handles Steam's notifications.
+ * TODO switch completely to Steam messages?
+ */
 exports.name = 'punk-notifications';
 
 exports.plugin = function(API) {

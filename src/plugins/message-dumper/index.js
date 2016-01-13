@@ -1,3 +1,7 @@
+/**
+ * Message Dumper
+ * Helps with debugging by logging every single Steam message.
+ */
 exports.name = 'punk-message-dumper';
 
 exports.plugin = function(API) {

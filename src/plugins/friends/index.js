@@ -3,6 +3,11 @@ var Constants = require('../../constants');
 
 var FriendsActions = require('../../actions/friends-actions.js');
 
+/**
+ * Friends
+ * Adds support for friends list actions such as adding, removing
+ * or blocking.
+ */
 exports.name = 'punk-friends';
 
 exports.plugin = function(API) {

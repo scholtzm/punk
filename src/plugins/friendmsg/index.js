@@ -3,6 +3,10 @@ var Constants = require('../../constants');
 var ChatActions = require('../../actions/chat-actions.js');
 var Constants = require('../../constants');
 
+/**
+ * Friend Message
+ * Takes care of sending and receiving chat messages.
+ */
 exports.name = 'punk-friendmsg';
 
 exports.plugin = function(API) {

@@ -3,6 +3,10 @@ var Constants = require('../../constants');
 var ChatActions = require('../../actions/chat-actions.js');
 var Constants = require('../../constants');
 
+/**
+ * Offline Messages
+ * Requests and intercepts Steam message which contains chat history.
+ */
 exports.name = 'punk-offline-messages';
 
 exports.plugin = function(API) {

@@ -6,6 +6,10 @@ var Login = require('../../components/login.js');
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 
+/**
+ * Logout
+ * Handles logout action invoked from the UI.
+ */
 exports.name = 'punk-logout';
 
 exports.plugin = function(API) {

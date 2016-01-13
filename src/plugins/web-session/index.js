@@ -2,7 +2,7 @@ var UserActions = require('../../actions/user-actions.js');
 
 /**
  * Web Session
- * Moves cookies to UserStore any time they change.
+ * Handles web session changes and sends them to internal store.
  */
 exports.name = 'punk-web-session';
 

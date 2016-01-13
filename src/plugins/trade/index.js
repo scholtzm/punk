@@ -5,6 +5,10 @@ var ChatStore = require('../../stores/chat-store.js');
 
 var SteamCommunityWindow = require('../../components/windows/steam-community.js');
 
+/**
+ * Trade
+ * Handles sending, receiving, accepting, declining and cancelling trade requests.
+ */
 exports.name = 'punk-trade';
 
 exports.plugin = function(API) {

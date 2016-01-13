@@ -12,7 +12,7 @@ module.exports = {
   presence: require('./presence'),
   friends: require('./friends'),
   notifications: require('./notifications'),
-  cookies: require('./cookies'),
+  webSession: require('./web-session'),
   disconnected: require('./disconnected'),
   offlineMessages: require('./offline-messages'),
   trade: require('./trade')

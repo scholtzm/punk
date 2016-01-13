@@ -1,3 +1,7 @@
+/**
+ * Login Key
+ * Saves user's credentials after we successfully log in.
+ */
 exports.name = 'punk-loginkey';
 
 exports.plugin = function(API) {

@@ -1,5 +1,9 @@
 var Logger = require('../../logger.js');
 
+/**
+ * Logger
+ * Proxies all 'message:*' events to our internal Logger module.
+ */
 exports.name = 'punk-logger';
 
 exports.plugin = function(API) {

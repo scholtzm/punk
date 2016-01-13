@@ -1,5 +1,9 @@
 var Storage = require('../../storage.js');
 
+/**
+ * File
+ * Proxies all file events from Vapor to our Storage module.
+ */
 exports.name = 'punk-file';
 
 exports.plugin = function(API) {

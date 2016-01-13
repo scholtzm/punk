@@ -1,6 +1,10 @@
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 
+/**
+ * Presence
+ * Handles online state and display name changes.
+ */
 exports.name = 'punk-presence';
 
 exports.plugin = function(API) {

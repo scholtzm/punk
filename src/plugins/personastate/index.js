@@ -3,6 +3,13 @@ var UserActions = require('../../actions/user-actions.js');
 
 var FriendsStore = require('../../stores/friends-store.js');
 
+/**
+ * Persona State
+ * Handles persona state changes - users changing online state, starting a game,
+ * changing name etc.
+ * Steam does not always send us everything so we also have to selectively request
+ * user information from Steam.
+ */
 exports.name = 'punk-personastate';
 
 exports.plugin = function(API) {

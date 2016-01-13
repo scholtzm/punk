@@ -8,6 +8,7 @@ var Storage = require('../../storage.js');
 
 /**
  * Chat Logger
+ * Automatically logs all chat messages to file.
  * In the future, users should be able to disable plugins like this one.
  */
 exports.name = 'punk-chat-logger';

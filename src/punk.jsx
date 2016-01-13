@@ -93,7 +93,7 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(plugins.presence);
   this.client.use(plugins.friends);
   this.client.use(plugins.notifications);
-  this.client.use(plugins.cookies);
+  this.client.use(plugins.webSession);
   this.client.use(plugins.disconnected);
   this.client.use(plugins.offlineMessages);
   this.client.use(plugins.trade);

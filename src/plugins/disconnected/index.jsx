@@ -5,6 +5,10 @@ var Loader = require('../../components/loader.js');
 
 var UIActions = require('../../actions/ui-actions.js');
 
+/**
+ * Disconnected
+ * Automatically reconnects Vapor client after we get disconnected.
+ */
 exports.name = 'punk-disconnected';
 
 exports.plugin = function(API) {
