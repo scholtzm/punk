@@ -1,4 +1,4 @@
-var Storage = require('../../storage.js');
+var Storage = require('../../utils/storage.js');
 
 /**
  * File

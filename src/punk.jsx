@@ -7,8 +7,8 @@ var vapor = require('vapor');
 var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
 
-var Storage = require('./storage.js');
-var Logger = require('./logger.js');
+var Storage = require('./utils/storage.js');
+var Logger = require('./utils/logger.js');
 var plugins = require('./plugins');
 
 function Punk() {

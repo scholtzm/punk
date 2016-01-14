@@ -4,7 +4,7 @@ var moment = require('moment');
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 var Constants = require('../../constants');
-var Storage = require('../../storage.js');
+var Storage = require('../../utils/storage.js');
 
 /**
  * Chat Logger
