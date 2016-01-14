@@ -1,5 +1,6 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
+var appMenu = require('./src/components/menus/app-menu.js');
 
 // get this working later? requires submit URL
 // require('crash-reporter').start();
@@ -31,4 +32,7 @@ app.on('ready', function() {
   mainWindow.webContents.on('did-finish-load', function() {
     mainWindow.setTitle(title);
   });
+
+  // register main app menu
+  appMenu.register();
 });

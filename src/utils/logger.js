@@ -2,7 +2,7 @@
  * Application logger which logs to console as well as file.
  */
 var util = require('util');
-var Storage = require('./utils/storage.js');
+var Storage = require('./storage.js');
 
 function log(args, logFunc, level) {
   var date = new Date();
