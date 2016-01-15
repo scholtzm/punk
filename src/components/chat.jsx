@@ -9,7 +9,7 @@ var moment = require('moment');
 var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
 var Constants = require('../constants');
-var SteamCommunityWindow = require('./windows/steam-community.js');
+var SteamCommunityWindow = require('../ui/windows/steam-community.js');
 
 var ENTER_KEY = 13;
 
@@ -138,7 +138,7 @@ var ChatWindow = React.createClass({
       return;
     }
 
-    var menu = require('./menus/chat-menu.js')(chat);
+    var menu = require('../ui/menus/chat-menu.js')(chat);
     menu.popup(remote.getCurrentWindow());
   },
 

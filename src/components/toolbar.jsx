@@ -7,7 +7,7 @@ var UIActions = require('../actions/ui-actions.js');
 var UserStore = require('../stores/user-store.js');
 var NotificationStore = require('../stores/notification-store.js');
 
-var SteamCommunityWindow = require('./windows/steam-community.js');
+var SteamCommunityWindow = require('../ui/windows/steam-community.js');
 
 var CurrentUser = React.createClass({
   _getStateClassName: function() {
@@ -28,7 +28,7 @@ var CurrentUser = React.createClass({
   },
 
   _onClick: function() {
-    var menu = require('./menus/current-user-menu.js')(this.props.user);
+    var menu = require('../ui/menus/current-user-menu.js')(this.props.user);
     menu.popup(remote.getCurrentWindow());
   },
 
@@ -86,7 +86,7 @@ var PendingTradeOffers = React.createClass({
 
 var Notifications = React.createClass({
   _onClick: function() {
-    var menu = require('./menus/notifications-menu.js')(this.state.notifications);
+    var menu = require('../ui/menus/notifications-menu.js')(this.state.notifications);
     menu.popup(remote.getCurrentWindow());
   },
 

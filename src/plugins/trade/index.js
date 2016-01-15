@@ -3,7 +3,7 @@ var Dispatcher = require('../../dispatcher');
 var ChatActions = require('../../actions/chat-actions.js');
 var ChatStore = require('../../stores/chat-store.js');
 
-var SteamCommunityWindow = require('../../components/windows/steam-community.js');
+var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
 
 /**
  * Trade

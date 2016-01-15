@@ -1,6 +1,6 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var appMenu = require('./src/components/menus/app-menu.js');
+var appMenu = require('./src/ui/menus/app-menu.js');
 
 // get this working later? requires submit URL
 // require('crash-reporter').start();

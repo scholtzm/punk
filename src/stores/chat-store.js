@@ -3,7 +3,7 @@ var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var shortid = require('shortid');
-var notifier = require('../components/notifier');
+var notifier = require('../ui/notifier');
 
 var CHANGE_EVENT = 'change';
 
