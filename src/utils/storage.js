@@ -3,16 +3,18 @@
  */
 var fs = require('fs');
 var path = require('path');
+var app = require('remote').app;
 
+var _appData = app.getPath('userData');
 var _dir = 'data';
 var _storage = {};
 
 function getPath(key) {
-  return path.join('.', _dir, key);
+  return path.join(_appData, _dir, key);
 }
 
-if (!fs.existsSync(path.join('.', _dir))){
-  fs.mkdirSync(path.join('.', _dir));
+if (!fs.existsSync(path.join(_appData, _dir))){
+  fs.mkdirSync(path.join(_appData, _dir));
 }
 
 var Storage = {};
