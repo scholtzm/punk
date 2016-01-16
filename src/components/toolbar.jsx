@@ -34,11 +34,15 @@ var CurrentUser = React.createClass({
 
   render: function() {
     var className = classNames('fa', 'fa-circle', this._getStateClassName());
+    var userName = this.props.user.username + ' ' || 'Loading...';
+    var caret = this.props.user.username ? <i className="fa fa-caret-down"></i> : '';
 
     return (
-      <button className="btn btn-default btn-dropdown" onClick={this._onClick}>
-        <i className={className}></i>&nbsp;
-        {this.props.user.username || 'Loading...'}
+      <button className="btn btn-default" onClick={this._onClick}>
+        <i className={className}></i>
+        {' '}
+        {userName}
+        {caret}
       </button>
     );
   }
@@ -172,7 +176,7 @@ var Toolbar = React.createClass({
           <button className="btn btn-default" onClick={this._onAddFriend}>
             <i className="fa fa-user-plus"></i>
           </button>
-          <button className="btn btn-default" title="Not implemented yet.">
+          <button className="btn btn-default" title="Not implemented yet">
             <i className="fa fa-cog"></i>
           </button>
         </div>

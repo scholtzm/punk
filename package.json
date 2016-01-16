@@ -20,6 +20,7 @@
     "moment": "^2.11.1",
     "node-notifier": "^4.4.0",
     "object-assign": "^4.0.1",
+    "photon": "github:connors/photon",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-linkify": "^0.1.1",
