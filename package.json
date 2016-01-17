@@ -3,7 +3,7 @@
   "productName": "Punk",
   "version": "0.0.1",
   "description": "Alternative cross-platform Steam client for desktop",
-  "main": "main.js",
+  "main": "src/main.js",
   "author": {
     "name": "Michael Scholtz",
     "email": "michael.scholtz@outlook.com"

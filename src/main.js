@@ -1,6 +1,6 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var appMenu = require('./src/ui/menus/app-menu.js');
+var appMenu = require('./ui/menus/app-menu.js');
 
 // get this working later? requires submit URL
 // require('crash-reporter').start();
@@ -23,7 +23,7 @@ app.on('ready', function() {
     autoHideMenuBar: true
   });
 
-  mainWindow.loadURL('file://' + __dirname + '/static/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/../static/index.html');
 
   mainWindow.on('closed', function() {
     mainWindow = null;
