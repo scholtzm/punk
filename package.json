@@ -45,7 +45,8 @@
     "lint": "node_modules/.bin/eslint --ignore-path .gitignore .",
     "start": "node_modules/.bin/electron .",
     "watch": "node_modules/.bin/gulp watch",
-    "package-osx": "electron-packager . Punk --overwrite --platform=darwin --arch=x64 --version=0.36.4 --prune --ignore='(src|style)'"
+    "package-osx": "electron-packager . Punk --overwrite --out=package --platform=darwin --arch=x64 --version=0.36.4 --prune --ignore=src --ignore=style",
+    "package-win64": "electron-packager . Punk --overwrite --out=package --platform=win32 --arch=x64 --version=0.36.4 --prune --ignore=src --ignore=style"
   },
   "private": true
 }
