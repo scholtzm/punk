@@ -3,7 +3,7 @@
   "productName": "Punk",
   "version": "0.0.1",
   "description": "Alternative cross-platform Steam client for desktop",
-  "main": "src/main.js",
+  "main": "dist/js/main.js",
   "author": {
     "name": "Michael Scholtz",
     "email": "michael.scholtz@outlook.com"
@@ -44,7 +44,8 @@
     "clean": "node_modules/.bin/gulp clean",
     "lint": "node_modules/.bin/eslint --ignore-path .gitignore .",
     "start": "node_modules/.bin/electron .",
-    "watch": "node_modules/.bin/gulp watch"
+    "watch": "node_modules/.bin/gulp watch",
+    "package-osx": "electron-packager . Punk --overwrite --platform=darwin --arch=x64 --version=0.36.4 --prune --ignore='(src|style)'"
   },
   "private": true
 }

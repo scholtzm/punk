@@ -23,7 +23,7 @@ app.on('ready', function() {
     autoHideMenuBar: true
   });
 
-  mainWindow.loadURL('file://' + __dirname + '/../static/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/../../static/index.html');
 
   mainWindow.on('closed', function() {
     mainWindow = null;

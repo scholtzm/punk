@@ -4,8 +4,8 @@ var sass = require('gulp-sass');
 var rimraf = require('gulp-rimraf');
 
 var jsPath = ['src/**/*.js', 'src/**/*.jsx'];
-var sassPath = 'css/**/*.scss';
-var fontPath = 'css/fonts/*.*';
+var sassPath = 'style/**/*.scss';
+var fontPath = 'style/fonts/*.*';
 
 gulp.task('default', ['clean'], function() {
   gulp.start('transpile-js', 'transpile-sass', 'copy-fonts');
