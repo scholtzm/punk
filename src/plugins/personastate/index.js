@@ -62,7 +62,7 @@ exports.plugin = function(API) {
 
   if(API.hasHandler('readFile')) {
     API.emitEvent('readFile', CACHE_FILE_NAME, function(error, data) {
-      if(error) {
+      if(error && error.code !== 'ENOENT') {
         log.error('Error while retrieving friends list cache.');
         log.debug(error);
       } else {

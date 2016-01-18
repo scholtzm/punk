@@ -2,12 +2,13 @@
  * Application logger which logs to console as well as file.
  */
 var util = require('util');
+var moment = require('moment');
 var Storage = require('./storage.js');
 
 function log(args, logFunc, level) {
   var date = new Date();
   var message = util.format.apply(util, args);
-  var logMessage = util.format('[%s @ %s] %s\n', level, date.toTimeString(), message);
+  var logMessage = util.format('[%s @ %s] %s\n', level, moment(date).format('YYYY-MM-DD HH:mm:ss'), message);
 
   logFunc(message);
   Storage.append('punk.log', logMessage, function(error) {
