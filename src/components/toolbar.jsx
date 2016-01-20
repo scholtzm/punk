@@ -34,7 +34,9 @@ var CurrentUser = React.createClass({
 
   render: function() {
     var className = classNames('fa', 'fa-circle', this._getStateClassName());
-    var userName = this.props.user.username + ' ' || 'Loading...';
+    var userName = this.props.user.username
+      ? this.props.user.username + ' '
+      : 'Loading...';
     var caret = this.props.user.username ? <i className="fa fa-caret-down"></i> : '';
 
     return (
