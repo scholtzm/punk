@@ -113,6 +113,12 @@ var template = [
         click: function() {
           require('electron').shell.openExternal('http://github.com/scholtzm/punk');
         }
+      },
+      {
+        label: 'Report an Issue',
+        click: function() {
+          require('electron').shell.openExternal('http://github.com/scholtzm/punk/issues');
+        }
       }
     ]
   }
