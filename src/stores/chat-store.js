@@ -3,6 +3,7 @@ var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var shortid = require('shortid');
+var remote = require('remote');
 var notifier = require('../ui/notifier');
 
 var CHANGE_EVENT = 'change';
@@ -170,6 +171,10 @@ function newIncomingMessage(message) {
   // increase unread count if necessary
   if(!currentChat.visible) {
     currentChat.unreadMessageCount++;
+  }
+
+  // notify user if needed
+  if(!currentChat.visible || !remote.getCurrentWindow().isFocused()) {
     _playSound();
 
     var options = {
