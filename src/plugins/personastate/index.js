@@ -1,6 +1,7 @@
+var SteamID = require('steamid');
+
 var FriendsActions = require('../../actions/friends-actions.js');
 var UserActions = require('../../actions/user-actions.js');
-
 var FriendsStore = require('../../stores/friends-store.js');
 
 /**
@@ -140,6 +141,14 @@ exports.plugin = function(API) {
     emitter: 'steamFriends',
     event: 'personaState'
   }, function(persona) {
+    var id = new SteamID(persona.friendid);
+
+    // they use these for groups too, we will ignore them for now
+    // perhaps this information can be used later
+    if(id.type === SteamID.Type.CLAN) {
+      return;
+    }
+
     // get old data if we have them
     var currentFriend = FriendsStore.getById(persona.friendid) || EMPTY_FRIEND;
 
