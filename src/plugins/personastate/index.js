@@ -177,9 +177,9 @@ exports.plugin = function(API) {
       id: persona.friendid,
       username: persona.player_name,
       avatar: avatarUrl,
-      inGame: persona.game_name !== '',
+      inGame: persona.gameid !== '0',
 
-      state: persona.game_name === '' ?
+      state: persona.gameid === '0' ?
         PERSONA_STATES[persona.persona_state] :
         persona.game_name,
       stateEnum: persona.persona_state,

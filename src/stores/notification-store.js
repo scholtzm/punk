@@ -3,6 +3,7 @@ var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var notifier = require('../ui/notifier');
+var remote = require('remote');
 
 var CHANGE_EVENT = 'change';
 
@@ -20,6 +21,9 @@ function _tradeOfferNotification(newCount) {
     };
 
     notifier.notify(options);
+
+    remote.app.dock.bounce('critical');
+    remote.getCurrentWindow().flashFrame(true);
   }
 }
 

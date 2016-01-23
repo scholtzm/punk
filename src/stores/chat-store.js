@@ -189,6 +189,11 @@ function newIncomingMessage(message) {
 
     notifier.notify(options);
   }
+
+  if(!remote.getCurrentWindow().isFocused()) {
+    remote.app.dock.bounce('informational');
+    remote.getCurrentWindow().flashFrame(true);
+  }
 }
 
 function newOutgoingMessage(message) {

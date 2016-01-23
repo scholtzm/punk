@@ -33,6 +33,10 @@ app.on('ready', function() {
     mainWindow.setTitle(title);
   });
 
+  mainWindow.on('focus', function() {
+    mainWindow.flashFrame(false);
+  });
+
   // register main app menu
   appMenu.register();
 });
