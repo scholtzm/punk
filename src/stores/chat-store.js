@@ -191,7 +191,9 @@ function newIncomingMessage(message) {
   }
 
   if(!remote.getCurrentWindow().isFocused()) {
-    remote.app.dock.bounce('informational');
+    if(process.platform === 'darwin') {
+      remote.app.dock.bounce('informational');
+    }
     remote.getCurrentWindow().flashFrame(true);
   }
 }

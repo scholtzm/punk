@@ -22,7 +22,9 @@ function _tradeOfferNotification(newCount) {
 
     notifier.notify(options);
 
-    remote.app.dock.bounce('critical');
+    if(process.platform === 'darwin') {
+      remote.app.dock.bounce('critical');
+    }
     remote.getCurrentWindow().flashFrame(true);
   }
 }
