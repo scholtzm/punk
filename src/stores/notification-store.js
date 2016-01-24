@@ -14,9 +14,8 @@ function _tradeOfferNotification(newCount) {
     var options = {
       title: 'New trade offer',
       message: 'You have new pending trade offer!',
-      icon: false,
+      icon: __dirname + '/../../../static/image/icon.png',
       wait: true,
-      sticky: true,
       url: 'https://steamcommunity.com/my/tradeoffers'
     };
 

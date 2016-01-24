@@ -180,9 +180,8 @@ function newIncomingMessage(message) {
     var options = {
       title: message.username + ' says:',
       message: message.text,
-      icon: false,
+      icon: __dirname + '/../../../static/image/icon.png',
       wait: true,
-      sticky: true,
       type: message.type,
       chat: currentChat
     };

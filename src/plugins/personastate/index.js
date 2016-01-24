@@ -156,14 +156,13 @@ exports.plugin = function(API) {
     var requestNewData = persona.avatar_hash === undefined;
 
     // fix persona since not all fields are sent by Steam
-    persona.persona_state = persona.persona_state === undefined
-      ? currentFriend.persona.persona_state || Steam.EPersonaState.Offline
-      : persona.persona_state;
-
+    persona.persona_state = persona.persona_state || currentFriend.persona.persona_state || Steam.EPersonaState.Offline;
+    // this is sometimes empty even if the other user is playing a game; no idea why
     persona.game_name = persona.game_name || currentFriend.persona.game_name || '';
+    persona.gameid = persona.gameid || currentFriend.persona.gameid || '0';
     persona.avatar_hash = persona.avatar_hash || currentFriend.persona.avatar_hash || EMPTY_AVATAR_HASH;
 
-    // only Vapor can correctly "decode" the object so we transform it here
+    // get avatar
     var hash = persona.avatar_hash.toString('hex');
     if(hash === EMPTY_AVATAR_HASH) {
       hash = DEFAULT_AVATAR_HASH;
@@ -177,11 +176,11 @@ exports.plugin = function(API) {
       id: persona.friendid,
       username: persona.player_name,
       avatar: avatarUrl,
-      inGame: persona.gameid && persona.gameid !== '0',
+      inGame: persona.gameid !== '0',
 
-      state: persona.gameid && persona.gameid === '0' ?
-        PERSONA_STATES[persona.persona_state] :
-        persona.game_name,
+      state: persona.gameid !== '0' ?
+        persona.game_name :
+        PERSONA_STATES[persona.persona_state],
       stateEnum: persona.persona_state,
 
       relationshipEnum: relationship,
