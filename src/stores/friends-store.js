@@ -1,5 +1,6 @@
 var Dispatcher = require('../dispatcher');
 var Constants = require('../constants');
+var notifier = require('../ui/notifier');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
@@ -18,6 +19,10 @@ function insertOrUpdate(friend) {
     _friends[existingIndex] = friend;
   } else {
     _friends.push(friend);
+
+    if(friend.relationshipEnum === Constants.SteamEnums.EFriendRelationship.RequestRecipient) {
+      notifier.friend();
+    }
   }
 }
 

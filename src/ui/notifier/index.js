@@ -47,6 +47,20 @@ notifications.playSound = function() {
   beep.play();
 };
 
+notifications.friend = function() {
+  var options = {
+    title: 'New friend request',
+    message: 'You have received a friend request!',
+    icon: __dirname + '/../../../../static/image/icon.png',
+    wait: true
+  };
+
+  notifier.notify(options);
+
+  this.playSound();
+  this.flash('critical');
+};
+
 notifications.tradeOffer = function() {
   var options = {
     title: 'New trade offer',
