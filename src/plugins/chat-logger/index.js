@@ -24,16 +24,16 @@ exports.plugin = function(API) {
   }
 
   function formatMessage(id, message) {
-    var username = id || '<unknown>';
+    var displayName = id || '<unknown>';
 
     var persona = steamFriends.personaStates[id];
     if(persona) {
-      username = persona.player_name;
+      displayName = persona.player_name;
     }
 
     var timestamp = new Date();
 
-    return util.format('[%s] %s: %s\n', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), username, message);
+    return util.format('[%s] %s: %s\n', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), displayName, message);
   }
 
   function appendCallback(error) {

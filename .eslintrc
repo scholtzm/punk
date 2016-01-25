@@ -16,6 +16,7 @@
     "quotes": [2, "single"],
     "no-unused-vars": 2,
     "no-undef": 2,
+    "no-shadow": 2,
     "comma-dangle": [2, "never"],
     "semi": [2, "always"],
 

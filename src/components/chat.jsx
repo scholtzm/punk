@@ -1,5 +1,4 @@
 var remote = require('remote');
-var shell = require('electron').shell;
 
 var React = require('react');
 var Linkify = require('react-linkify');
@@ -10,6 +9,7 @@ var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
 var Constants = require('../constants');
 var SteamCommunityWindow = require('../ui/windows/steam-community.js');
+var urlHelper = require('../utils/url-helper.js');
 
 var ENTER_KEY = 13;
 
@@ -60,13 +60,14 @@ var ChatMessage = React.createClass({
         <p key={indexLine}>
           <Linkify properties={{
             onClick: function(event) {
+              var url = event.target.href;
+
               event.preventDefault();
 
-              if(event.target.host === 'steamcommunity.com' ||
-                 event.target.host === 'store.steampowered.com') {
-                SteamCommunityWindow.open(event.target.href);
+              if(urlHelper.isSteamUrl(url)) {
+                SteamCommunityWindow.open(url);
               } else {
-                shell.openExternal(event.target.href);
+                urlHelper.openExternal(url);
               }
             }
           }}>

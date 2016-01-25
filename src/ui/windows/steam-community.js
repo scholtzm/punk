@@ -1,6 +1,7 @@
 var BrowserWindow = require('electron').remote.BrowserWindow;
 var UserStore = require('../../stores/user-store.js');
 var Logger = require('../../utils/logger.js');
+var urlHelper = require('../../utils/url-helper.js');
 
 var win;
 
@@ -45,8 +46,12 @@ function open(url) {
 
   win.webContents.on('new-window', function(event, newUrl) {
     event.preventDefault();
-    Logger.debug('SteamCommunityWindow: opening new url');
-    win.loadURL(newUrl);
+
+    if(urlHelper.isSteamUrl(newUrl)) {
+      win.loadURL(newUrl);
+    } else {
+      urlHelper.openExternal(newUrl);
+    }
   });
 
   cookies.forEach(function(cookie) {
