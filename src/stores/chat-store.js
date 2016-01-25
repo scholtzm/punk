@@ -109,11 +109,6 @@ function _getTradeRequestById(userId, tradeRequestId) {
   }
 }
 
-function _playSound() {
-  var beep = new Audio('sounds/beep.mp3');
-  beep.play();
-}
-
 function openChat(user) {
   var id = user.id;
   var username = user.username;
@@ -175,25 +170,17 @@ function newIncomingMessage(message) {
 
   // notify user if needed
   if(!currentChat.visible || !remote.getCurrentWindow().isFocused()) {
-    _playSound();
-
-    var options = {
-      title: message.username + ' says:',
-      message: message.text,
-      icon: __dirname + '/../../../static/image/icon.png',
-      wait: true,
-      type: message.type,
-      chat: currentChat
-    };
-
-    notifier.notify(options);
+    notifier.message({
+      username: message.username,
+      text: message.text,
+      chat: currentChat,
+      playSound: true
+    });
   }
 
+  // flash the window if it has no focus
   if(!remote.getCurrentWindow().isFocused()) {
-    if(process.platform === 'darwin') {
-      remote.app.dock.bounce('informational');
-    }
-    remote.getCurrentWindow().flashFrame(true);
+    notifier.flash('informational');
   }
 }
 

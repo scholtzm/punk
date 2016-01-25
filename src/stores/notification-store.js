@@ -3,7 +3,6 @@ var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var notifier = require('../ui/notifier');
-var remote = require('remote');
 
 var CHANGE_EVENT = 'change';
 
@@ -11,20 +10,7 @@ var _notifications = {};
 
 function _tradeOfferNotification(newCount) {
   if(newCount > _notifications.tradeOffers) {
-    var options = {
-      title: 'New trade offer',
-      message: 'You have new pending trade offer!',
-      icon: __dirname + '/../../../static/image/icon.png',
-      wait: true,
-      url: 'https://steamcommunity.com/my/tradeoffers'
-    };
-
-    notifier.notify(options);
-
-    if(process.platform === 'darwin') {
-      remote.app.dock.bounce('critical');
-    }
-    remote.getCurrentWindow().flashFrame(true);
+    notifier.tradeOffer();
   }
 }
 
