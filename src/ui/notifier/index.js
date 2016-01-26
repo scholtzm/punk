@@ -6,6 +6,9 @@ var ChatActions = require('../../actions/chat-actions.js');
 var SteamCommunityWindow = require('../windows/steam-community.js');
 var urlHelper = require('../../utils/url-helper.js');
 
+var soundPath = 'sounds/beep.mp3';
+var iconPath = __dirname + '/../../../../static/image/icon.png';
+
 notifier.on('click', function(notifierObject, options) {
   if(!options.meta) {
     return;
@@ -43,7 +46,7 @@ notifications.flash = function(mode) {
 };
 
 notifications.playSound = function() {
-  var beep = new Audio('sounds/beep.mp3');
+  var beep = new Audio(soundPath);
   beep.play();
 };
 
@@ -51,7 +54,7 @@ notifications.friend = function() {
   var options = {
     title: 'New friend request',
     message: 'You have received a friend request!',
-    icon: __dirname + '/../../../../static/image/icon.png',
+    icon: iconPath,
     wait: true
   };
 
@@ -65,7 +68,7 @@ notifications.tradeOffer = function() {
   var options = {
     title: 'New trade offer',
     message: 'You have new pending trade offer!',
-    icon: __dirname + '/../../../../static/image/icon.png',
+    icon: iconPath,
     wait: true,
     meta: {
       action: Constants.UIActions.UI_NOTIFICATION_OPEN_URL,
@@ -83,7 +86,7 @@ notifications.message = function(options) {
   var notificationOptions = {
     title: options.username + ' says:',
     message: options.text,
-    icon: __dirname + '/../../../../static/image/icon.png',
+    icon: iconPath,
     wait: true,
     meta: {
       action: Constants.UIActions.UI_NOTIFICATION_SWITCH_CHAT,
