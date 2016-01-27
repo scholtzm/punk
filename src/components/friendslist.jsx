@@ -8,6 +8,10 @@ var FriendsStore = require('../stores/friends-store.js');
 var Constants = require('../constants');
 
 var FriendsListItem = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
+
   _getOnlineStateClassName: function() {
     if(this.props.user.inGame) {
       return 'in-game-border';

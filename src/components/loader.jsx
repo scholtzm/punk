@@ -1,6 +1,10 @@
 var React = require('react');
 
 var Loader = React.createClass({
+  propTypes: {
+    message: React.PropTypes.string
+  },
+
   render: function() {
     return (
       <div className="window">

@@ -22,13 +22,24 @@ npm run build
 npm run watch
 ```
 
-A `dist` folder should be also created.
+A `dist` folder will be created.
 
 ## Running the application
 
 ```sh
 npm start
 ```
+
+## Building the packages
+
+```sh
+npm run build
+npm run package-osx
+# or
+npm run package-win
+```
+
+A `package` folder will be created.
 
 ## LICENSE
 

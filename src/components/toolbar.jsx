@@ -10,6 +10,10 @@ var NotificationStore = require('../stores/notification-store.js');
 var SteamCommunityWindow = require('../ui/windows/steam-community.js');
 
 var CurrentUser = React.createClass({
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
+
   _getStateClassName: function() {
     if(!this.props.user.stateEnum) {
       return 'offline';

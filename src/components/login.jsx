@@ -4,6 +4,10 @@ var ReactDOM = require('react-dom');
 var Loader = require('./loader.js');
 
 var Login = React.createClass({
+  propTypes: {
+    message: React.PropTypes.string
+  },
+
   _proceedLogin: function(event) {
     event.preventDefault();
 

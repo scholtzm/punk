@@ -48,7 +48,7 @@ exports.plugin = function(API) {
     var friends = FriendsStore.getAll();
 
     if(API.hasHandler('writeFile')) {
-      API.emitEvent('writeFile', CACHE_FILE_NAME, JSON.stringify(friends, null, 2), function(error) {
+      API.emitEvent('writeFile', CACHE_FILE_NAME, JSON.stringify(friends), function(error) {
         if(error) {
           log.error('Failed to persist friends list to cache.');
           log.debug(error);
@@ -56,6 +56,8 @@ exports.plugin = function(API) {
 
         pendingWrite = false;
       });
+    } else {
+      pendingWrite = false;
     }
   }
 

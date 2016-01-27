@@ -14,6 +14,10 @@ var urlHelper = require('../utils/url-helper.js');
 var ENTER_KEY = 13;
 
 var Tab = React.createClass({
+  propTypes: {
+    chat: React.PropTypes.object.isRequired
+  },
+
   _onClick: function(event) {
     event.stopPropagation();
     ChatActions.switchChat(this.props.chat);
@@ -39,6 +43,11 @@ var Tab = React.createClass({
 });
 
 var ChatMessage = React.createClass({
+  propTypes: {
+    chat: React.PropTypes.object.isRequired,
+    message: React.PropTypes.object.isRequired
+  },
+
   _onAcceptTradeRequest: function() {
     ChatActions.respondToTradeRequest(this.props.chat, this.props.message, true);
   },
@@ -122,6 +131,10 @@ var ChatMessage = React.createClass({
 });
 
 var ChatWindow = React.createClass({
+  propTypes: {
+    chats: React.PropTypes.object.isRequired
+  },
+
   _findVisibleChat: function() {
     for(var id in this.props.chats) {
       if(this.props.chats[id].visible) {
@@ -180,6 +193,10 @@ var ChatWindow = React.createClass({
 });
 
 var MessageComposer = React.createClass({
+  propTypes: {
+    chats: React.PropTypes.object.isRequired
+  },
+
   _findVisibleChat: function() {
     for(var id in this.props.chats) {
       if(this.props.chats[id].visible) {
