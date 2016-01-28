@@ -180,9 +180,9 @@ exports.plugin = function(API) {
       avatar: avatarUrl,
       inGame: persona.gameid !== '0',
 
-      state: persona.gameid !== '0' ?
-        persona.game_name :
-        PERSONA_STATES[persona.persona_state],
+      state: persona.gameid !== '0'
+        ? (persona.game_name !== '' ? persona.game_name : 'In-Game') // sometimes this will be empty, no idea why
+        : PERSONA_STATES[persona.persona_state],
       stateEnum: persona.persona_state,
 
       relationshipEnum: relationship,

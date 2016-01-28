@@ -1,6 +1,6 @@
 ![Punk logo](https://cloud.githubusercontent.com/assets/2640934/11823554/dde8a120-a374-11e5-8c81-7a91481d5243.png)
 
-![Punk screenshot](https://cloud.githubusercontent.com/assets/2640934/11825305/a0382ff8-a37e-11e5-9957-5c42b6c9bf16.png)
+![Punk screenshot](https://cloud.githubusercontent.com/assets/2640934/12659057/fc11ad1c-c60c-11e5-841b-8d34e729b8e4.png)
 
 [![Build Status](https://travis-ci.org/scholtzm/punk.svg?branch=master)](https://travis-ci.org/scholtzm/punk)
 [![Dependency Status](https://david-dm.org/scholtzm/punk.svg)](https://david-dm.org/scholtzm/punk)
