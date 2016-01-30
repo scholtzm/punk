@@ -79,12 +79,17 @@ var FriendsList = React.createClass({
 
   _onSearchSubmit: function(event) {
     if(event.keyCode === ENTER_KEY) {
-      var firstFriend = this._firstUserThatMatchesSearchTerm();
-      ChatActions.openChat(firstFriend);
+      event.preventDefault();
 
-      var newState = this.state;
-      newState.searchTerm = '';
-      this.setState(newState);
+      var firstFriend = this._firstUserThatMatchesSearchTerm();
+
+      if(firstFriend) {
+        ChatActions.openChat(firstFriend);
+
+        var newState = this.state;
+        newState.searchTerm = '';
+        this.setState(newState);
+      }
     }
   },
 
