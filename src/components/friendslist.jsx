@@ -7,6 +7,8 @@ var ChatActions = require('../actions/chat-actions.js');
 var FriendsStore = require('../stores/friends-store.js');
 var Constants = require('../constants');
 
+var ENTER_KEY = 13;
+
 var FriendsListItem = React.createClass({
   propTypes: {
     user: React.PropTypes.object.isRequired
@@ -75,6 +77,17 @@ var FriendsList = React.createClass({
     this.setState(newState);
   },
 
+  _onSearchSubmit: function(event) {
+    if(event.keyCode === ENTER_KEY) {
+      var firstFriend = this._firstUserThatMatchesSearchTerm();
+      ChatActions.openChat(firstFriend);
+
+      var newState = this.state;
+      newState.searchTerm = '';
+      this.setState(newState);
+    }
+  },
+
   _userMatchesSearchTerm: function(user) {
     var searchTerm = this.state.searchTerm.toLowerCase();
     var username = user.username.toLowerCase();
@@ -89,6 +102,16 @@ var FriendsList = React.createClass({
     }
 
     return false;
+  },
+
+  _firstUserThatMatchesSearchTerm: function() {
+    var friends = this.state.friends;
+
+    for(var id in friends) {
+      if(this._userMatchesSearchTerm(friends[id])) {
+        return friends[id];
+      }
+    }
   },
 
   getInitialState: function() {
@@ -117,7 +140,8 @@ var FriendsList = React.createClass({
             type="text"
             placeholder="Search by name or Steam ID"
             value={this.state.searchTerm}
-            onChange={this._onSearch} />
+            onChange={this._onSearch}
+            onKeyDown={this._onSearchSubmit} />
         </li>
         {self.state.friends.map(function(friend) {
           if(self._userMatchesSearchTerm(friend)) {
