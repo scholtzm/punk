@@ -124,13 +124,13 @@ button {
   border-left: 1px solid #989698;
 }
 
-.pane, .pane-sm {
-  overflow-y: hidden;
-}
-
 .pane-sm {
   position: relative;
   flex: 1;
+}
+
+.pane, .pane-sm {
+  overflow-y: hidden;
 }
 
 .friendslist {

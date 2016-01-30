@@ -21,10 +21,10 @@
     "node-notifier": "^4.4.0",
     "object-assign": "^4.0.1",
     "photon": "github:connors/photon",
-    "react": "^0.14.6",
-    "react-dom": "^0.14.6",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
     "react-linkify": "^0.1.1",
-    "request": "^2.67.0",
+    "request": "^2.69.0",
     "shortid": "^2.2.4",
     "steamid": "^0.3.1",
     "vapor": "^1.2.0"
@@ -32,11 +32,11 @@
   "devDependencies": {
     "babel-preset-react": "^6.3.13",
     "electron-packager": "^5.2.1",
-    "electron-prebuilt": "^0.36.5",
+    "electron-prebuilt": "^0.36.7",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.16.1",
     "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1",
+    "gulp-babel": "^6.1.2",
     "gulp-rimraf": "^0.2.0",
     "gulp-sass": "^2.1.0"
   },
