@@ -213,7 +213,7 @@ var MessageComposer = React.createClass({
     if(event.keyCode === ENTER_KEY && !event.shiftKey) {
       event.preventDefault();
       var text = this.state.text.trim();
-      if(text) {
+      if(text !== '') {
         var targetChat = this._findVisibleChat();
 
         ChatActions.newOutgoingMessage({
@@ -232,6 +232,12 @@ var MessageComposer = React.createClass({
     return {text: ''};
   },
 
+  componentDidUpdate: function() {
+    if(this.refs.textArea) {
+      this.refs.textArea.focus();
+    }
+  },
+
   render: function() {
     var visible = this._findVisibleChat();
 
@@ -242,6 +248,7 @@ var MessageComposer = React.createClass({
     return (
       <div className="message-composer">
         <textarea
+          ref="textArea"
           rows="3"
           className="form-control"
           name="message"
