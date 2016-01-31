@@ -42,9 +42,10 @@ var CurrentUser = React.createClass({
       ? this.props.user.username + ' '
       : 'Loading...';
     var caret = this.props.user.username ? <i className="fa fa-caret-down"></i> : '';
+    var title = this.props.user.state;
 
     return (
-      <button className="btn btn-default" onClick={this._onClick}>
+      <button className="btn btn-default" onClick={this._onClick} title={title}>
         <i className={className}></i>
         {' '}
         {userName}
