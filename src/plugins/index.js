@@ -1,19 +1,24 @@
+/**
+ * Punk's built-in Vapor plugins
+ * Sorted alphabetically
+ */
 module.exports = {
-  messageDumper: require('./message-dumper'),
-  logger: require('./logger'),
-  chatLogger: require('./chat-logger'),
+  disconnected: require('./disconnected'),
+  essentials: require('./essentials'),
   file: require('./file'),
-  steamGuard: require('./steamguard'),
-  ready: require('./ready'),
-  personaState: require('./personastate'),
   friendMsg: require('./friendmsg'),
+  friends: require('./friends'),
+  chatLogger: require('./chat-logger'),
+  logger: require('./logger'),
   loginKey: require('./loginkey'),
   logout: require('./logout'),
-  presence: require('./presence'),
-  friends: require('./friends'),
+  messageDumper: require('./message-dumper'),
   notifications: require('./notifications'),
-  webSession: require('./web-session'),
-  disconnected: require('./disconnected'),
   offlineMessages: require('./offline-messages'),
-  trade: require('./trade')
+  personaState: require('./personastate'),
+  presence: require('./presence'),
+  ready: require('./ready'),
+  steamGuard: require('./steamguard'),
+  trade: require('./trade'),
+  webSession: require('./web-session')
 };
