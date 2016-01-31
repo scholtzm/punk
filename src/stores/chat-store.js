@@ -139,6 +139,7 @@ function closeChat(chat) {
     var toBeMadeVisible = _findFirstToMakeVisible(id);
     if(toBeMadeVisible) {
       toBeMadeVisible.visible = true;
+      _resetUnreadMessageCount(toBeMadeVisible.id);
     }
   }
 };
@@ -236,6 +237,7 @@ function remove(id) {
     var toBeMadeVisible = _findFirstToMakeVisible(id);
     if(toBeMadeVisible) {
       toBeMadeVisible.visible = true;
+      _resetUnreadMessageCount(toBeMadeVisible.id);
     }
   }
 
