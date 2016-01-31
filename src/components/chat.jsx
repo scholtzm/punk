@@ -34,7 +34,7 @@ var Tab = React.createClass({
     title += this.props.chat.username;
 
     return (
-      <div className={className} onClick={this._onClick}>
+      <div className={className} onClick={this._onClick} title={title}>
         <span className="icon icon-cancel icon-close-tab" onClick={this._onClose}></span>
         {title}
       </div>
