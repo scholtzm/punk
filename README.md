@@ -10,9 +10,35 @@
 
 The UI is powered by [React](https://facebook.github.io/react/), [Flux](https://facebook.github.io/flux/) and the visuals are handled by [Photon](http://photonkit.com/).
 
-Punk is currently under development and as such isn't recommended for day-to-day usage.
+## Features
 
-## Build & develop
+- Friends list
+ - Add, remove or block friends
+ - Send, accept, decline or cancel friend requests
+ - Display offline messages
+
+- Chatting
+ - Chat with people in your friends list
+ - Built-in chat logger
+
+- Trading
+ - Accept, decline or cancel regular trades
+ - Accept or send trade offers
+
+- Notifications
+ - Dedicated notification badge for trade offers
+ - Desktop notifications for chat messages and trade offers
+
+- Steam Community & Steam Store integration
+ - Full interaction with these websites
+
+## Download
+
+Pre-built binaries as well as the source code snapshots can be found in the [releases](https://github.com/scholtzm/punk/releases) section.
+
+## Developers
+
+### Build & develop
 
 After cloning the repo, run:
 
@@ -24,13 +50,13 @@ npm run watch
 
 A `dist` folder will be created.
 
-## Running the application
+### Running the application
 
 ```sh
 npm start
 ```
 
-## Building the packages
+### Building the packages
 
 ```sh
 npm run build
@@ -40,6 +66,17 @@ npm run package-win
 ```
 
 A `package` folder will be created.
+
+## Data
+
+Punk stores all of your data in a single folder. The folder path depends on your operating system:
+
+- `%APPDATA%/Punk` on Windows
+- `$XDG_CONFIG_HOME/Punk` or `~/.config/Punk` on Linux
+- `~/Library/Application Support/Punk` on OS X
+
+This folder contains user data, cache files, chat logs and application log.
+Make sure to remove this folder in case you decide to stop using Punk.
 
 ## LICENSE
 
