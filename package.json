@@ -17,7 +17,7 @@
     "classnames": "^2.2.3",
     "flux": "^2.1.1",
     "font-awesome": "^4.5.0",
-    "moment": "^2.11.1",
+    "moment": "^2.11.2",
     "node-notifier": "^4.4.0",
     "object-assign": "^4.0.1",
     "photon": "github:connors/photon",
@@ -38,7 +38,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
     "gulp-rimraf": "^0.2.0",
-    "gulp-sass": "^2.1.0"
+    "gulp-sass": "^2.2.0"
   },
   "scripts": {
     "build": "node_modules/.bin/gulp",
