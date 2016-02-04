@@ -7,6 +7,7 @@ var moment = require('moment');
 
 var ChatActions = require('../actions/chat-actions.js');
 var ChatStore = require('../stores/chat-store.js');
+var FriendsStore = require('../stores/friends-store.js');
 var Constants = require('../constants');
 var SteamCommunityWindow = require('../ui/windows/steam-community.js');
 var urlHelper = require('../utils/url-helper.js');
@@ -28,14 +29,51 @@ var Tab = React.createClass({
     ChatActions.closeChat(this.props.chat);
   },
 
+  _getStateClassName: function(user) {
+    if(!user.stateEnum) {
+      return 'offline';
+    }
+
+    if(user.inGame) {
+      return 'in-game';
+    }
+
+    switch (user.stateEnum) {
+      case 0:
+        return 'offline';
+      default:
+        return 'online';
+    }
+  },
+
+  _onChange: function() {
+    this.setState({ friend: FriendsStore.getById(this.props.chat.id) });
+  },
+
+  getInitialState: function() {
+    return { friend: FriendsStore.getById(this.props.chat.id) };
+  },
+
+  componentDidMount: function() {
+    FriendsStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    FriendsStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
-    var className = classNames('tab-item', {'active': this.props.chat.visible});
+    var tabClassName = classNames('tab-item', {'active': this.props.chat.visible});
+    var onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName(this.state.friend));
+
     var title = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
-    title += this.props.chat.username;
+    title += this.state.friend.username;
 
     return (
-      <div className={className} onClick={this._onClick} title={title}>
+      <div className={tabClassName} onClick={this._onClick} title={title}>
         <span className="icon icon-cancel icon-close-tab" onClick={this._onClose}></span>
+        <i className={onlineStateClassName}></i>
+        {' '}
         {title}
       </div>
     );

@@ -158,7 +158,9 @@ exports.plugin = function(API) {
     var requestNewData = persona.avatar_hash === undefined;
 
     // fix persona since not all fields are sent by Steam
-    persona.persona_state = persona.persona_state || currentFriend.persona.persona_state || Steam.EPersonaState.Offline;
+    persona.persona_state = persona.persona_state === undefined
+      ? currentFriend.persona.persona_state || Steam.EPersonaState.Offline
+      : persona.persona_state;
     // this is sometimes empty even if the other user is playing a game; no idea why
     persona.game_name = persona.game_name || currentFriend.persona.game_name || '';
     persona.gameid = persona.gameid || currentFriend.persona.gameid || '0';
