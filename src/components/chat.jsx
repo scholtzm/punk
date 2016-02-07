@@ -29,7 +29,9 @@ var Tab = React.createClass({
     ChatActions.closeChat(this.props.chat);
   },
 
-  _getStateClassName: function(user) {
+  _getStateClassName: function() {
+    var user = this.state.friend;
+
     if(!user.stateEnum) {
       return 'offline';
     }
@@ -64,17 +66,17 @@ var Tab = React.createClass({
 
   render: function() {
     var tabClassName = classNames('tab-item', {'active': this.props.chat.visible});
-    var onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName(this.state.friend));
+    var onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName());
 
-    var title = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
-    title += this.state.friend.username;
+    var tabTitle = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
+    tabTitle += this.state.friend.username;
 
     return (
-      <div className={tabClassName} onClick={this._onClick} title={title}>
+      <div className={tabClassName} onClick={this._onClick} title={tabTitle}>
         <span className="icon icon-cancel icon-close-tab" onClick={this._onClose}></span>
         <i className={onlineStateClassName}></i>
         {' '}
-        {title}
+        {tabTitle}
       </div>
     );
   }
