@@ -39,6 +39,9 @@ app.on('ready', function() {
 
     mainWindow.webContents.on('did-finish-load', function() {
       mainWindow.setTitle(title);
+      if(lastWindowsState.maximized) {
+        mainWindow.maximize();
+      }
     });
 
     mainWindow.on('focus', function() {
@@ -46,16 +49,21 @@ app.on('ready', function() {
     });
 
     function preserveWindowState() {
-      Settings.set('lastWindowState', mainWindow.getBounds(), function(err) {
-        if(err) {
+      var currentWindowsState = mainWindow.getBounds();
+      currentWindowsState.maximized = mainWindow.isMaximized();
+
+      Settings.set('lastWindowState', currentWindowsState, function(setErr) {
+        if(setErr) {
           Logger.error('Failed to save lastWindowState.');
-          Logger.error(err);
+          Logger.error(setErr);
         }
       });
     }
 
     mainWindow.on('move', preserveWindowState);
     mainWindow.on('resize', preserveWindowState);
+    mainWindow.on('maximize', preserveWindowState);
+    mainWindow.on('unmaximize', preserveWindowState);
 
     // register main app menu
     appMenu.register();
