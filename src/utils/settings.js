@@ -1,0 +1,44 @@
+/**
+ * App settings
+ */
+var Storage = require('./storage.js');
+
+var fileName = 'settings.json';
+
+var Settings = {};
+
+Settings.set = function(key, value, callback) {
+  Storage.get(fileName, function(err, data) {
+    var parsedData = {};
+    if(err) {
+      parsedData[key] = value;
+    } else {
+      try {
+        parsedData = JSON.parse(data);
+        parsedData[key] = value;
+      } catch(e) {
+        parsedData[key] = value;
+      }
+    }
+    Storage.set(fileName, JSON.stringify(parsedData, null, 2), function(setError) {
+      callback(setError);
+    });
+  });
+};
+
+Settings.get = function(key, callback) {
+  Storage.get(fileName, function(err, data) {
+    if(err) {
+      callback(err);
+    } else {
+      try {
+        var parsedData = JSON.parse(data);
+        callback(null, parsedData[key]);
+      } catch(e) {
+        callback(e);
+      }
+    }
+  });
+};
+
+module.exports = Settings;

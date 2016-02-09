@@ -3,7 +3,10 @@
  */
 var fs = require('fs');
 var path = require('path');
-var app = require('remote').app;
+
+var app = process.type === 'renderer'
+  ? require('remote').app
+  : require('app');
 
 var _appData = app.getPath('userData');
 var _dir = 'data';
