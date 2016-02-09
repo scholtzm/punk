@@ -17,17 +17,6 @@ app.on('window-all-closed', function() {
   }
 });
 
-app.on('before-quit', function() {
-  if (!mainWindow.isFullScreen()) {
-    Settings.set('lastWindowState', mainWindow.getBounds(), function(err) {
-      if(err) {
-        Logger.error('Failed to save lastWindowState.');
-        Logger.error(err);
-      }
-    });
-  }
-});
-
 app.on('ready', function() {
   Settings.get('lastWindowState', function(err, data) {
     var lastWindowsState = err && {width: 800, height: 600} || data;
@@ -55,6 +44,18 @@ app.on('ready', function() {
     mainWindow.on('focus', function() {
       mainWindow.flashFrame(false);
     });
+
+    function preserveWindowState() {
+      Settings.set('lastWindowState', mainWindow.getBounds(), function(err) {
+        if(err) {
+          Logger.error('Failed to save lastWindowState.');
+          Logger.error(err);
+        }
+      });
+    }
+
+    mainWindow.on('move', preserveWindowState);
+    mainWindow.on('resize', preserveWindowState);
 
     // register main app menu
     appMenu.register();
