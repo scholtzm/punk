@@ -18,7 +18,7 @@
     "flux": "^2.1.1",
     "font-awesome": "^4.5.0",
     "moment": "^2.11.2",
-    "node-notifier": "^4.4.0",
+    "node-notifier": "^4.5.0",
     "object-assign": "^4.0.1",
     "photon": "github:connors/photon",
     "react": "^0.14.7",
@@ -27,15 +27,15 @@
     "request": "^2.69.0",
     "shortid": "^2.2.4",
     "steamid": "^0.3.1",
-    "vapor": "^1.2.0"
+    "vapor": "^1.2.2"
   },
   "devDependencies": {
-    "babel-preset-react": "^6.3.13",
+    "babel-preset-react": "^6.5.0",
     "electron-packager": "^5.2.1",
     "electron-prebuilt": "0.35.4",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.16.1",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-rimraf": "^0.2.0",
     "gulp-sass": "^2.2.0"
