@@ -1,4 +1,4 @@
-var Logger = require('../../utils/logger.js');
+var Logger = require('../../utils/logger.js')('vapor');
 
 /**
  * Logger

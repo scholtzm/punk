@@ -2,7 +2,7 @@ var app = require('app');
 var BrowserWindow = require('browser-window');
 var appMenu = require('./ui/menus/app-menu.js');
 
-var Logger = require('./utils/logger.js');
+var Logger = require('./utils/logger.js')('main');
 var Settings = require('./utils/settings.js');
 
 // get this working later? requires submit URL

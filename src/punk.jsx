@@ -8,7 +8,7 @@ var Loader = require('./components/loader.js');
 var Login = require('./components/login.js');
 
 var Storage = require('./utils/storage.js');
-var Logger = require('./utils/logger.js');
+var Logger = require('./utils/logger.js')('punk');
 var plugins = require('./plugins');
 
 function Punk() {

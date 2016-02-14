@@ -1,6 +1,6 @@
 var BrowserWindow = require('electron').remote.BrowserWindow;
 var UserStore = require('../../stores/user-store.js');
-var Logger = require('../../utils/logger.js');
+var Logger = require('../../utils/logger.js')('sc-window');
 var urlHelper = require('../../utils/url-helper.js');
 
 var win;
