@@ -3,12 +3,15 @@
  */
 var Storage = require('./storage.js');
 
-var fileName = 'settings.json';
+var _fileName = 'settings.json';
+var _settingsCache = {};
 
 var Settings = {};
 
 Settings.set = function(key, value, callback) {
-  Storage.get(fileName, function(err, data) {
+  _settingsCache[key] = value;
+
+  Storage.get(_fileName, function(err, data) {
     var parsedData = {};
     if(err) {
       parsedData[key] = value;
@@ -20,14 +23,18 @@ Settings.set = function(key, value, callback) {
         parsedData[key] = value;
       }
     }
-    Storage.set(fileName, JSON.stringify(parsedData, null, 2), function(setError) {
+    Storage.set(_fileName, JSON.stringify(parsedData, null, 2), function(setError) {
       callback(setError);
     });
   });
 };
 
 Settings.get = function(key, callback) {
-  Storage.get(fileName, function(err, data) {
+  if(key in _settingsCache) {
+    return _settingsCache[key];
+  }
+
+  Storage.get(_fileName, function(err, data) {
     if(err) {
       callback(err);
     } else {

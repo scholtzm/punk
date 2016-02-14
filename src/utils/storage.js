@@ -3,22 +3,26 @@
  */
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 var app = process.type === 'renderer'
   ? require('remote').app
   : require('app');
 
-var _appData = app.getPath('userData');
-var _dir = 'data';
+var _defaultDir = path.join(app.getPath('userData'), 'data');
 var _storage = {};
 
 function getPath(key) {
-  return path.join(_appData, _dir, key);
+  return path.join(_defaultDir, key);
 }
 
-if (!fs.existsSync(path.join(_appData, _dir))){
-  fs.mkdirSync(path.join(_appData, _dir));
+function ensureDirectoryExists(dir) {
+  if (!fs.existsSync(dir)){
+    mkdirp.sync(dir);
+  }
 }
+
+ensureDirectoryExists(_defaultDir);
 
 var Storage = {};
 
