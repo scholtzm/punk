@@ -3,8 +3,10 @@
       "browser": true,
       "node": true
   },
-  "ecmaFeatures": {
-    "jsx": true
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true
+    }
   },
   "plugins": [
     "react"
