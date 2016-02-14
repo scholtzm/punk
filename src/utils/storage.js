@@ -12,8 +12,12 @@ var app = process.type === 'renderer'
 var _defaultDir = path.join(app.getPath('userData'), 'data');
 var _storage = {};
 
-function getPath(key) {
-  return path.join(_defaultDir, key);
+function getPath(options) {
+  if(options.prefix) {
+    return path.join(_defaultDir, options.prefix, options.fileName);
+  }
+
+  return path.join(_defaultDir, options.fileName);
 }
 
 function ensureDirectoryExists(dir) {
@@ -22,36 +26,54 @@ function ensureDirectoryExists(dir) {
   }
 }
 
+function ensurePrefixExists(prefix) {
+  ensureDirectoryExists(path.join(_defaultDir, prefix));
+}
+
 ensureDirectoryExists(_defaultDir);
 
 var Storage = {};
 
-Storage.set = function(key, value, callback) {
-  _storage[key] = value;
-  fs.writeFile(getPath(key), value, callback);
+Storage.set = function(options, callback) {
+  if(options.prefix) {
+    ensurePrefixExists(options.prefix);
+  }
+  var file = getPath(options);
+
+  _storage[file] = options.value;
+  fs.writeFile(file, options.value, callback);
 };
 
-Storage.get = function(key, callback) {
-  if(key in _storage) {
-    callback(null, _storage[key]);
+Storage.get = function(options, callback) {
+  var file = getPath(options);
+
+  if(file in _storage) {
+    callback(null, _storage[file]);
     return;
   }
 
-  fs.readFile(getPath(key), callback);
+  fs.readFile(file, callback);
 };
 
-Storage.append = function(key, value, callback) {
-  if(!(key in _storage)) {
-    _storage[key] = [];
+Storage.append = function(options, callback) {
+  if(options.prefix) {
+    ensurePrefixExists(options.prefix);
+  }
+  var file = getPath(options);
+
+  if(!(file in _storage)) {
+    _storage[file] = [];
   }
 
-  _storage[key].push(value);
-  fs.appendFile(getPath(key), value, callback);
+  _storage[file].push(options.value);
+  fs.appendFile(file, options.value, callback);
 };
 
-Storage.delete = function(key, callback) {
-  delete _storage[key];
-  fs.unlink(getPath(key), callback);
+Storage.delete = function(options, callback) {
+  var file = getPath(options);
+
+  delete _storage[file];
+  fs.unlink(file, callback);
 };
 
 module.exports = Storage;

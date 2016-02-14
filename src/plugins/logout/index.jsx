@@ -21,7 +21,7 @@ exports.plugin = function(API) {
       case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
-        Storage.delete('user.json', function(error) {
+        Storage.delete({fileName: 'user.json'}, function(error) {
           if(error && error.code !== 'ENOENT') {
             log.error(error);
           }

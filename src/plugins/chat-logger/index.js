@@ -1,5 +1,6 @@
 var util = require('util');
 var moment = require('moment');
+var path = require('path');
 
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
@@ -20,7 +21,7 @@ exports.plugin = function(API) {
   var username = API.getConfig().username;
 
   function getKey(id) {
-    return username + '-' + id + '.txt';
+    return id + '.log';
   }
 
   function formatMessage(id, message) {
@@ -36,6 +37,14 @@ exports.plugin = function(API) {
     return util.format('[%s] %s: %s\n', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), displayName, message);
   }
 
+  function createOptions(id, sender, text) {
+    return {
+      prefix: path.join(username, 'logs'),
+      fileName: getKey(id),
+      value: formatMessage(sender, text)
+    };
+  }
+
   function appendCallback(error) {
     if(error) {
       log.error('Failed to save chat message.');
@@ -46,15 +55,15 @@ exports.plugin = function(API) {
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
-        Storage.append(getKey(action.message.target), formatMessage(client.steamID, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.target, client.steamID, action.message.text), appendCallback);
         break;
 
       case Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE:
-        Storage.append(getKey(action.message.sender), formatMessage(action.message.sender, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.sender, action.message.sender, action.message.text), appendCallback);
         break;
 
       case Constants.ChatActions.CHAT_ECHO_MESSAGE:
-        Storage.append(getKey(action.message.target), formatMessage(client.steamID, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.target, client.steamID, action.message.text), appendCallback);
         break;
 
       default:

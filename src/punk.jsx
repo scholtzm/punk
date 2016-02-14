@@ -20,7 +20,7 @@ Punk.prototype.start = function() {
 
   Logger.info('Starting %s v%s', app.getName(), app.getVersion());
 
-  Storage.get('user.json', function(error, data) {
+  Storage.get({fileName: 'user.json'}, function(error, data) {
     if(error) {
       // assume the file does not exist
       ReactDOM.render(<Login />, document.getElementById('app'));
@@ -53,7 +53,7 @@ Punk.prototype.init = function(options, next) {
   // official client obfuscates private IP address but we probably don't want this
   options.logonID = Math.floor(new Date() / 1000);
 
-  Storage.get('servers.json', function(error, data) {
+  Storage.get({prefix: options.username, fileName: 'servers.json'}, function(error, data) {
     if(error) {
       Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
     } else {

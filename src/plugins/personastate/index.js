@@ -37,8 +37,6 @@ exports.plugin = function(API) {
   var steamFriends = API.getHandler('steamFriends');
   var pendingWrite = false;
 
-  CACHE_FILE_NAME = username + '-' + CACHE_FILE_NAME;
-
   function persistFriendsList() {
     if(pendingWrite) {
       return;
@@ -48,7 +46,7 @@ exports.plugin = function(API) {
     var friends = FriendsStore.getAll();
 
     if(API.hasHandler('writeFile')) {
-      API.emitEvent('writeFile', CACHE_FILE_NAME, JSON.stringify(friends), function(error) {
+      API.emitEvent('writeFile', {prefix: username, fileName: CACHE_FILE_NAME, value: JSON.stringify(friends)}, function(error) {
         if(error) {
           log.error('Failed to persist friends list to cache.');
           log.debug(error);
@@ -64,9 +62,9 @@ exports.plugin = function(API) {
   FriendsStore.addChangeListener(persistFriendsList);
 
   if(API.hasHandler('readFile')) {
-    API.emitEvent('readFile', CACHE_FILE_NAME, function(error, data) {
-      if(error && error.code !== 'ENOENT') {
-        log.error('Error while retrieving friends list cache.');
+    API.emitEvent('readFile', {prefix: username, fileName: CACHE_FILE_NAME}, function(error, data) {
+      if(error) {
+        log.warn('Couldn\'t retrieve friends list from cache.');
         log.debug(error);
       } else {
         try {

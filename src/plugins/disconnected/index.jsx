@@ -34,7 +34,8 @@ exports.plugin = function(API) {
     var enumString = utils.enumToString(error.eresult, Steam.EResult);
     log.warn('Got disconnected. EResult: %d (%s)', error.eresult, enumString);
 
-    if(error.eresult === Steam.EResult.InvalidPassword && !logOnDetailsAreCorrect) {
+    if((error.eresult === Steam.EResult.InvalidPassword && !logOnDetailsAreCorrect) ||
+       error.eresult === Steam.EResult.InvalidLoginAuthCode) {
       var message = 'Login error: ' + enumString;
       UIActions.logout(message);
     } else {
