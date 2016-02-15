@@ -48,12 +48,13 @@ Punk.prototype.start = function() {
 
 Punk.prototype.init = function(options, next) {
   var self = this;
+  var sanitizedUsername = options.username.toLowerCase();
 
   // set logonID to something unique
   // official client obfuscates private IP address but we probably don't want this
   options.logonID = Math.floor(new Date() / 1000);
 
-  Storage.get({prefix: options.username, fileName: 'servers.json'}, function(error, data) {
+  Storage.get({prefix: sanitizedUsername, fileName: 'servers.json'}, function(error, data) {
     if(error) {
       Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
     } else {

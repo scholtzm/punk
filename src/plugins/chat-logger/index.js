@@ -19,6 +19,7 @@ exports.plugin = function(API) {
   var steamFriends = API.getHandler('steamFriends');
   var log = API.getLogger();
   var username = API.getConfig().username;
+  var sanitizedUsername = username.toLowerCase();
 
   function getKey(id) {
     return id + '.log';
@@ -39,7 +40,7 @@ exports.plugin = function(API) {
 
   function createOptions(id, sender, text) {
     return {
-      prefix: path.join(username, 'logs'),
+      prefix: path.join(sanitizedUsername, 'logs'),
       fileName: getKey(id),
       value: formatMessage(sender, text)
     };
