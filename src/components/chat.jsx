@@ -32,7 +32,7 @@ var Tab = React.createClass({
   _getStateClassName: function() {
     var user = this.state.friend;
 
-    if(!user.stateEnum) {
+    if(!user || !user.stateEnum) {
       return 'offline';
     }
 
@@ -69,7 +69,7 @@ var Tab = React.createClass({
     var onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName());
 
     var tabTitle = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
-    tabTitle += this.state.friend.username;
+    tabTitle += this.state.friend ? this.state.friend.username : '';
 
     return (
       <div className={tabClassName} onClick={this._onClick} title={tabTitle}>

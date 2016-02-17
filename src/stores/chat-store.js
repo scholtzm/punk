@@ -357,6 +357,11 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
       ChatStore.emitChange();
       break;
 
+    case Constants.FriendsActions.FRIENDS_PURGE:
+      remove(action.id);
+      ChatStore.emitChange();
+      break;
+
     case Constants.UIActions.UI_LOGOUT:
       clear();
       ChatStore.emitChange();
