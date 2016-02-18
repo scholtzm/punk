@@ -48,6 +48,22 @@ function getIndexById(id) {
   // returns undefined if no match
 }
 
+function getById(id) {
+  var existingIndex = getIndexById(id);
+
+  if(existingIndex !== undefined) {
+    return _friends[existingIndex];
+  }
+}
+
+function setRelationship(id, relationshipEnum) {
+  var friend = getById(id);
+
+  if(friend) {
+    friend.relationshipEnum = relationshipEnum;
+  }
+}
+
 var FriendsStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
@@ -67,11 +83,7 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
   },
 
   getById: function(id) {
-    var existingIndex = getIndexById(id);
-
-    if(existingIndex !== undefined) {
-      return _friends[existingIndex];
-    }
+    return getById(id);
   },
 
   getAll: function() {
@@ -120,6 +132,12 @@ FriendsStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE:
       insertOrUpdate(action.friend);
+      FriendsStore.emitChange();
+      break;
+
+    // we have to update this ourselves in case the user is offline when we accept the friend request
+    case Constants.FriendsActions.FRIENDS_ADD:
+      setRelationship(action.id, Constants.SteamEnums.EFriendRelationship.Friend);
       FriendsStore.emitChange();
       break;
 
