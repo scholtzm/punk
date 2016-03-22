@@ -83,7 +83,7 @@ function createWindowsPackage() {
   process.chdir(path.join('.', outputFolder));
 
   var folderName = productName + '-' + platform + '-' + arch;
-  var appName = productName + '-v' + appVersion + '-win32';
+  var appName = productName + '-v' + appVersion + '-' + platform;
   var zipName = appName + '.zip';
 
   shell.exec('rename ' + folderName + ' ' + appName, function(renameExitCode) {
