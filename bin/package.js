@@ -61,7 +61,7 @@ rimraf(path.join('.', outputFolder), function(removeErr) {
       if(platform === 'darwin') {
         createOsxPackage(appPath);
       } else if(platform === 'win32') {
-        createWindowsPackage(appPath);
+        createWindowsPackage();
       }
     }
   });
@@ -79,7 +79,7 @@ function createOsxPackage(appPath) {
   });
 }
 
-function createWindowsPackage(appPath) {
+function createWindowsPackage() {
   process.chdir(path.join('.', outputFolder));
 
   var folderName = productName + '-' + platform + '-' + arch;
@@ -91,7 +91,7 @@ function createWindowsPackage(appPath) {
 
     // assumes 7z.exe is in PATH
     shell.exec('7z a ' + zipName + ' ' + appName + ' > nul', function(zipExitCode) {
-      console.log('7zip exit code: ' + zipExitCode)
+      console.log('7zip exit code: ' + zipExitCode);
     });
   });
 }
