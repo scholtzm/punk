@@ -39,7 +39,9 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-rimraf": "^0.2.0",
-    "gulp-sass": "^2.2.0"
+    "gulp-sass": "^2.2.0",
+    "rimraf": "^2.5.2",
+    "shelljs": "^0.6.0"
   },
   "scripts": {
     "build": "node_modules/.bin/gulp",
@@ -47,7 +49,7 @@
     "lint": "node_modules/.bin/eslint --ignore-path .gitignore .",
     "start": "node_modules/.bin/electron .",
     "watch": "node_modules/.bin/gulp watch",
-    "package-osx": "electron-packager . Punk --overwrite --out=package --platform=darwin --arch=x64 --version=0.35.4 --prune --icon=resources/icon.icns --ignore=src --ignore=style",
+    "package-osx": "node bin/package.js",
     "package-win": "electron-packager . Punk --overwrite --out=package --platform=win32 --arch=ia32 --version=0.35.4 --prune --icon=resources/icon.ico --ignore=src --ignore=style"
   },
   "private": true
