@@ -50,7 +50,7 @@
     "start": "node_modules/.bin/electron .",
     "watch": "node_modules/.bin/gulp watch",
     "package-osx": "node bin/package.js",
-    "package-win": "electron-packager . Punk --overwrite --out=package --platform=win32 --arch=ia32 --version=0.35.4 --prune --icon=resources/icon.ico --ignore=src --ignore=style"
+    "package-win": "node bin/package.js --win32"
   },
   "private": true
 }

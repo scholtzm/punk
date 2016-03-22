@@ -18,7 +18,7 @@ var icon = 'resources/icon.icns';
 if (process.argv[2] === '--win32') {
   platform = 'win32';
   arch = 'ia32';
-  icon = 'resource/icon.ico';
+  icon = 'resources/icon.ico';
 }
 
 var options = {
@@ -60,6 +60,8 @@ rimraf(path.join('.', outputFolder), function(removeErr) {
 
       if(platform === 'darwin') {
         createOsxPackage(appPath);
+      } else if(platform === 'win32') {
+        createWindowsPackage(appPath);
       }
     }
   });
@@ -74,5 +76,22 @@ function createOsxPackage(appPath) {
 
   shell.exec(dittoCommand, function(code) {
     console.log('Ditto command exit code:', code);
+  });
+}
+
+function createWindowsPackage(appPath) {
+  process.chdir(path.join('.', outputFolder));
+
+  var folderName = productName + '-' + platform + '-' + arch;
+  var appName = productName + '-v' + appVersion + '-win32';
+  var zipName = appName + '.zip';
+
+  shell.exec('rename ' + folderName + ' ' + appName, function(renameExitCode) {
+    console.log('Rename exit code:', renameExitCode);
+
+    // assumes 7z.exe is in PATH
+    shell.exec('7z a ' + zipName + ' ' + appName + ' > nul', function(zipExitCode) {
+      console.log('7zip exit code: ' + zipExitCode)
+    });
   });
 }
