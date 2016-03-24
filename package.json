@@ -1,7 +1,7 @@
 {
   "name": "punk",
   "productName": "Punk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Alternative cross-platform Steam client for desktop",
   "main": "dist/js/main.js",
   "author": {
