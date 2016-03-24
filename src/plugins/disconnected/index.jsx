@@ -16,17 +16,6 @@ exports.plugin = function(API) {
   var Steam = API.getSteam();
   var utils = API.getUtils();
 
-  var logOnDetailsAreCorrect = false;
-
-  API.registerHandler({
-    emitter: 'client',
-    event: 'logOnResponse'
-  }, function(response) {
-    if(response.eresult === Steam.EResult.OK) {
-      logOnDetailsAreCorrect = true;
-    }
-  });
-
   API.registerHandler({
     emitter: 'vapor',
     event: 'disconnected'
@@ -34,8 +23,8 @@ exports.plugin = function(API) {
     var enumString = utils.enumToString(error.eresult, Steam.EResult);
     log.warn('Got disconnected. EResult: %d (%s)', error.eresult, enumString);
 
-    if((error.eresult === Steam.EResult.InvalidPassword && !logOnDetailsAreCorrect) ||
-       error.eresult === Steam.EResult.InvalidLoginAuthCode) {
+    if(error.eresult === Steam.EResult.InvalidPassword ||
+      error.eresult === Steam.EResult.InvalidLoginAuthCode) {
       var message = 'Login error: ' + enumString;
       UIActions.logout(message);
     } else {
