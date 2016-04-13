@@ -4,7 +4,6 @@ var path = require('path');
 
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
-var Constants = require('../../constants');
 var Storage = require('../../utils/storage.js');
 
 /**
