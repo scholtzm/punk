@@ -1,5 +1,6 @@
-var app = require('app');
-var Menu = require('menu');
+var electron = require('electron');
+var app = electron.app;
+var Menu = electron.Menu;
 
 /**
  * Stock menu from the Electron docs since we need keyboard shortcuts.

@@ -1,4 +1,4 @@
-var app = require('remote').app;
+var app = require('electron').remote.app;
 
 var React = require('react');
 var ReactDOM = require('react-dom');

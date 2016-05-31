@@ -1,4 +1,4 @@
-var remote = require('remote');
+var remote = require('electron').remote;
 
 var React = require('react');
 var classNames = require('classnames');

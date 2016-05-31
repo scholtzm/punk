@@ -1,6 +1,6 @@
-var remote = require('remote');
-var Menu = remote.require('menu');
-var MenuItem = remote.require('menu-item');
+var remote = require('electron').remote;
+var Menu = remote.Menu;
+var MenuItem = remote.MenuItem;
 
 var ChatActions = require('../../actions/chat-actions.js');
 

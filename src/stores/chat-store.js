@@ -3,7 +3,7 @@ var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var shortid = require('shortid');
-var remote = require('remote');
+var remote = require('electron').remote;
 var notifier = require('../ui/notifier');
 
 var CHANGE_EVENT = 'change';

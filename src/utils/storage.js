@@ -6,8 +6,8 @@ var path = require('path');
 var mkdirp = require('mkdirp');
 
 var app = process.type === 'renderer'
-  ? require('remote').app
-  : require('app');
+  ? require('electron').remote.app
+  : require('electron').app;
 
 var _defaultDir = path.join(app.getPath('userData'), 'data');
 var _storage = {};

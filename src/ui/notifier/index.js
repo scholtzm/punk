@@ -1,5 +1,5 @@
 var notifier = require('node-notifier');
-var remote = require('remote');
+var remote = require('electron').remote;
 
 var Constants = require('../../constants');
 var ChatActions = require('../../actions/chat-actions.js');

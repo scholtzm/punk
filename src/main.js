@@ -1,5 +1,6 @@
-var app = require('app');
-var BrowserWindow = require('browser-window');
+var electron = require('electron');
+var app = electron.app;
+var BrowserWindow = electron.BrowserWindow;
 var appMenu = require('./ui/menus/app-menu.js');
 
 var Logger = require('./utils/logger.js')('main');
