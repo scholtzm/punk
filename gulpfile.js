@@ -11,12 +11,12 @@ gulp.task('default', ['clean'], function() {
   gulp.start('transpile-js', 'transpile-sass', 'copy-fonts');
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', function() {
   gulp.watch(jsPath, ['transpile-js']);
   gulp.watch(sassPath, ['transpile-sass']);
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', function() {
   return gulp.src(['dist/css', 'dist/js'], { read: false })
     .pipe(rimraf());
 });
@@ -31,7 +31,7 @@ gulp.task('transpile-js', function() {
     .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('transpile-sass', function () {
+gulp.task('transpile-sass', function() {
   gulp.src(sassPath)
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('dist/css'));

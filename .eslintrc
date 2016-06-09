@@ -21,6 +21,7 @@
     "no-shadow": 2,
     "comma-dangle": [2, "never"],
     "semi": [2, "always"],
+    "space-before-function-paren": [2, "never"],
 
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
