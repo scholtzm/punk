@@ -1,11 +1,11 @@
 {
   "env": {
-      "browser": true,
-      "node": true
+    "browser": true,
+    "node": true
   },
   "parserOptions": {
     "ecmaFeatures": {
-        "jsx": true
+      "jsx": true
     }
   },
   "plugins": [
