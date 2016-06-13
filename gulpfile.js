@@ -11,7 +11,7 @@ gulp.task('default', ['clean'], function() {
   gulp.start('transpile-js', 'transpile-sass', 'copy-fonts');
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['transpile-js', 'transpile-sass'], function() {
   gulp.watch(jsPath, ['transpile-js']);
   gulp.watch(sassPath, ['transpile-sass']);
 });
