@@ -6,17 +6,11 @@ var UIStore = require('../../stores/ui-store.js');
 
 var ChangeNameDialog = React.createClass({
   _onChange: function() {
-    var newState = this.state;
-    newState.uiState = UIStore.get();
-
-    this.setState(newState);
+    this.setState({ uiState: UIStore.get() });
   },
 
   _onDisplayNameChange: function(event) {
-    var newState = this.state;
-    newState.displayName = event.target.value;
-
-    this.setState(newState);
+    this.setState({ displayName: event.target.value });
   },
 
   _onCancel: function() {

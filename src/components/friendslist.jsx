@@ -62,19 +62,11 @@ var FriendsListItem = React.createClass({
 
 var FriendsList = React.createClass({
   _onChange: function() {
-    var newFriends = FriendsStore.getAllSorted();
-    var newState = this.state;
-
-    newState.friends = newFriends;
-    this.setState(newState);
+    this.setState({ friends: FriendsStore.getAllSorted() });
   },
 
   _onSearch: function(event) {
-    var newSearchTerm = event.target.value.trim();
-    var newState = this.state;
-
-    newState.searchTerm = newSearchTerm;
-    this.setState(newState);
+    this.setState({ searchTerm: event.target.value.trim() });
   },
 
   _onSearchSubmit: function(event) {
@@ -85,10 +77,7 @@ var FriendsList = React.createClass({
 
       if(firstFriend) {
         ChatActions.openChat(firstFriend);
-
-        var newState = this.state;
-        newState.searchTerm = '';
-        this.setState(newState);
+        this.setState({ searchTerm: '' });
       }
     }
   },

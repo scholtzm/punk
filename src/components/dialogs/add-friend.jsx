@@ -6,17 +6,11 @@ var UIStore = require('../../stores/ui-store.js');
 
 var AddFriendDialog = React.createClass({
   _onChange: function() {
-    var newState = this.state;
-    newState.uiState = UIStore.get();
-
-    this.setState(newState);
+    this.setState({ uiState: UIStore.get() });
   },
 
   _onFriendIdChange: function(event) {
-    var newState = this.state;
-    newState.friendId = event.target.value;
-
-    this.setState(newState);
+    this.setState({ friendId: event.target.value });
   },
 
   _onCancel: function() {
