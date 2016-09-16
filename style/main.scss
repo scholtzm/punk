@@ -176,6 +176,10 @@ button {
   text-overflow: ellipsis;
   overflow: hidden;
 
+  &.active {
+    font-weight: bold;
+  }
+
   &:hover .icon-close-tab {
     opacity: 1;
     color: #b4b2b4;
