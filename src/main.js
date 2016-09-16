@@ -20,7 +20,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   Settings.get('lastWindowState', function(err, data) {
-    var lastWindowsState = err && {width: 800, height: 600} || data;
+    var lastWindowsState = err && { width: 800, height: 600 } || data;
 
     mainWindow = new BrowserWindow({
       x: lastWindowsState.x,

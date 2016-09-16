@@ -22,6 +22,7 @@
     "comma-dangle": [2, "never"],
     "semi": [2, "always"],
     "space-before-function-paren": [2, "never"],
+    "object-curly-spacing": [2, "always"],
 
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,

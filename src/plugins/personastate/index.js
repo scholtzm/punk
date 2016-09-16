@@ -17,7 +17,7 @@ exports.plugin = function(API) {
   var CACHE_FILE_NAME = 'friendslist-cache.json';
   var EMPTY_AVATAR_HASH = '0000000000000000000000000000000000000000';
   var DEFAULT_AVATAR_HASH = 'fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb';
-  var EMPTY_FRIEND = {persona: {}};
+  var EMPTY_FRIEND = { persona: {} };
 
   var PERSONA_STATES = [
     'Offline',
@@ -47,7 +47,7 @@ exports.plugin = function(API) {
     var friends = FriendsStore.getAll();
 
     if(API.hasHandler('writeFile')) {
-      API.emitEvent('writeFile', {prefix: sanitizedUsername, fileName: CACHE_FILE_NAME, value: JSON.stringify(friends)}, function(error) {
+      API.emitEvent('writeFile', { prefix: sanitizedUsername, fileName: CACHE_FILE_NAME, value: JSON.stringify(friends) }, function(error) {
         if(error) {
           log.error('Failed to persist friends list to cache.');
           log.debug(error);
@@ -63,7 +63,7 @@ exports.plugin = function(API) {
   FriendsStore.addChangeListener(persistFriendsList);
 
   if(API.hasHandler('readFile')) {
-    API.emitEvent('readFile', {prefix: sanitizedUsername, fileName: CACHE_FILE_NAME}, function(error, data) {
+    API.emitEvent('readFile', { prefix: sanitizedUsername, fileName: CACHE_FILE_NAME }, function(error, data) {
       if(error) {
         if(error.code !== 'ENOENT') {
           log.warn('Couldn\'t retrieve friends list from cache.');

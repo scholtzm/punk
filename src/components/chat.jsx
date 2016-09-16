@@ -65,7 +65,7 @@ var Tab = React.createClass({
   },
 
   render: function() {
-    var tabClassName = classNames('tab-item', {'active': this.props.chat.visible});
+    var tabClassName = classNames('tab-item', { 'active': this.props.chat.visible });
     var onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName());
 
     var tabTitle = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';

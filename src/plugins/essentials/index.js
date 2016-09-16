@@ -9,11 +9,11 @@ exports.plugin = function(API) {
   var steamFriends = API.getHandler('steamFriends');
   var utils = API.getUtils();
 
-  API.registerHandler({emitter: 'steamFriends', event: 'friend'}, friend);
-  API.registerHandler({emitter: 'steamFriends', event: 'group'}, group);
-  API.registerHandler({emitter: 'steamFriends', event: 'relationships'}, relationships);
-  API.registerHandler({emitter: 'steamUser', event: 'tradeOffers'}, tradeOffers);
-  API.registerHandler({emitter: 'steamTrading', event: 'tradeProposed'}, tradeProposed);
+  API.registerHandler({ emitter: 'steamFriends', event: 'friend' }, friend);
+  API.registerHandler({ emitter: 'steamFriends', event: 'group' }, group);
+  API.registerHandler({ emitter: 'steamFriends', event: 'relationships' }, relationships);
+  API.registerHandler({ emitter: 'steamUser', event: 'tradeOffers' }, tradeOffers);
+  API.registerHandler({ emitter: 'steamTrading', event: 'tradeProposed' }, tradeProposed);
 
   function friend(user, type) {
     if(type === Steam.EFriendRelationship.RequestRecipient) {

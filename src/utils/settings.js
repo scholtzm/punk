@@ -11,7 +11,7 @@ var Settings = {};
 Settings.set = function(key, value, callback) {
   _settingsCache[key] = value;
 
-  Storage.get({fileName: _fileName}, function(err, data) {
+  Storage.get({ fileName: _fileName }, function(err, data) {
     var parsedData = {};
     if(err) {
       parsedData[key] = value;
@@ -23,7 +23,7 @@ Settings.set = function(key, value, callback) {
         parsedData[key] = value;
       }
     }
-    Storage.set({fileName: _fileName, value: JSON.stringify(parsedData, null, 2)}, function(setError) {
+    Storage.set({ fileName: _fileName, value: JSON.stringify(parsedData, null, 2) }, function(setError) {
       callback(setError);
     });
   });
@@ -34,7 +34,7 @@ Settings.get = function(key, callback) {
     return _settingsCache[key];
   }
 
-  Storage.get({fileName: _fileName}, function(err, data) {
+  Storage.get({ fileName: _fileName }, function(err, data) {
     if(err) {
       callback(err);
     } else {

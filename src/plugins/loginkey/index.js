@@ -19,7 +19,7 @@ exports.plugin = function(API) {
 
     log.debug('Received new login key.');
 
-    API.emitEvent('writeFile', {fileName: 'user.json', value: JSON.stringify(user, null, 2)}, function(error) {
+    API.emitEvent('writeFile', { fileName: 'user.json', value: JSON.stringify(user, null, 2) }, function(error) {
       if(error) {
         log.warn('Failed to save user data.');
         log.debug(error);
