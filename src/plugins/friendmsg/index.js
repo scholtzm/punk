@@ -23,6 +23,10 @@ exports.plugin = function(API) {
         steamFriends.sendMessage(action.message.target, action.message.text);
         break;
 
+      case Constants.ChatActions.WE_ARE_TYPING:
+        steamFriends.sendMessage(action.steamId, '', Steam.EChatEntryType.Typing);
+        break;
+
       default:
         // ignore
     }

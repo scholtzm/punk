@@ -247,6 +247,14 @@ var MessageComposer = React.createClass({
 
   _onChange: function(event) {
     this.setState({ text: event.target.value });
+
+    var visible = this._findVisibleChat();
+
+    if(!visible) {
+      return;
+    }
+
+    ChatActions.weAreTyping(visible.id);
   },
 
   _onKeyDown: function(event) {

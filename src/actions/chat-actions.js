@@ -93,6 +93,13 @@ var ChatActions = {
       type: Constants.ChatActions.OTHER_USER_STOPPED_TYPING,
       steamId: steamId
     });
+  },
+
+  weAreTyping: function(steamId) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.WE_ARE_TYPING,
+      steamId: steamId
+    });
   }
 };
 
