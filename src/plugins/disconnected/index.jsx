@@ -16,6 +16,17 @@ exports.plugin = function(API) {
   var Steam = API.getSteam();
   var utils = API.getUtils();
 
+  var tryCount = 0;
+
+  API.registerHandler({
+    emitter: 'client',
+    event: 'logOnResponse'
+  }, function(response) {
+    if(response.eresult === Steam.EResult.OK) {
+      tryCount = 0;
+    }
+  });
+
   API.registerHandler({
     emitter: 'vapor',
     event: 'disconnected'
@@ -30,7 +41,8 @@ exports.plugin = function(API) {
     } else {
       setTimeout(function() { API.connect(); }, 3000);
 
-      ReactDOM.render(<Loader message="Got disconnected. Connecting back..." />, document.getElementById('app'));
+      var message = 'Got disconnected: ' + error.eresult + ' (' + enumString + '). Retrying... (' + (++tryCount) + ')';
+      ReactDOM.render(<Loader message={message} />, document.getElementById('app'));
     }
   });
 };
