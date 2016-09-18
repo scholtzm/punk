@@ -11,6 +11,7 @@ var Settings = require('./utils/settings.js');
 
 var mainWindow = null;
 var title = app.getName() + ' [v' + app.getVersion() + ']';
+var WINDOW_STATE_KEY = 'lastMainWindowState';
 
 app.on('window-all-closed', function() {
   if(process.platform !== 'darwin') {
@@ -19,7 +20,7 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
-  Settings.get('lastWindowState', function(err, data) {
+  Settings.get(WINDOW_STATE_KEY, function(err, data) {
     var lastWindowsState = err && { width: 800, height: 600 } || data;
 
     mainWindow = new BrowserWindow({
@@ -53,9 +54,9 @@ app.on('ready', function() {
       var currentWindowsState = mainWindow.getBounds();
       currentWindowsState.maximized = mainWindow.isMaximized();
 
-      Settings.set('lastWindowState', currentWindowsState, function(setErr) {
+      Settings.set(WINDOW_STATE_KEY, currentWindowsState, function(setErr) {
         if(setErr) {
-          Logger.error('Failed to save lastWindowState.');
+          Logger.error('Failed to save last window state.');
           Logger.error(setErr);
         }
       });

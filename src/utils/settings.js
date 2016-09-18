@@ -31,7 +31,8 @@ Settings.set = function(key, value, callback) {
 
 Settings.get = function(key, callback) {
   if(key in _settingsCache) {
-    return _settingsCache[key];
+    callback(null, _settingsCache[key]);
+    return;
   }
 
   Storage.get({ fileName: _fileName }, function(err, data) {
