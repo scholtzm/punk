@@ -49,8 +49,7 @@ exports.plugin = function(API) {
         ChatActions.otherUserStoppedTyping(user);
       }, TYPING_TIMEOUT);
     } else if(type === Steam.EChatEntryType.ChatMsg) {
-      var username = user;
-
+      var username;
       var persona = steamFriends.personaStates[user];
       if(persona) {
         username = persona.player_name;

@@ -23,7 +23,11 @@ function _createChat(id) {
 
 function _createChatMessage(id, message) {
   _chats[id].tabbed = true;
-  _chats[id].username = message.username;
+
+  if(message.username) {
+    _chats[id].username = message.username;
+  }
+
   _chats[id].messages.push({
     id: shortid.generate(), // each message gets unique ID
     type: message.type,
