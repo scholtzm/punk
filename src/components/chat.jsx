@@ -1,7 +1,7 @@
 var remote = require('electron').remote;
 
 var React = require('react');
-var Linkify = require('react-linkify');
+var Linkify = require('react-linkify').default;
 var classNames = require('classnames');
 var moment = require('moment');
 
