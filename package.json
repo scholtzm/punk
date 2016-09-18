@@ -20,10 +20,10 @@
     "lint:fix": "node_modules/.bin/eslint --ignore-path .gitignore . --fix",
     "start": "node_modules/.bin/electron .",
     "watch": "node_modules/.bin/gulp watch",
-    "package-osx": "npm run build && node bin/package.js",
-    "package-win": "npm run build && node bin/package.js --win32"
+    "package-osx": "npm run build && node scripts/package.js",
+    "package-win": "npm run build && node scripts/package.js --win32"
   },
-  "dependencies": {
+  "devDependencies": {
     "classnames": "^2.2.5",
     "flux": "^2.1.1",
     "font-awesome": "^4.6.3",
@@ -38,9 +38,7 @@
     "request": "^2.75.0",
     "shortid": "^2.2.6",
     "steamid": "^1.0.2",
-    "vapor": "^1.3.0"
-  },
-  "devDependencies": {
+    "vapor": "^1.3.0",
     "babel-preset-react": "^6.11.1",
     "electron-packager": "^8.0.0",
     "electron-prebuilt": "^1.4.0",
