@@ -10,8 +10,12 @@ var Constants = require('../../constants');
 exports.name = 'punk-friendmsg';
 
 exports.plugin = function(API) {
+  // Steam client emits typing info only every ~20 seconds so this should be safe.
+  var TYPING_TIMEOUT = 21000;
+
   var Steam = API.getSteam();
   var steamFriends = API.getHandler('steamFriends');
+  var typingTimeouts = {};
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
@@ -27,14 +31,19 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'friendMsg'
-  }, function(user, message, type) {
+  }, function(user, receivedText, type) {
     // Steam sends us messages from anyone, even people who are not on our friends list
     if(steamFriends.friends[user] !== Steam.EFriendRelationship.Friend) {
       return;
     }
 
     if(type === Steam.EChatEntryType.Typing) {
-      // TODO implement 'is typing' recognition
+      ChatActions.otherUserIsTyping(user);
+
+      clearTimeout(typingTimeouts[user]);
+      typingTimeouts[user] = setTimeout(function() {
+        ChatActions.otherUserStoppedTyping(user);
+      }, TYPING_TIMEOUT);
     } else if(type === Steam.EChatEntryType.ChatMsg) {
       var username = user;
 
@@ -48,7 +57,7 @@ exports.plugin = function(API) {
         sender: user,       // SteamID64 string
         username: username, // display name if possible
         date: new Date(),
-        text: message
+        text: receivedText
       };
 
       ChatActions.newIncomingMessage(message);

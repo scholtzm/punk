@@ -246,7 +246,7 @@ var MessageComposer = React.createClass({
   },
 
   _onChange: function(event) {
-    this.setState({text: event.target.value});
+    this.setState({ text: event.target.value });
   },
 
   _onKeyDown: function(event) {
@@ -264,12 +264,12 @@ var MessageComposer = React.createClass({
           text: text
         });
       }
-      this.setState({text: ''});
+      this.setState({ text: '' });
     }
   },
 
   getInitialState: function() {
-    return {text: ''};
+    return { text: '' };
   },
 
   componentDidUpdate: function() {
@@ -285,8 +285,23 @@ var MessageComposer = React.createClass({
       return <div/>;
     }
 
+    var extraInfo = (
+      <div className="extra-info">
+        <i className="fa fa-comment-o"></i> You are chatting with {visible.username}
+      </div>
+    );
+
+    if(visible.typing) {
+      extraInfo = (
+        <div className="extra-info">
+          <i className="fa fa-commenting-o"></i> {visible.username} is typing...
+        </div>
+      );
+    }
+
     return (
       <div className="message-composer">
+        {extraInfo}
         <textarea
           ref="textArea"
           rows="3"

@@ -17,6 +17,7 @@ function _createChat(id) {
     _chats[id].messages = [];
     _chats[id].visible = false;
     _chats[id].unreadMessageCount = 0;
+    _chats[id].typing = false;
   }
 }
 
@@ -169,6 +170,9 @@ function newIncomingMessage(message) {
     currentChat.unreadMessageCount++;
   }
 
+  // mark as not typing
+  currentChat.typing = false;
+
   // notify user if needed
   if(!currentChat.visible || !remote.getCurrentWindow().isFocused()) {
     notifier.message({
@@ -242,6 +246,22 @@ function remove(id) {
   }
 
   delete _chats[id];
+}
+
+function otherUserIsTyping(steamId) {
+  if(!_chats[steamId]) {
+    return;
+  }
+
+  _chats[steamId].typing = true;
+}
+
+function otherUserStoppedTyping(steamId) {
+  if(!_chats[steamId]) {
+    return;
+  }
+
+  _chats[steamId].typing = false;
 }
 
 function clear() {
@@ -333,6 +353,16 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE:
       incomingTradeRequestResponse(action.response);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.ChatActions.OTHER_USER_IS_TYPING:
+      otherUserIsTyping(action.steamId);
+      ChatStore.emitChange();
+      break;
+
+    case Constants.ChatActions.OTHER_USER_STOPPED_TYPING:
+      otherUserStoppedTyping(action.steamId);
       ChatStore.emitChange();
       break;
 

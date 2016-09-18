@@ -79,8 +79,21 @@ var ChatActions = {
       type: Constants.ChatActions.CHAT_CANCEL_TRADE_REQUEST,
       id: id
     });
-  }
+  },
 
+  otherUserIsTyping: function(steamId) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.OTHER_USER_IS_TYPING,
+      steamId: steamId
+    });
+  },
+
+  otherUserStoppedTyping: function(steamId) {
+    Dispatcher.dispatch({
+      type: Constants.ChatActions.OTHER_USER_STOPPED_TYPING,
+      steamId: steamId
+    });
+  }
 };
 
 module.exports = ChatActions;
