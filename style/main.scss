@@ -69,6 +69,12 @@ button {
   }
 }
 
+input[type="text"],
+input[type="password"],
+textarea {
+  cursor: text;
+}
+
 .online {
   color: $online-color !important;
 }
