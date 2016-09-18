@@ -10,7 +10,7 @@ function log(args, logFunc, level, tag) {
   var message = util.format.apply(util, args);
   var logMessage = util.format('[%s @ %s] [%s] %s\n', level, moment(date).format('YYYY-MM-DD HH:mm:ss'), tag, message);
 
-  logFunc(message);
+  logFunc(logMessage);
   Storage.append({ fileName: 'punk.log', value: logMessage }, function(error) {
     if(error) {
       console.error('Failed to save log message.');

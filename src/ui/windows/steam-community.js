@@ -29,8 +29,6 @@ function open(url) {
   Logger.debug('SteamCommunityWindow: creating new instance');
 
   Settings.get(WINDOW_STATE_KEY, function(err, data) {
-    Logger.debug('Got settings', data);
-
     var lastWindowsState = err && { width: 1024, height: 768 } || data;
 
     win = new BrowserWindow({
