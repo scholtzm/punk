@@ -8,7 +8,7 @@ var packageJson = require('./../package.json');
 
 var productName = packageJson.productName;
 var appVersion = packageJson.version;
-var electronVersion = packageJson.devDependencies['electron-prebuilt'];
+var electronVersion = packageJson.devDependencies['electron'];
 var outputFolder = 'package';
 
 var platform = 'darwin';
