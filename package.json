@@ -23,7 +23,7 @@
     "package-osx": "npm run build && node scripts/package.js",
     "package-win": "npm run build && node scripts/package.js --win32"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel-preset-react": "^6.11.1",
     "classnames": "^2.2.5",
     "electron": "^1.4.3",
