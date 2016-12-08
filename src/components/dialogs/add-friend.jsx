@@ -4,6 +4,8 @@ var UIActions = require('../../actions/ui-actions.js');
 var FriendsActions = require('../../actions/friends-actions.js');
 var UIStore = require('../../stores/ui-store.js');
 
+var ENTER_KEY = 13;
+
 var AddFriendDialog = React.createClass({
   _onChange: function() {
     this.setState({ uiState: UIStore.get() });
@@ -17,12 +19,20 @@ var AddFriendDialog = React.createClass({
     UIActions.addFriendCloseDialog();
   },
 
+  _onSubmit: function(event) {
+    if(event.keyCode === ENTER_KEY) {
+      this._onSave();
+    }
+  },
+
   _onSave: function() {
     var id = this.state.friendId.trim();
 
     if(id !== '') {
       FriendsActions.add(id);
       UIActions.addFriendCloseDialog();
+
+      this.setState({ displayName: '' });
     }
   },
 
@@ -35,6 +45,12 @@ var AddFriendDialog = React.createClass({
 
   componentDidMount: function() {
     UIStore.addChangeListener(this._onChange);
+  },
+
+  componentDidUpdate: function() {
+    if(this.refs.friendId) {
+      this.refs.friendId.focus();
+    }
   },
 
   componentWillUnmount: function() {

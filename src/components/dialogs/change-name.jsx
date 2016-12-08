@@ -4,6 +4,8 @@ var UIActions = require('../../actions/ui-actions.js');
 var UserActions = require('../../actions/user-actions.js');
 var UIStore = require('../../stores/ui-store.js');
 
+var ENTER_KEY = 13;
+
 var ChangeNameDialog = React.createClass({
   _onChange: function() {
     this.setState({ uiState: UIStore.get() });
@@ -17,12 +19,20 @@ var ChangeNameDialog = React.createClass({
     UIActions.changeNameCloseDialog();
   },
 
+  _onSubmit: function(event) {
+    if(event.keyCode === ENTER_KEY) {
+      this._onSave();
+    }
+  },
+
   _onSave: function() {
     var name = this.state.displayName.trim();
 
     if(name !== '') {
       UserActions.changeName(name);
       UIActions.changeNameCloseDialog();
+
+      this.setState({ displayName: '' });
     }
   },
 
@@ -35,6 +45,12 @@ var ChangeNameDialog = React.createClass({
 
   componentDidMount: function() {
     UIStore.addChangeListener(this._onChange);
+  },
+
+  componentDidUpdate: function() {
+    if(this.refs.displayName) {
+      this.refs.displayName.focus();
+    }
   },
 
   componentWillUnmount: function() {
@@ -53,7 +69,13 @@ var ChangeNameDialog = React.createClass({
         </header>
 
         <div className="content">
-            <input type="text" className="form-control" ref="displayName" value={this.state.displayName} onChange={this._onDisplayNameChange} />
+            <input
+              type="text"
+              className="form-control"
+              ref="displayName"
+              value={this.state.displayName}
+              onChange={this._onDisplayNameChange}
+              onKeyDown={this._onSubmit} />
         </div>
 
         <footer className="toolbar toolbar-footer">
