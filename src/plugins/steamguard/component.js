@@ -4,6 +4,10 @@ var ReactDOM = require('react-dom');
 var Loader = require('../../components/misc/Loader.js');
 
 var SteamGuard = React.createClass({
+  propTypes: {
+    callback: React.PropTypes.func
+  },
+
   _proceedSteamGuard: function(event) {
     event.preventDefault();
 

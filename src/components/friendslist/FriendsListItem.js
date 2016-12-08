@@ -37,7 +37,7 @@ var FriendsListItem = React.createClass({
 
   _onContextMenu: function(event) {
     event.preventDefault();
-    var menu = require('../ui/menus/friends-menu.js')(this.props.user);
+    var menu = require('../../ui/menus/friends-menu.js')(this.props.user);
     menu.popup(remote.getCurrentWindow());
   },
 

@@ -26,7 +26,7 @@ var ChatWindow = React.createClass({
       return;
     }
 
-    var menu = require('../ui/menus/chat-menu.js')(chat);
+    var menu = require('../../ui/menus/chat-menu.js')(chat);
     menu.popup(remote.getCurrentWindow());
   },
 

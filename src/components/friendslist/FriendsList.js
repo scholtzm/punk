@@ -1,5 +1,3 @@
-var remote = require('electron').remote;
-
 var React = require('react');
 
 var ChatActions = require('../../actions/chat-actions.js');
