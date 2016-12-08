@@ -4,8 +4,8 @@ var FriendsList = require('../friendslist/FriendsList.js');
 var Chat = require('../chat/Chat.js');
 var Toolbar = require('../toolbar/Toolbar.js');
 
-var ChangeNameDialog = require('../dialogs/change-name.js');
-var AddFriendDialog = require('../dialogs/add-friend.js');
+var ChangeNameDialog = require('../dialogs/ChangeNameDialog.js');
+var AddFriendDialog = require('../dialogs/AddFriendDialog.js');
 
 var Main = React.createClass({
   render: function() {
