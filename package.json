@@ -14,12 +14,12 @@
     "url": "https://github.com/scholtzm/punk.git"
   },
   "scripts": {
-    "build": "node_modules/.bin/gulp",
-    "clean": "node_modules/.bin/gulp clean",
-    "lint": "node_modules/.bin/eslint --ignore-path .gitignore .",
-    "lint:fix": "node_modules/.bin/eslint --ignore-path .gitignore . --fix",
-    "start": "node_modules/.bin/electron .",
-    "watch": "node_modules/.bin/gulp watch",
+    "build": "gulp",
+    "clean": "gulp clean",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:fix": "eslint --ignore-path .gitignore . --fix",
+    "start": "electron .",
+    "watch": "gulp watch",
     "package-osx": "npm run build && node scripts/package.js",
     "package-win": "npm run build && node scripts/package.js --win32"
   },
