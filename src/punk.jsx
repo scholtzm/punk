@@ -4,8 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var vapor = require('vapor');
 
-var Loader = require('./components/loader.js');
-var Login = require('./components/login.js');
+var Loader = require('./components/misc/Loader.js');
+var Login = require('./components/login/Login.js');
 
 var Storage = require('./utils/storage.js');
 var Logger = require('./utils/logger.js')('punk');
@@ -20,7 +20,7 @@ Punk.prototype.start = function() {
 
   Logger.info('Starting %s v%s', app.getName(), app.getVersion());
 
-  Storage.get({fileName: 'user.json'}, function(error, data) {
+  Storage.get({ fileName: 'user.json' }, function(error, data) {
     if(error) {
       // assume the file does not exist
       ReactDOM.render(<Login />, document.getElementById('app'));
@@ -54,7 +54,7 @@ Punk.prototype.init = function(options, next) {
   // official client obfuscates private IP address but we probably don't want this
   options.logonID = Math.floor(new Date() / 1000);
 
-  Storage.get({prefix: sanitizedUsername, fileName: 'servers.json'}, function(error, data) {
+  Storage.get({ prefix: sanitizedUsername, fileName: 'servers.json' }, function(error, data) {
     if(error) {
       Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
     } else {

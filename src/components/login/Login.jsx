@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Loader = require('./loader.js');
+var Loader = require('../misc/Loader.js');
 
 var Login = React.createClass({
   propTypes: {

@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Loader = require('../../components/loader.js');
+var Loader = require('../../components/misc/Loader.js');
 
 var SteamGuard = React.createClass({
   _proceedSteamGuard: function(event) {

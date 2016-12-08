@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Login = require('../../components/login.js');
+var Login = require('../../components/login/Login.js');
 
 var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
@@ -21,7 +21,7 @@ exports.plugin = function(API) {
       case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
-        Storage.delete({fileName: 'user.json'}, function(error) {
+        Storage.delete({ fileName: 'user.json' }, function(error) {
           if(error && error.code !== 'ENOENT') {
             log.error(error);
           }
