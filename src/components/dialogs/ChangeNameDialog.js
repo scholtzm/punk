@@ -3,12 +3,21 @@ var React = require('react');
 var UIActions = require('../../actions/ui-actions.js');
 var UserActions = require('../../actions/user-actions.js');
 var UIStore = require('../../stores/ui-store.js');
+var UserStore = require('../../stores/user-store.js');
 
 var ENTER_KEY = 13;
 
 var ChangeNameDialog = React.createClass({
   _onChange: function() {
-    this.setState({ uiState: UIStore.get() });
+    this.setState({
+      uiState: UIStore.get(),
+      displayName: UserStore.get().username || ''
+    });
+
+    if(this.refs.displayName) {
+      this.refs.displayName.focus();
+      this.refs.displayName.select();
+    }
   },
 
   _onDisplayNameChange: function(event) {
@@ -31,8 +40,6 @@ var ChangeNameDialog = React.createClass({
     if(name !== '') {
       UserActions.changeName(name);
       UIActions.changeNameCloseDialog();
-
-      this.setState({ displayName: '' });
     }
   },
 
@@ -47,19 +54,13 @@ var ChangeNameDialog = React.createClass({
     UIStore.addChangeListener(this._onChange);
   },
 
-  componentDidUpdate: function() {
-    if(this.refs.displayName) {
-      this.refs.displayName.focus();
-    }
-  },
-
   componentWillUnmount: function() {
     UIStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
     if(!this.state.uiState.isChangeNameDialogOpen) {
-      return <div/>;
+      return null;
     }
 
     return (

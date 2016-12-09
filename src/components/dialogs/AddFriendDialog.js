@@ -59,7 +59,7 @@ var AddFriendDialog = React.createClass({
 
   render: function() {
     if(!this.state.uiState.isAddFriendDialogOpen) {
-      return <div/>;
+      return null;
     }
 
     return (
