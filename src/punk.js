@@ -7,6 +7,7 @@ var vapor = require('vapor');
 var Loader = require('./components/misc/Loader.js');
 var Login = require('./components/login/Login.js');
 
+var updateChecker = require('./utils/update-checker.js');
 var Storage = require('./utils/storage.js');
 var Logger = require('./utils/logger.js')('punk');
 var plugins = require('./plugins');
@@ -19,6 +20,8 @@ Punk.prototype.start = function() {
   var self = this;
 
   Logger.info('Starting %s v%s', app.getName(), app.getVersion());
+
+  updateChecker();
 
   Storage.get({ fileName: 'user.json' }, function(error, data) {
     if(error) {

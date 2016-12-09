@@ -48,6 +48,10 @@ module.exports = {
     UI_NOTIFICATION_SWITCH_CHAT: 'UI_NOTIFICATION_SWITCH_CHAT'
   },
 
+  SettingsActions: {
+    SETTINGS_NOTIFY_UPDATE_AVAILABLE: 'SETTINGS_NOTIFY_UPDATE_AVAILABLE'
+  },
+
   MessageTypes: {
     CHAT_OUR_MESSAGE: 'our-message',
     CHAT_THEIR_MESSAGE: 'their-message',

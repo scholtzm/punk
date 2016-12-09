@@ -6,6 +6,7 @@ var UserStore = require('../../stores/user-store.js');
 var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
 
 var CurrentUser = require('./CurrentUser.js');
+const UpdateButton = require('./UpdateButton.js');
 var PendingTradeOffers = require('./PendingTradeOffers.js');
 var Notifications = require('./Notifications.js');
 
@@ -53,9 +54,6 @@ var Toolbar = React.createClass({
           <button className="btn btn-default" onClick={this._onAddFriend}>
             <i className="fa fa-user-plus"></i>
           </button>
-          <button className="btn btn-default" title="Not implemented yet">
-            <i className="fa fa-cog"></i>
-          </button>
         </div>
 
         <div className="btn-group">
@@ -75,6 +73,8 @@ var Toolbar = React.createClass({
         <button className="btn btn-default pull-right" title="Logout" onClick={this._onLogout}>
           <i className="fa fa-sign-out"></i>
         </button>
+
+        <UpdateButton />
       </div>
     );
   }
