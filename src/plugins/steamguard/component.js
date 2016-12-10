@@ -5,7 +5,7 @@ var Loader = require('../../components/misc/Loader.js');
 
 var SteamGuard = React.createClass({
   propTypes: {
-    callback: React.PropTypes.func
+    callback: React.PropTypes.func.required
   },
 
   _proceedSteamGuard: function(event) {
