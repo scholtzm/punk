@@ -7,7 +7,8 @@ var CHANGE_EVENT = 'change';
 
 var _state = {
   isChangeNameDialogOpen: false,
-  isAddFriendDialogOpen: false
+  isAddFriendDialogOpen: false,
+  isUpdateAvailable: false
 };
 
 function set(key, value) {
@@ -53,6 +54,11 @@ UIStore.dispatchToken = Dispatcher.register(function(action) {
 
     case Constants.UIActions.UI_ADD_FRIEND_CLOSE_DIALOG:
       set('isAddFriendDialogOpen', false);
+      UIStore.emitChange();
+      break;
+
+    case Constants.UIActions.UI_UPDATE_AVAILABLE:
+      set('isUpdateAvailable', true);
       UIStore.emitChange();
       break;
 

@@ -3,7 +3,7 @@ const request = require('request');
 
 // TODO: Fix paths.
 const pkg = require('../../../package.json'); // eslint-disable-line import/no-unresolved
-const SettingsActions = require('../actions/settings-actions.js');
+const UIActions = require('../actions/ui-actions.js');
 const Logger = require('./logger.js')('updater');
 
 module.exports = function() {
@@ -33,7 +33,7 @@ module.exports = function() {
 
     if(semver.lt(pkg.version, latestVersion)) {
       Logger.debug('Current version is lower than latest version');
-      SettingsActions.notifyUpdateAvailable();
+      UIActions.notifyUpdateAvailable();
     }
   });
 };

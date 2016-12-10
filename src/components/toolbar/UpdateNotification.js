@@ -1,31 +1,32 @@
-var React = require('react');
+const React = require('react');
 
-var SettingsStore = require('../../stores/settings-store.js');
+const UIStore = require('../../stores/ui-store.js');
 const urlHelper = require('../../utils/url-helper.js');
 
-var UpdateButton = React.createClass({
+const UpdateNotification = React.createClass({
   _onChange: function() {
-    this.setState({ updateAvailable: SettingsStore.getUpdateAvailable() });
+    this.setState({ isUpdateAvailable: UIStore.get().isUpdateAvailable });
   },
 
   _onClick: function() {
+    // TODO: Move all URLs to some config
     urlHelper.openExternal('http://github.com/scholtzm/punk/releases');
   },
 
   getInitialState: function() {
-    return { updateAvailable: SettingsStore.getUpdateAvailable() };
+    return { isUpdateAvailable: UIStore.get().isUpdateAvailable };
   },
 
   componentDidMount: function() {
-    SettingsStore.addChangeListener(this._onChange);
+    UIStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    SettingsStore.removeChangeListener(this._onChange);
+    UIStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
-    if(!this.state.updateAvailable) {
+    if(!this.state.isUpdateAvailable) {
       return null;
     }
 
@@ -37,4 +38,4 @@ var UpdateButton = React.createClass({
   }
 });
 
-module.exports = UpdateButton;
+module.exports = UpdateNotification;

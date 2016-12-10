@@ -32,6 +32,12 @@ var UIActions = {
       type: Constants.UIActions.UI_LOGOUT,
       message: message
     });
+  },
+
+  notifyUpdateAvailable: function() {
+    Dispatcher.dispatch({
+      type: Constants.UIActions.UI_UPDATE_AVAILABLE
+    });
   }
 
 };

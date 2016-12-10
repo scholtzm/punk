@@ -1,5 +1,4 @@
 var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
@@ -8,8 +7,6 @@ var CHANGE_EVENT = 'change';
 var _settings = {
   checkForUpdatesOnStartup: true
 };
-
-let _updateAvailable = false;
 
 var SettingsStore = assign({}, EventEmitter.prototype, {
 
@@ -27,25 +24,12 @@ var SettingsStore = assign({}, EventEmitter.prototype, {
 
   get: function() {
     return _settings;
-  },
-
-  getUpdateAvailable() {
-    return _updateAvailable;
-  },
-
-  markUpdateAsAvailable: function() {
-    _updateAvailable = true;
   }
 
 });
 
 SettingsStore.dispatchToken = Dispatcher.register(function(action) {
   switch(action.type) {
-    case Constants.SettingsActions.SETTINGS_NOTIFY_UPDATE_AVAILABLE:
-      SettingsStore.markUpdateAsAvailable();
-      SettingsStore.emitChange();
-      break;
-
     default:
       // ignore
   }
