@@ -39,12 +39,17 @@ exports.plugin = function(API) {
       }
 
       var notifications = {
-        // TODO: need to figure out the rest, e.g. gifts
-        tradeOffers: body.notifications[1],
-        comments: body.notifications[4],
-        items: body.notifications[5],
-        invites: body.notifications[6],
-        messages: body.notifications[9]
+        tradeOffers: body.notifications[1] || 0,
+        gameTurns: body.notifications[2] || 0,
+        moderatorMessages: body.notifications[3] || 0,
+        comments: body.notifications[4] || 0,
+        items: body.notifications[5] || 0,
+        invites: body.notifications[6] || 0,
+        // No clue about 7
+        gifts: body.notifications[8] || 0,
+        messages: body.notifications[9] || 0,
+        helpRequestReplies: body.notifications[10] || 0,
+        accountAlerts: body.notifications[11] || 0
       };
 
       NotificationActions.updateAll(notifications);
