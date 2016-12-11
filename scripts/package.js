@@ -35,7 +35,10 @@ var options = {
     '/src($|/)',
     '/bin($|/)',
     '/style($|/)'
-  ]
+  ],
+  asar: {
+    unpackDir: '**/steam-resources/**/*'
+  }
 };
 
 rimraf(path.join('.', outputFolder), function(removeErr) {
