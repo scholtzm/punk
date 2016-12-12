@@ -33,12 +33,9 @@ var options = {
   icon: icon,
   ignore: [
     '/src($|/)',
-    '/bin($|/)',
+    '/scripts($|/)',
     '/style($|/)'
-  ],
-  asar: {
-    unpackDir: '**/steam-resources/**/*'
-  }
+  ]
 };
 
 rimraf(path.join('.', outputFolder), function(removeErr) {
