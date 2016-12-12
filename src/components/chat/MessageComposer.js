@@ -63,7 +63,7 @@ var MessageComposer = React.createClass({
     var visible = this._findVisibleChat();
 
     if(!visible) {
-      return <div/>;
+      return null;
     }
 
     var extraInfo = (

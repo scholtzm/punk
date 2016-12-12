@@ -2,6 +2,7 @@ var Dispatcher = require('../../dispatcher');
 var Constants = require('../../constants');
 var ChatActions = require('../../actions/chat-actions.js');
 var Constants = require('../../constants');
+const FriendsStore = require('../../stores/friends-store.js');
 
 /**
  * Offline Messages
@@ -14,7 +15,6 @@ exports.plugin = function(API) {
   var log = API.getLogger();
   var Steam = API.getSteam();
   var utils = API.getUtils();
-  var steamFriends = API.getHandler('steamFriends');
 
   var token = Dispatcher.register(function(action) {
     switch(action.type) {
@@ -53,9 +53,9 @@ exports.plugin = function(API) {
 
         // get username if possible
         var username = id;
-        var persona = steamFriends.personaStates[id];
-        if(persona) {
-          username = persona.player_name;
+        const friend = FriendsStore.getById(id);
+        if(friend) {
+          username = friend.username;
         }
 
         // create message
