@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "flux": "^3.1.0",
+    "flux": "^3.1.2",
     "font-awesome": "^4.7.0",
     "lodash.omit": "^4.5.0",
     "mkdirp": "^0.5.1",
@@ -46,9 +46,9 @@
   "devDependencies": {
     "babel-preset-react": "^6.16.0",
     "devtron": "^1.4.0",
-    "electron": "1.4.12",
+    "electron": "^1.4.13",
     "electron-packager": "^8.4.0",
-    "eslint": "^3.12.0",
+    "eslint": "^3.12.2",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-react": "^6.8.0",
     "gulp": "^3.9.1",
