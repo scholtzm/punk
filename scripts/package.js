@@ -22,6 +22,7 @@ if (process.argv[2] === '--win32') {
 }
 
 var options = {
+  asar: true,
   dir: '.',
   name: productName,
   overwrite: true,

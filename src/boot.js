@@ -1,3 +1,5 @@
+require('./utils/monkey-patch');
+
 var Punk = require('./punk.js');
 
 var punk = new Punk();
