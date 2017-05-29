@@ -14,24 +14,24 @@ The UI is powered by [React](https://facebook.github.io/react/), [Flux](https://
 ## Features
 
 - Friends list
- - Add, remove or block friends
- - Send, accept, decline or cancel friend requests
- - Display offline messages
+  - Add, remove or block friends
+  - Send, accept, decline or cancel friend requests
+  - Display offline messages
 
 - Chatting
- - Chat with people in your friends list
- - Built-in chat logger
+  - Chat with people in your friends list
+  - Built-in chat logger
 
 - Trading
- - Accept, decline or cancel regular trades
- - Accept or send trade offers
+  - Accept, decline or cancel regular trades
+  - Accept or send trade offers
 
 - Notifications
- - Dedicated notification badge for trade offers
- - Desktop notifications for chat messages and trade offers
+  - Dedicated notification badge for trade offers
+  - Desktop notifications for chat messages and trade offers
 
 - Steam Community & Steam Store integration
- - Full interaction with these websites
+  - Full interaction with these websites
 
 ## Download
 
