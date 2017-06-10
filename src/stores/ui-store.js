@@ -1,11 +1,11 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
+const EventEmitter = require('events').EventEmitter;
+const assign = require('object-assign');
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
-var _state = {
+const _state = {
   isChangeNameDialogOpen: false,
   isAddFriendDialogOpen: false,
   isUpdateAvailable: false
@@ -15,7 +15,7 @@ function set(key, value) {
   _state[key] = value;
 }
 
-var UIStore = assign({}, EventEmitter.prototype, {
+const UIStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -35,7 +35,7 @@ var UIStore = assign({}, EventEmitter.prototype, {
 
 });
 
-UIStore.dispatchToken = Dispatcher.register(function(action) {
+UIStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.UIActions.UI_CHANGE_NAME_OPEN_DIALOG:
       set('isChangeNameDialogOpen', true);

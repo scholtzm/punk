@@ -1,12 +1,12 @@
-var electron = require('electron');
-var app = electron.app;
-var Menu = electron.Menu;
+const electron = require('electron');
+const app = electron.app;
+const Menu = electron.Menu;
 
 /**
  * Stock menu from the Electron docs since we need keyboard shortcuts.
  * More options to come later.
  */
-var template = [
+const template = [
   {
     label: 'Edit',
     submenu: [
@@ -127,12 +127,12 @@ var template = [
 
 // special OSX options
 if (process.platform === 'darwin') {
-  var name = require('electron').app.getName();
+  const name = require('electron').app.getName();
   template.unshift({
     label: name,
     submenu: [
       {
-        label: 'About ' + name,
+        label: `About ${ name}`,
         role: 'about'
       },
       {
@@ -147,7 +147,7 @@ if (process.platform === 'darwin') {
         type: 'separator'
       },
       {
-        label: 'Hide ' + name,
+        label: `Hide ${ name}`,
         accelerator: 'Command+H',
         role: 'hide'
       },
@@ -184,9 +184,9 @@ if (process.platform === 'darwin') {
   );
 }
 
-var self = {
+const self = {
   register: function() {
-    var appMenu = Menu.buildFromTemplate(template);
+    const appMenu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(appMenu);
   }
 };

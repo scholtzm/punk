@@ -1,4 +1,4 @@
-var Storage = require('../../utils/storage.js');
+const Storage = require('../../utils/storage.js');
 
 /**
  * File
@@ -7,16 +7,16 @@ var Storage = require('../../utils/storage.js');
 exports.name = 'punk-file';
 
 exports.plugin = function(API) {
-  var username = API.getConfig().username;
-  var sanitizedUsername = username.toLowerCase();
+  const username = API.getConfig().username;
+  const sanitizedUsername = username.toLowerCase();
 
-  API.registerHandler({ emitter: 'vapor', event: 'readFile' }, function(fileName, callback) {
+  API.registerHandler({ emitter: 'vapor', event: 'readFile' }, (fileName, callback) => {
     Storage.get({ prefix: sanitizedUsername, fileName: fileName }, callback);
   });
 
   API.registerHandler({ emitter: 'plugin', plugin: '*', event: 'readFile' }, Storage.get);
 
-  API.registerHandler({ emitter: 'vapor', event: 'writeFile' }, function(fileName, value, callback) {
+  API.registerHandler({ emitter: 'vapor', event: 'writeFile' }, (fileName, value, callback) => {
     Storage.set({ prefix: sanitizedUsername, fileName: fileName, value: value }, callback);
   });
 

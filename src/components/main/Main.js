@@ -1,14 +1,14 @@
-var React = require('react');
+const React = require('react');
 
-var FriendsList = require('../friendslist/FriendsList.js');
-var Chat = require('../chat/Chat.js');
-var Toolbar = require('../toolbar/Toolbar.js');
+const FriendsList = require('../friendslist/FriendsList.js');
+const Chat = require('../chat/Chat.js');
+const Toolbar = require('../toolbar/Toolbar.js');
 
-var ChangeNameDialog = require('../dialogs/ChangeNameDialog.js');
-var AddFriendDialog = require('../dialogs/AddFriendDialog.js');
+const ChangeNameDialog = require('../dialogs/ChangeNameDialog.js');
+const AddFriendDialog = require('../dialogs/AddFriendDialog.js');
 
-var Main = React.createClass({
-  render: function() {
+class Main extends React.Component {
+  render() {
     return (
       <div className="window">
         <ChangeNameDialog />
@@ -35,6 +35,6 @@ var Main = React.createClass({
       </div>
     );
   }
-});
+};
 
 module.exports = Main;

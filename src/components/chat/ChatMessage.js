@@ -1,40 +1,36 @@
-var React = require('react');
-var Linkify = require('react-linkify').default;
-var moment = require('moment');
+const React = require('react');
+const PropTypes = require('prop-types');
+const Linkify = require('react-linkify').default;
+const moment = require('moment');
 
-var ChatActions = require('../../actions/chat-actions.js');
-var Constants = require('../../constants');
-var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
-var urlHelper = require('../../utils/url-helper.js');
+const ChatActions = require('../../actions/chat-actions.js');
+const Constants = require('../../constants');
+const SteamCommunityWindow = require('../../ui/windows/steam-community.js');
+const urlHelper = require('../../utils/url-helper.js');
 
-var ChatMessage = React.createClass({
-  propTypes: {
-    chat: React.PropTypes.object.isRequired,
-    message: React.PropTypes.object.isRequired
-  },
-
-  _onAcceptTradeRequest: function() {
+class ChatMessage extends React.Component {
+  _onAcceptTradeRequest() {
     ChatActions.respondToTradeRequest(this.props.chat, this.props.message, true);
-  },
+  }
 
-  _onDeclineTradeRequest: function() {
+  _onDeclineTradeRequest() {
     ChatActions.respondToTradeRequest(this.props.chat, this.props.message, false);
-  },
+  }
 
-  _onCancelTradeRequest: function() {
+  _onCancelTradeRequest() {
     ChatActions.cancelTradeRequest(this.props.chat.id);
-  },
+  }
 
-  render: function() {
-    var message = this.props.message;
+  render() {
+    const message = this.props.message;
 
-    var text = message.text.split('\n').map(function(line, indexLine) {
+    const text = message.text.split('\n').map((line, indexLine) => {
       // using index as a key shouldn't be an issue here
       return (
         <p key={indexLine}>
           <Linkify properties={{
             onClick: function(event) {
-              var url = event.target.href;
+              const url = event.target.href;
 
               event.preventDefault();
 
@@ -51,7 +47,7 @@ var ChatMessage = React.createClass({
       );
     });
 
-    var extra;
+    let extra;
     if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST) {
       if(message.meta.response) {
         extra = (
@@ -60,9 +56,9 @@ var ChatMessage = React.createClass({
       } else {
         extra = (
           <p>
-            <a href="#" onClick={this._onAcceptTradeRequest}>Accept</a>
+            <a href="#" onClick={(e) => this._onAcceptTradeRequest(e)}>Accept</a>
             {' or '}
-            <a href="#" onClick={this._onDeclineTradeRequest}>Decline</a>
+            <a href="#" onClick={(e) => this._onDeclineTradeRequest(e)}>Decline</a>
           </p>
         );
       }
@@ -76,7 +72,7 @@ var ChatMessage = React.createClass({
       } else {
         extra = (
           <p>
-            <a href="#" onClick={this._onCancelTradeRequest}>Cancel</a>
+            <a href="#" onClick={(e) => this._onCancelTradeRequest(e)}>Cancel</a>
           </p>
         );
       }
@@ -93,6 +89,11 @@ var ChatMessage = React.createClass({
       </li>
     );
   }
-});
+};
+
+ChatMessage.propTypes = {
+  chat: PropTypes.object.isRequired,
+  message: PropTypes.object.isRequired
+};
 
 module.exports = ChatMessage;

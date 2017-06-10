@@ -1,64 +1,66 @@
-var React = require('react');
+const React = require('react');
 
-var UIActions = require('../../actions/ui-actions.js');
-var UserActions = require('../../actions/user-actions.js');
-var UIStore = require('../../stores/ui-store.js');
-var UserStore = require('../../stores/user-store.js');
+const UIActions = require('../../actions/ui-actions.js');
+const UserActions = require('../../actions/user-actions.js');
+const UIStore = require('../../stores/ui-store.js');
+const UserStore = require('../../stores/user-store.js');
 
-var ENTER_KEY = 13;
+const ENTER_KEY = 13;
 
-var ChangeNameDialog = React.createClass({
-  _onChange: function() {
+class ChangeNameDialog extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      uiState: UIStore.get(),
+      displayName: ''
+    };
+  }
+
+  _onChange() {
     this.setState({
       uiState: UIStore.get(),
       displayName: UserStore.get().username || ''
     });
 
-    if(this.refs.displayName) {
-      this.refs.displayName.focus();
-      this.refs.displayName.select();
+    if(this._displayName) {
+      this._displayName.focus();
+      this._displayName.select();
     }
-  },
+  }
 
-  _onDisplayNameChange: function(event) {
+  _onDisplayNameChange(event) {
     this.setState({ displayName: event.target.value });
-  },
+  }
 
-  _onCancel: function() {
+  _onCancel() {
     UIActions.changeNameCloseDialog();
-  },
+  }
 
-  _onSubmit: function(event) {
+  _onSubmit(event) {
     if(event.keyCode === ENTER_KEY) {
       this._onSave();
     }
-  },
+  }
 
-  _onSave: function() {
-    var name = this.state.displayName.trim();
+  _onSave() {
+    const name = this.state.displayName.trim();
 
     if(name !== '') {
       UserActions.changeName(name);
       UIActions.changeNameCloseDialog();
     }
-  },
+  }
 
-  getInitialState: function() {
-    return {
-      uiState: UIStore.get(),
-      displayName: ''
-    };
-  },
+  componentDidMount() {
+    UIStore.addChangeListener(() => this._onChange());
+  }
 
-  componentDidMount: function() {
-    UIStore.addChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    UIStore.removeChangeListener(() => this._onChange());
+  }
 
-  componentWillUnmount: function() {
-    UIStore.removeChangeListener(this._onChange);
-  },
-
-  render: function() {
+  render() {
     if(!this.state.uiState.isChangeNameDialogOpen) {
       return null;
     }
@@ -73,21 +75,21 @@ var ChangeNameDialog = React.createClass({
             <input
               type="text"
               className="form-control"
-              ref="displayName"
+              ref={(c) => { this._displayName = c; }}
               value={this.state.displayName}
-              onChange={this._onDisplayNameChange}
-              onKeyDown={this._onSubmit} />
+              onChange={(e) => this._onDisplayNameChange(e)}
+              onKeyDown={(e) => this._onSubmit(e)} />
         </div>
 
         <footer className="toolbar toolbar-footer">
             <div className="toolbar-actions">
-                <button className="btn btn-default" onClick={this._onCancel}>Cancel</button>
-                <button className="btn btn-primary pull-right" onClick={this._onSave}>Save</button>
+                <button className="btn btn-default" onClick={(e) => this._onCancel(e)}>Cancel</button>
+                <button className="btn btn-primary pull-right" onClick={(e) => this._onSave(e)}>Save</button>
             </div>
         </footer>
       </dialog>
     );
   }
-});
+};
 
 module.exports = ChangeNameDialog;

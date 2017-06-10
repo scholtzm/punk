@@ -1,7 +1,7 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var Component = require('./component.js');
+const Component = require('./component.js');
 
 /**
  * SteamGuard
@@ -14,7 +14,7 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'vapor',
     event: 'steamGuard'
-  }, function(callback) {
+  }, (callback) => {
     ReactDOM.render(<Component callback={callback} />, document.getElementById('app'));
   });
 };

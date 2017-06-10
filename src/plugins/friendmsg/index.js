@@ -1,7 +1,6 @@
-var Dispatcher = require('../../dispatcher');
-var Constants = require('../../constants');
-var ChatActions = require('../../actions/chat-actions.js');
-var Constants = require('../../constants');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
+const ChatActions = require('../../actions/chat-actions.js');
 
 /**
  * Friend Message
@@ -11,13 +10,13 @@ exports.name = 'punk-friendmsg';
 
 exports.plugin = function(API) {
   // Steam client emits typing info only every ~20 seconds so this should be safe.
-  var TYPING_TIMEOUT = 21000;
+  const TYPING_TIMEOUT = 21000;
 
-  var Steam = API.getSteam();
-  var steamFriends = API.getHandler('steamFriends');
-  var typingTimeouts = {};
+  const Steam = API.getSteam();
+  const steamFriends = API.getHandler('steamFriends');
+  const typingTimeouts = {};
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
         steamFriends.sendMessage(action.message.target, action.message.text);
@@ -35,7 +34,7 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'friendMsg'
-  }, function(user, receivedText, type) {
+  }, (user, receivedText, type) => {
     // Steam sends us messages from anyone, even people who are not on our friends list
     if(steamFriends.friends[user] !== Steam.EFriendRelationship.Friend) {
       return;
@@ -45,17 +44,17 @@ exports.plugin = function(API) {
       ChatActions.otherUserIsTyping(user);
 
       clearTimeout(typingTimeouts[user]);
-      typingTimeouts[user] = setTimeout(function() {
+      typingTimeouts[user] = setTimeout(() => {
         ChatActions.otherUserStoppedTyping(user);
       }, TYPING_TIMEOUT);
     } else if(type === Steam.EChatEntryType.ChatMsg) {
-      var username;
-      var persona = steamFriends.personaStates[user];
+      let username;
+      const persona = steamFriends.personaStates[user];
       if(persona) {
         username = persona.player_name;
       }
 
-      var message = {
+      const message = {
         type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
         sender: user,       // SteamID64 string
         username: username, // display name if possible
@@ -70,16 +69,16 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'friendMsgEchoToSender'
-  }, function(user, message, type) {
+  }, (user, message, type) => {
     if(type === Steam.EChatEntryType.ChatMsg) {
-      var username = user;
+      let username = user;
 
-      var persona = steamFriends.personaStates[user];
+      const persona = steamFriends.personaStates[user];
       if(persona) {
         username = persona.player_name;
       }
 
-      var message = {
+      const echoMessage = {
         type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
         target: user,
         username: username,
@@ -87,7 +86,7 @@ exports.plugin = function(API) {
         text: message
       };
 
-      ChatActions.echoMessage(message);
+      ChatActions.echoMessage(echoMessage);
     }
   });
 
@@ -95,7 +94,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     Dispatcher.unregister(token);
   });
 };

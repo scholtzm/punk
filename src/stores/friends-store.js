@@ -1,19 +1,19 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
-var notifier = require('../ui/notifier');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
+const notifier = require('../ui/notifier');
+const EventEmitter = require('events').EventEmitter;
+const assign = require('object-assign');
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
-var _friends = [];
+let _friends = [];
 
 function init(friends) {
   _friends = friends;
 }
 
 function insertOrUpdate(friend) {
-  var existingIndex = getIndexById(friend.id);
+  const existingIndex = getIndexById(friend.id);
 
   if(existingIndex !== undefined) {
     _friends[existingIndex] = friend;
@@ -27,7 +27,7 @@ function insertOrUpdate(friend) {
 }
 
 function remove(id) {
-  var existingIndex = getIndexById(id);
+  const existingIndex = getIndexById(id);
 
   if(existingIndex !== undefined) {
     _friends.splice(existingIndex, 1);
@@ -39,7 +39,7 @@ function clear() {
 }
 
 function getIndexById(id) {
-  for(var i = 0; i < _friends.length; i++) {
+  for(let i = 0; i < _friends.length; i++) {
     if(_friends[i].id === id) {
       // returns number >= 0
       return i;
@@ -49,7 +49,7 @@ function getIndexById(id) {
 }
 
 function getById(id) {
-  var existingIndex = getIndexById(id);
+  const existingIndex = getIndexById(id);
 
   if(existingIndex !== undefined) {
     return _friends[existingIndex];
@@ -57,14 +57,14 @@ function getById(id) {
 }
 
 function setRelationship(id, relationshipEnum) {
-  var friend = getById(id);
+  const friend = getById(id);
 
   if(friend) {
     friend.relationshipEnum = relationshipEnum;
   }
 }
 
-var FriendsStore = assign({}, EventEmitter.prototype, {
+const FriendsStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -93,7 +93,7 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
   // this is probably slow af
   // perhaps prioritized sorting might be faster
   getAllSorted: function() {
-    _friends = _friends.sort(function(a, b) {
+    _friends = _friends.sort((a, b) => {
       if(a.relationshipEnum < b.relationshipEnum) {
         return -1;
       } else if(a.relationshipEnum > b.relationshipEnum) {
@@ -123,7 +123,7 @@ var FriendsStore = assign({}, EventEmitter.prototype, {
 
 });
 
-FriendsStore.dispatchToken = Dispatcher.register(function(action) {
+FriendsStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.FriendsActions.FRIENDS_INIT:
       init(action.friends);

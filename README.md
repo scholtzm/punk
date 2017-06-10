@@ -45,7 +45,7 @@ After cloning the repo, run:
 
 ```sh
 npm install
-npm run build
+npm run build:dev
 # or
 npm run watch
 ```
@@ -61,10 +61,9 @@ npm start
 ### Building the packages
 
 ```sh
-npm run build
-npm run package-osx
+npm run package:osx
 # or
-npm run package-win
+npm run package:win
 ```
 
 A `package` folder will be created.

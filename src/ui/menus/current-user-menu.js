@@ -1,16 +1,16 @@
-var remote = require('electron').remote;
-var Menu = remote.Menu;
-var MenuItem = remote.MenuItem;
+const remote = require('electron').remote;
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
 
-var UserActions = require('../../actions/user-actions.js');
-var UIActions = require('../../actions/ui-actions.js');
+const UserActions = require('../../actions/user-actions.js');
+const UIActions = require('../../actions/ui-actions.js');
 
 module.exports = function(user) {
-  var menu = new Menu();
+  const menu = new Menu();
 
   function appendStateOptionToMenu(label, state) {
-    var type = (state === user.stateEnum) ? 'checkbox' : 'normal';
-    var checked = state === user.stateEnum;
+    const type = (state === user.stateEnum) ? 'checkbox' : 'normal';
+    const checked = state === user.stateEnum;
 
     menu.append(new MenuItem({
       label: label,

@@ -1,7 +1,7 @@
 // var Dispatcher = require('../dispatcher');
 // var Constants = require('../constants');
 
-var SettingsActions = {
+const SettingsActions = {
 
 };
 

@@ -1,7 +1,7 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
 
-var NotificationActions = {
+const NotificationActions = {
 
   updateAll: function(notifications) {
     Dispatcher.dispatch({

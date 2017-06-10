@@ -1,26 +1,29 @@
-var React = require('react');
-var classNames = require('classnames');
+const React = require('react');
+const PropTypes = require('prop-types');
+const classNames = require('classnames');
 
-var ChatActions = require('../../actions/chat-actions.js');
-var FriendsStore = require('../../stores/friends-store.js');
+const ChatActions = require('../../actions/chat-actions.js');
+const FriendsStore = require('../../stores/friends-store.js');
 
-var Tab = React.createClass({
-  propTypes: {
-    chat: React.PropTypes.object.isRequired
-  },
+class Tab extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _onClick: function(event) {
+    this.state = { friend: FriendsStore.getById(this.props.chat.id) };
+  }
+
+  _onClick(event) {
     event.stopPropagation();
     ChatActions.switchChat(this.props.chat);
-  },
+  }
 
-  _onClose: function(event) {
+  _onClose(event) {
     event.stopPropagation();
     ChatActions.closeChat(this.props.chat);
-  },
+  }
 
-  _getStateClassName: function() {
-    var user = this.state.friend;
+  _getStateClassName() {
+    const user = this.state.friend;
 
     if(!user || !user.stateEnum) {
       return 'offline';
@@ -36,40 +39,40 @@ var Tab = React.createClass({
       default:
         return 'online';
     }
-  },
+  }
 
-  _onChange: function() {
+  _onChange() {
     this.setState({ friend: FriendsStore.getById(this.props.chat.id) });
-  },
+  }
 
-  getInitialState: function() {
-    return { friend: FriendsStore.getById(this.props.chat.id) };
-  },
+  componentDidMount() {
+    FriendsStore.addChangeListener(() => this._onChange());
+  }
 
-  componentDidMount: function() {
-    FriendsStore.addChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    FriendsStore.removeChangeListener(() => this._onChange());
+  }
 
-  componentWillUnmount: function() {
-    FriendsStore.removeChangeListener(this._onChange);
-  },
+  render() {
+    const tabClassName = classNames('tab-item', { 'active': this.props.chat.visible });
+    const onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName());
 
-  render: function() {
-    var tabClassName = classNames('tab-item', { 'active': this.props.chat.visible });
-    var onlineStateClassName = classNames('fa', 'fa-circle', this._getStateClassName());
-
-    var tabTitle = this.props.chat.unreadMessageCount > 0 ? '(' + this.props.chat.unreadMessageCount + ') ' : '';
+    let tabTitle = this.props.chat.unreadMessageCount > 0 ? `(${ this.props.chat.unreadMessageCount }) ` : '';
     tabTitle += this.state.friend ? this.state.friend.username : '';
 
     return (
-      <div className={tabClassName} onClick={this._onClick} title={tabTitle}>
-        <span className="icon icon-cancel icon-close-tab" onClick={this._onClose}></span>
+      <div className={tabClassName} onClick={(e) => this._onClick(e)} title={tabTitle}>
+        <span className="icon icon-cancel icon-close-tab" onClick={(e) => this._onClose(e)}></span>
         <i className={onlineStateClassName}></i>
         {' '}
         {tabTitle}
       </div>
     );
   }
-});
+};
+
+Tab.propTypes = {
+  chat: PropTypes.object.isRequired
+};
 
 module.exports = Tab;

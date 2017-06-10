@@ -1,57 +1,59 @@
-var remote = require('electron').remote;
+const remote = require('electron').remote;
 
-var React = require('react');
+const React = require('react');
 const omit = require('lodash.omit');
 
-var NotificationStore = require('../../stores/notification-store.js');
+const NotificationStore = require('../../stores/notification-store.js');
 
-var Notifications = React.createClass({
-  // NOTE: We don't need trade offer notifications since those have a dedicated button.
-  _getNotifications: function() {
-    return omit(NotificationStore.get(), 'tradeOffers');
-  },
+class Notifications extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _onClick: function() {
-    var menu = require('../../ui/menus/notifications-menu.js')(this.state.notifications);
-    menu.popup(remote.getCurrentWindow());
-  },
-
-  _onChange: function() {
-    this.setState({ notifications: this._getNotifications() });
-  },
-
-  getInitialState: function() {
-    return {
+    this.state= {
       notifications: this._getNotifications()
     };
-  },
+  }
 
-  componentDidMount: function() {
-    NotificationStore.addChangeListener(this._onChange);
-  },
+  // NOTE: We don't need trade offer notifications since those have a dedicated button.
+  _getNotifications() {
+    return omit(NotificationStore.get(), 'tradeOffers');
+  }
 
-  componentWillUnmount: function() {
-    NotificationStore.removeChangeListener(this._onChange);
-  },
+  _onClick() {
+    const menu = require('../../ui/menus/notifications-menu.js')(this.state.notifications);
+    menu.popup(remote.getCurrentWindow());
+  }
 
-  render: function() {
+  _onChange() {
+    this.setState({ notifications: this._getNotifications() });
+  }
+
+  componentDidMount() {
+    NotificationStore.addChangeListener(() => this._onChange());
+  }
+
+  componentWillUnmount() {
+    NotificationStore.removeChangeListener(() => this._onChange());
+  }
+
+  render() {
     const count = Object.keys(this.state.notifications)
       .map(key => this.state.notifications[key])
       .reduce((a, b) => a + b, 0);
 
-    var badge = <span/>;
+    let badge = <span/>;
 
     if(count && count > 0) {
       badge = <span className="badge">{count}</span>;
     }
 
     return (
-      <button className="btn btn-default" title="Steam notifications" onClick={this._onClick}>
+      <button className="btn btn-default" title="Steam notifications" onClick={(e) => this._onClick(e)}>
         <i className="fa fa-envelope-o"></i>
         {badge}
       </button>
     );
   }
-});
+};
 
 module.exports = Notifications;

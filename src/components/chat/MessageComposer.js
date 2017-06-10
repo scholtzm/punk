@@ -1,41 +1,44 @@
-var React = require('react');
+const React = require('react');
+const PropTypes = require('prop-types');
 
-var ChatActions = require('../../actions/chat-actions.js');
-var Constants = require('../../constants');
+const ChatActions = require('../../actions/chat-actions.js');
+const Constants = require('../../constants');
 
-var ENTER_KEY = 13;
+const ENTER_KEY = 13;
 
-var MessageComposer = React.createClass({
-  propTypes: {
-    chats: React.PropTypes.object.isRequired
-  },
+class MessageComposer extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _findVisibleChat: function() {
-    for(var id in this.props.chats) {
+    this.state = { text: '' };
+  }
+
+  _findVisibleChat() {
+    for(const id in this.props.chats) {
       if(this.props.chats[id].visible) {
         return this.props.chats[id];
       }
     }
-  },
+  }
 
-  _onChange: function(event) {
+  _onChange(event) {
     this.setState({ text: event.target.value });
 
-    var visible = this._findVisibleChat();
+    const visible = this._findVisibleChat();
 
     if(!visible) {
       return;
     }
 
     ChatActions.weAreTyping(visible.id);
-  },
+  }
 
-  _onKeyDown: function(event) {
+  _onKeyDown(event) {
     if(event.keyCode === ENTER_KEY && !event.shiftKey) {
       event.preventDefault();
-      var text = this.state.text.trim();
+      const text = this.state.text.trim();
       if(text !== '') {
-        var targetChat = this._findVisibleChat();
+        const targetChat = this._findVisibleChat();
 
         ChatActions.newOutgoingMessage({
           type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
@@ -47,26 +50,22 @@ var MessageComposer = React.createClass({
       }
       this.setState({ text: '' });
     }
-  },
+  }
 
-  getInitialState: function() {
-    return { text: '' };
-  },
-
-  componentDidUpdate: function() {
-    if(this.refs.textArea) {
-      this.refs.textArea.focus();
+  componentDidUpdate() {
+    if(this._textArea) {
+      this._textArea.focus();
     }
-  },
+  }
 
-  render: function() {
-    var visible = this._findVisibleChat();
+  render() {
+    const visible = this._findVisibleChat();
 
     if(!visible) {
       return null;
     }
 
-    var extraInfo = (
+    let extraInfo = (
       <div className="extra-info">
         <i className="fa fa-comment-o"></i> You are chatting with {visible.username}
       </div>
@@ -84,16 +83,20 @@ var MessageComposer = React.createClass({
       <div className="message-composer">
         {extraInfo}
         <textarea
-          ref="textArea"
+          ref={(c) => { this._textArea = c; }}
           rows="3"
           className="form-control"
           name="message"
           value={this.state.text}
-          onChange={this._onChange}
-          onKeyDown={this._onKeyDown} />
+          onChange={(e) => this._onChange(e)}
+          onKeyDown={(e) => this._onKeyDown(e)} />
       </div>
     );
   }
-});
+};
+
+MessageComposer.propTypes = {
+  chats: PropTypes.object.isRequired
+};
 
 module.exports = MessageComposer;

@@ -1,12 +1,12 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
-var notifier = require('../ui/notifier');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
+const EventEmitter = require('events').EventEmitter;
+const assign = require('object-assign');
+const notifier = require('../ui/notifier');
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
-var _notifications = {};
+let _notifications = {};
 
 function _tradeOfferNotification(newCount) {
   if(newCount > _notifications.tradeOffers) {
@@ -28,7 +28,7 @@ function clear() {
   _notifications = {};
 }
 
-var NotificationStore = assign({}, EventEmitter.prototype, {
+const NotificationStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -48,7 +48,7 @@ var NotificationStore = assign({}, EventEmitter.prototype, {
 
 });
 
-NotificationStore.dispatchToken = Dispatcher.register(function(action) {
+NotificationStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.NotificationActions.NOTIFICATION_UPDATE_TRADEOFFER_COUNT:
       updateTradeOfferCount(action.count);

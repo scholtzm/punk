@@ -1,14 +1,14 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
-var shortid = require('shortid');
-var remote = require('electron').remote;
-var notifier = require('../ui/notifier');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
+const EventEmitter = require('events').EventEmitter;
+const assign = require('object-assign');
+const shortid = require('shortid');
+const remote = require('electron').remote;
+const notifier = require('../ui/notifier');
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
-var _chats = {};
+let _chats = {};
 
 function _createChat(id) {
   if(!_chats[id]) {
@@ -42,7 +42,7 @@ function _resetUnreadMessageCount(id) {
 }
 
 function _findVisibleChat() {
-  for(var id in _chats) {
+  for(const id in _chats) {
     if(_chats[id].visible) {
       return _chats[id];
     }
@@ -50,7 +50,7 @@ function _findVisibleChat() {
 }
 
 function _toggleVisibleChat(id) {
-  var currentVisibleChat = _findVisibleChat();
+  const currentVisibleChat = _findVisibleChat();
   if(currentVisibleChat) {
     currentVisibleChat.visible = false;
   }
@@ -61,7 +61,7 @@ function _toggleVisibleChat(id) {
 }
 
 function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
-  for(var id in _chats) {
+  for(const id in _chats) {
     if(id !== cannotBeMadeVisibleId && _chats[id].tabbed) {
       return _chats[id];
     }
@@ -73,7 +73,7 @@ function _invalidateTradeRequests(id) {
     return;
   }
 
-  _chats[id].messages.forEach(function(message) {
+  _chats[id].messages.forEach((message) => {
     if(message.meta && message.meta.tradeRequestId && !message.meta.response) {
       message.meta.response = 'Invalid';
     }
@@ -83,7 +83,7 @@ function _invalidateTradeRequests(id) {
 function _getLastTradeRequest(id, ourRequestsOnly) {
   ourRequestsOnly = ourRequestsOnly || false;
 
-  var tradeRequests = _chats[id].messages.filter(function(message) {
+  const tradeRequests = _chats[id].messages.filter((message) => {
     if(message.type === Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST) {
       return true;
     }
@@ -101,7 +101,7 @@ function _getLastTradeRequest(id, ourRequestsOnly) {
 }
 
 function _getTradeRequestById(userId, tradeRequestId) {
-  var messages = _chats[userId].messages.filter(function(message) {
+  const messages = _chats[userId].messages.filter((message) => {
     if(message.meta && message.meta.tradeRequestId === tradeRequestId) {
       return true;
     }
@@ -115,8 +115,8 @@ function _getTradeRequestById(userId, tradeRequestId) {
 }
 
 function openChat(user) {
-  var id = user.id;
-  var username = user.username;
+  const id = user.id;
+  const username = user.username;
 
   _createChat(id);
   _toggleVisibleChat(id);
@@ -127,21 +127,21 @@ function openChat(user) {
 }
 
 function switchChat(chat) {
-  var id = chat.id;
+  const id = chat.id;
 
   _toggleVisibleChat(id);
   _resetUnreadMessageCount(id);
 }
 
 function closeChat(chat) {
-  var id = chat.id;
+  const id = chat.id;
 
   _chats[id].tabbed = false;
 
   if(_chats[id].visible) {
     _chats[id].visible = false;
 
-    var toBeMadeVisible = _findFirstToMakeVisible(id);
+    const toBeMadeVisible = _findFirstToMakeVisible(id);
     if(toBeMadeVisible) {
       toBeMadeVisible.visible = true;
       _resetUnreadMessageCount(toBeMadeVisible.id);
@@ -150,7 +150,7 @@ function closeChat(chat) {
 };
 
 function clearChat(chat) {
-  var id = chat.id;
+  const id = chat.id;
 
   if(_chats[id]) {
     _chats[id].messages = [];
@@ -161,10 +161,10 @@ function newIncomingMessage(message) {
   _createChat(message.sender);
   _createChatMessage(message.sender, message);
 
-  var currentChat = _chats[message.sender];
+  const currentChat = _chats[message.sender];
 
   // make visible if necessary
-  var currentVisibleChat = _findVisibleChat();
+  const currentVisibleChat = _findVisibleChat();
   if(!currentVisibleChat) {
     currentChat.visible = true;
   }
@@ -198,7 +198,7 @@ function newOutgoingMessage(message) {
   _createChatMessage(message.target, message);
 
   // make visible if necessary
-  var currentVisibleChat = _findVisibleChat();
+  const currentVisibleChat = _findVisibleChat();
   if(!currentVisibleChat) {
     _chats[message.target].visible = true;
   }
@@ -215,18 +215,18 @@ function incomingTradeRequestResponse(response) {
 
   if(response.tradeRequestId === 0) {
     // assume this concerns the very last trade request
-    var message = _getLastTradeRequest(response.id);
+    const message = _getLastTradeRequest(response.id);
     if(message) {
       message.meta.response = response.responseEnum;
     }
   } else {
-    var message = _getTradeRequestById(response.id, response.tradeRequestId);
+    const message = _getTradeRequestById(response.id, response.tradeRequestId);
 
     if(message) {
       message.meta.response = response.responseEnum;
     } else {
       // trade request ID did not match, this is probably a trade request which we sent
-      var message = _getLastTradeRequest(response.id, true);
+      const message = _getLastTradeRequest(response.id, true);
       if(message) {
         message.meta.response = response.responseEnum;
       }
@@ -242,7 +242,7 @@ function remove(id) {
   if(_chats[id].visible) {
     _chats[id].visible = false;
 
-    var toBeMadeVisible = _findFirstToMakeVisible(id);
+    const toBeMadeVisible = _findFirstToMakeVisible(id);
     if(toBeMadeVisible) {
       toBeMadeVisible.visible = true;
       _resetUnreadMessageCount(toBeMadeVisible.id);
@@ -272,7 +272,7 @@ function clear() {
   _chats = {};
 }
 
-var ChatStore = assign({}, EventEmitter.prototype, {
+const ChatStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -295,7 +295,7 @@ var ChatStore = assign({}, EventEmitter.prototype, {
   },
 
   getVisible: function() {
-    for(var id in _chats) {
+    for(const id in _chats) {
       if(_chats[id].visible) {
         return _chats[id];
       }
@@ -303,7 +303,7 @@ var ChatStore = assign({}, EventEmitter.prototype, {
   },
 
   getLastIncomingTradeRequestId: function(id) {
-    var incomingTradeRequests = _chats[id].messages.filter(function(message) {
+    const incomingTradeRequests = _chats[id].messages.filter((message) => {
       if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST && message.meta && message.meta.tradeRequestId) {
         return true;
       }
@@ -317,7 +317,7 @@ var ChatStore = assign({}, EventEmitter.prototype, {
 
 });
 
-ChatStore.dispatchToken = Dispatcher.register(function(action) {
+ChatStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.ChatActions.CHAT_OPEN:
       openChat(action.user);
@@ -371,14 +371,14 @@ ChatStore.dispatchToken = Dispatcher.register(function(action) {
       break;
 
     case Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST:
-      var friend = action.friend;
+      const friend = action.friend;
 
-      var message = {
+      const message = {
         type: Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST,
         target: friend.id,
         username: friend.username,
         date: new Date(),
-        text: 'You have sent a trade request to ' + friend.username + '.',
+        text: `You have sent a trade request to ${ friend.username }.`,
         meta: {}
       };
 

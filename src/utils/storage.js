@@ -1,16 +1,16 @@
 /**
  * Central storage with in-memory cache
  */
-var fs = require('fs');
-var path = require('path');
-var mkdirp = require('mkdirp');
+const fs = require('fs');
+const path = require('path');
+const mkdirp = require('mkdirp');
 
-var app = process.type === 'renderer'
+const app = process.type === 'renderer'
   ? require('electron').remote.app
   : require('electron').app;
 
-var _defaultDir = path.join(app.getPath('userData'), 'data');
-var _storage = {};
+const _defaultDir = path.join(app.getPath('userData'), 'data');
+const _storage = {};
 
 function getPath(options) {
   if(options.prefix) {
@@ -32,20 +32,20 @@ function ensurePrefixExists(prefix) {
 
 ensureDirectoryExists(_defaultDir);
 
-var Storage = {};
+const Storage = {};
 
 Storage.set = function(options, callback) {
   if(options.prefix) {
     ensurePrefixExists(options.prefix);
   }
-  var file = getPath(options);
+  const file = getPath(options);
 
   _storage[file] = options.value;
   fs.writeFile(file, options.value, callback);
 };
 
 Storage.get = function(options, callback) {
-  var file = getPath(options);
+  const file = getPath(options);
 
   if(file in _storage) {
     callback(null, _storage[file]);
@@ -59,7 +59,7 @@ Storage.append = function(options, callback) {
   if(options.prefix) {
     ensurePrefixExists(options.prefix);
   }
-  var file = getPath(options);
+  const file = getPath(options);
 
   if(!(file in _storage)) {
     _storage[file] = [];
@@ -70,7 +70,7 @@ Storage.append = function(options, callback) {
 };
 
 Storage.delete = function(options, callback) {
-  var file = getPath(options);
+  const file = getPath(options);
 
   delete _storage[file];
   fs.unlink(file, callback);

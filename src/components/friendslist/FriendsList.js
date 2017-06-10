@@ -1,38 +1,47 @@
-var React = require('react');
+const React = require('react');
 
-var ChatActions = require('../../actions/chat-actions.js');
-var FriendsStore = require('../../stores/friends-store.js');
+const ChatActions = require('../../actions/chat-actions.js');
+const FriendsStore = require('../../stores/friends-store.js');
 
-var FriendsListItem = require('./FriendsListItem.js');
+const FriendsListItem = require('./FriendsListItem.js');
 
-var ENTER_KEY = 13;
+const ENTER_KEY = 13;
 
-var FriendsList = React.createClass({
-  _onChange: function() {
+class FriendsList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      friends: FriendsStore.getAllSorted(),
+      searchTerm: ''
+    };
+  }
+
+  _onChange() {
     this.setState({ friends: FriendsStore.getAllSorted() });
-  },
+  }
 
-  _onSearch: function(event) {
+  _onSearch(event) {
     this.setState({ searchTerm: event.target.value.trim() });
-  },
+  }
 
-  _onSearchSubmit: function(event) {
+  _onSearchSubmit(event) {
     if(event.keyCode === ENTER_KEY) {
       event.preventDefault();
 
-      var firstFriend = this._firstUserThatMatchesSearchTerm();
+      const firstFriend = this._firstUserThatMatchesSearchTerm();
 
       if(firstFriend) {
         ChatActions.openChat(firstFriend);
         this.setState({ searchTerm: '' });
       }
     }
-  },
+  }
 
-  _userMatchesSearchTerm: function(user) {
-    var searchTerm = this.state.searchTerm.toLowerCase();
-    var username = user.username.toLowerCase();
-    var id = user.id.toLowerCase();
+  _userMatchesSearchTerm(user) {
+    const searchTerm = this.state.searchTerm.toLowerCase();
+    const username = user.username.toLowerCase();
+    const id = user.id.toLowerCase();
 
     if(username.indexOf(searchTerm) > -1) {
       return true;
@@ -43,35 +52,28 @@ var FriendsList = React.createClass({
     }
 
     return false;
-  },
+  }
 
-  _firstUserThatMatchesSearchTerm: function() {
-    var friends = this.state.friends;
+  _firstUserThatMatchesSearchTerm() {
+    const friends = this.state.friends;
 
-    for(var id in friends) {
+    for(const id in friends) {
       if(this._userMatchesSearchTerm(friends[id])) {
         return friends[id];
       }
     }
-  },
+  }
 
-  getInitialState: function() {
-    return {
-      friends: FriendsStore.getAllSorted(),
-      searchTerm: ''
-    };
-  },
+  componentDidMount() {
+    FriendsStore.addChangeListener(() => this._onChange());
+  }
 
-  componentDidMount: function() {
-    FriendsStore.addChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    FriendsStore.removeChangeListener(() => this._onChange());
+  }
 
-  componentWillUnmount: function() {
-    FriendsStore.removeChangeListener(this._onChange);
-  },
-
-  render: function() {
-    var self = this;
+  render() {
+    const self = this;
 
     return (
       <ul className="list-group">
@@ -81,10 +83,10 @@ var FriendsList = React.createClass({
             type="text"
             placeholder="Search by name or Steam ID"
             value={this.state.searchTerm}
-            onChange={this._onSearch}
-            onKeyDown={this._onSearchSubmit} />
+            onChange={(e) => this._onSearch(e)}
+            onKeyDown={(e) => this._onSearchSubmit(e)} />
         </li>
-        {self.state.friends.map(function(friend) {
+        {self.state.friends.map((friend) => {
           if(self._userMatchesSearchTerm(friend)) {
             return <FriendsListItem key={friend.id} user={friend} />;
           }
@@ -92,6 +94,6 @@ var FriendsList = React.createClass({
       </ul>
     );
   }
-});
+};
 
 module.exports = FriendsList;

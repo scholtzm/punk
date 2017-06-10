@@ -1,18 +1,18 @@
-var BrowserWindow = require('electron').remote.BrowserWindow;
-var UserStore = require('../../stores/user-store.js');
-var Logger = require('../../utils/logger.js')('sc-window');
-var urlHelper = require('../../utils/url-helper.js');
-var Settings = require('../../utils/settings.js');
+const BrowserWindow = require('electron').remote.BrowserWindow;
+const UserStore = require('../../stores/user-store.js');
+const Logger = require('../../utils/logger.js')('sc-window');
+const urlHelper = require('../../utils/url-helper.js');
+const Settings = require('../../utils/settings.js');
 
-var win;
-var WINDOW_STATE_KEY = 'lastSteamCommunityWindowState';
+let win;
+const WINDOW_STATE_KEY = 'lastSteamCommunityWindowState';
 
 // official Steam client uses this as their user agent
-var USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; Valve Steam Client/1451445940; ) ' + // eslint-disable-line no-unused-vars
+const USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; Valve Steam Client/1451445940; ) ' + // eslint-disable-line no-unused-vars
                  'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.49 Safari/537.36';
 
 function open(url) {
-  var cookies = UserStore.getWebSession().cookies;
+  const cookies = UserStore.getWebSession().cookies;
 
   // if we don't have cookies, abort
   if(cookies.length === 0) {
@@ -28,8 +28,8 @@ function open(url) {
 
   Logger.debug('SteamCommunityWindow: creating new instance');
 
-  Settings.get(WINDOW_STATE_KEY, function(err, data) {
-    var lastWindowsState = err && { width: 1024, height: 768 } || data;
+  Settings.get(WINDOW_STATE_KEY, (err, data) => {
+    const lastWindowsState = err && { width: 1024, height: 768 } || data;
 
     win = new BrowserWindow({
       x: lastWindowsState.x,
@@ -46,11 +46,11 @@ function open(url) {
       autoHideMenuBar: true
     });
 
-    win.on('closed', function() {
+    win.on('closed', () => {
       win = null;
     });
 
-    win.webContents.on('new-window', function(event, newUrl) {
+    win.webContents.on('new-window', (event, newUrl) => {
       event.preventDefault();
 
       if(urlHelper.isSteamUrl(newUrl)) {
@@ -60,14 +60,14 @@ function open(url) {
       }
     });
 
-    win.webContents.on('did-finish-load', function() {
+    win.webContents.on('did-finish-load', () => {
       if(lastWindowsState.maximized) {
         win.maximize();
       }
     });
 
-    cookies.forEach(function(cookie) {
-      var split = cookie.split('=');
+    cookies.forEach((cookie) => {
+      const split = cookie.split('=');
 
       win.webContents.session.cookies.set({
         url : 'https://steamcommunity.com',
@@ -75,7 +75,7 @@ function open(url) {
         value : split[1],
         session: split[0].indexOf('steamLogin') > -1 ? true : false,
         secure: split[0] === 'steamLoginSecure'
-      }, function(){});
+      }, () => {});
 
       win.webContents.session.cookies.set({
         url : 'https://store.steampowered.com',
@@ -83,14 +83,14 @@ function open(url) {
         value : split[1],
         session: split[0].indexOf('steamLogin') > -1 ? true : false,
         secure: split[0] === 'steamLoginSecure'
-      }, function(){});
+      }, () => {});
     });
 
     function preserveWindowState() {
-      var currentWindowsState = win.getBounds();
+      const currentWindowsState = win.getBounds();
       currentWindowsState.maximized = win.isMaximized();
 
-      Settings.set(WINDOW_STATE_KEY, currentWindowsState, function(setErr) {
+      Settings.set(WINDOW_STATE_KEY, currentWindowsState, (setErr) => {
         if(setErr) {
           Logger.error('Failed to save last window state.');
           Logger.error(setErr);
@@ -108,7 +108,7 @@ function open(url) {
   });
 }
 
-var SteamCommunityWindow = {
+const SteamCommunityWindow = {
   open: open
 };
 

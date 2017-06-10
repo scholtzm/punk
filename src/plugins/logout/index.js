@@ -1,11 +1,11 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var Login = require('../../components/login/Login.js');
+const Login = require('../../components/login/Login.js');
 
-var Dispatcher = require('../../dispatcher');
-var Constants = require('../../constants');
-var Storage = require('../../utils/storage.js');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
+const Storage = require('../../utils/storage.js');
 
 /**
  * Logout
@@ -14,14 +14,14 @@ var Storage = require('../../utils/storage.js');
 exports.name = 'punk-logout';
 
 exports.plugin = function(API) {
-  var log = API.getLogger();
+  const log = API.getLogger();
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
-        Storage.delete({ fileName: 'user.json' }, function(error) {
+        Storage.delete({ fileName: 'user.json' }, (error) => {
           if(error && error.code !== 'ENOENT') {
             log.error(error);
           }

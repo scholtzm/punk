@@ -1,17 +1,17 @@
-var remote = require('electron').remote;
-var Menu = remote.Menu;
-var MenuItem = remote.MenuItem;
+const remote = require('electron').remote;
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
 
-var FriendsActions = require('../../actions/friends-actions.js');
-var SteamCommunityWindow = require('../windows/steam-community.js');
+const FriendsActions = require('../../actions/friends-actions.js');
+const SteamCommunityWindow = require('../windows/steam-community.js');
 
 module.exports = function(friend) {
-  var menu = new Menu();
+  const menu = new Menu();
 
   menu.append(new MenuItem({
     label: 'View Steam profile',
     click: function() {
-      SteamCommunityWindow.open('https://steamcommunity.com/profiles/' + friend.id);
+      SteamCommunityWindow.open(`https://steamcommunity.com/profiles/${ friend.id}`);
     }
   }));
 

@@ -1,18 +1,18 @@
 /**
  * App settings
  */
-var Storage = require('./storage.js');
+const Storage = require('./storage.js');
 
-var _fileName = 'settings.json';
-var _settingsCache = {};
+const _fileName = 'settings.json';
+const _settingsCache = {};
 
-var Settings = {};
+const Settings = {};
 
 Settings.set = function(key, value, callback) {
   _settingsCache[key] = value;
 
-  Storage.get({ fileName: _fileName }, function(err, data) {
-    var parsedData = {};
+  Storage.get({ fileName: _fileName }, (err, data) => {
+    let parsedData = {};
     if(err) {
       parsedData[key] = value;
     } else {
@@ -23,7 +23,7 @@ Settings.set = function(key, value, callback) {
         parsedData[key] = value;
       }
     }
-    Storage.set({ fileName: _fileName, value: JSON.stringify(parsedData, null, 2) }, function(setError) {
+    Storage.set({ fileName: _fileName, value: JSON.stringify(parsedData, null, 2) }, (setError) => {
       callback(setError);
     });
   });
@@ -35,12 +35,12 @@ Settings.get = function(key, callback) {
     return;
   }
 
-  Storage.get({ fileName: _fileName }, function(err, data) {
+  Storage.get({ fileName: _fileName }, (err, data) => {
     if(err) {
       callback(err);
     } else {
       try {
-        var parsedData = JSON.parse(data);
+        const parsedData = JSON.parse(data);
         callback(null, parsedData[key]);
       } catch(e) {
         callback(e);

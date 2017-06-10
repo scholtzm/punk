@@ -1,11 +1,8 @@
-var React = require('react');
+const React = require('react');
+const PropTypes = require('prop-types');
 
-var Loader = React.createClass({
-  propTypes: {
-    message: React.PropTypes.string
-  },
-
-  render: function() {
+class Loader extends React.Component {
+  render() {
     return (
       <div className="window">
         <div className="window-content">
@@ -20,6 +17,10 @@ var Loader = React.createClass({
       </div>
     );
   }
-});
+};
+
+Loader. propTypes = {
+  message: PropTypes.string
+};
 
 module.exports = Loader;

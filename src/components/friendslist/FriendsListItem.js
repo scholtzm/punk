@@ -1,17 +1,14 @@
-var remote = require('electron').remote;
+const remote = require('electron').remote;
 
-var React = require('react');
-var classNames = require('classnames');
+const React = require('react');
+const PropTypes = require('prop-types');
+const classNames = require('classnames');
 
-var ChatActions = require('../../actions/chat-actions.js');
-var Constants = require('../../constants');
+const ChatActions = require('../../actions/chat-actions.js');
+const Constants = require('../../constants');
 
-var FriendsListItem = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired
-  },
-
-  _getOnlineStateClassName: function() {
+class FriendsListItem extends React.Component {
+  _getOnlineStateClassName() {
     if(this.props.user.inGame) {
       return 'in-game-border';
     }
@@ -22,31 +19,31 @@ var FriendsListItem = React.createClass({
       default:
         return 'online-border';
     }
-  },
+  }
 
-  _getRelationshipStateClassName: function() {
-    return 'relationship-' + this.props.user.relationshipEnum;
-  },
+  _getRelationshipStateClassName() {
+    return `relationship-${ this.props.user.relationshipEnum}`;
+  }
 
-  _onDoubleClick: function(event) {
+  _onDoubleClick(event) {
     event.preventDefault();
     if(this.props.user.relationshipEnum === Constants.SteamEnums.EFriendRelationship.Friend) {
       ChatActions.openChat(this.props.user);
     }
-  },
+  }
 
-  _onContextMenu: function(event) {
+  _onContextMenu(event) {
     event.preventDefault();
-    var menu = require('../../ui/menus/friends-menu.js')(this.props.user);
+    const menu = require('../../ui/menus/friends-menu.js')(this.props.user);
     menu.popup(remote.getCurrentWindow());
-  },
+  }
 
-  render: function() {
-    var classNameItem = classNames('list-group-item', this._getRelationshipStateClassName());
-    var classNameAvatar = classNames('img-circle', 'media-object', 'pull-left', this._getOnlineStateClassName());
+  render() {
+    const classNameItem = classNames('list-group-item', this._getRelationshipStateClassName());
+    const classNameAvatar = classNames('img-circle', 'media-object', 'pull-left', this._getOnlineStateClassName());
 
     return (
-      <li className={classNameItem} onDoubleClick={this._onDoubleClick} onContextMenu={this._onContextMenu}>
+      <li className={classNameItem} onDoubleClick={(e) => this._onDoubleClick(e)} onContextMenu={(e) => this._onContextMenu(e)}>
         <img className={classNameAvatar} src={this.props.user.avatar} width="32" height="32" />
         <div className="media-body">
           <strong>{this.props.user.username}</strong>
@@ -55,6 +52,10 @@ var FriendsListItem = React.createClass({
       </li>
     );
   }
-});
+};
+
+FriendsListItem.propTypes = {
+  user: PropTypes.object.isRequired
+};
 
 module.exports = FriendsListItem;

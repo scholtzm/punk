@@ -1,11 +1,11 @@
-var remote = require('electron').remote;
-var Menu = remote.Menu;
-var MenuItem = remote.MenuItem;
+const remote = require('electron').remote;
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
 
-var ChatActions = require('../../actions/chat-actions.js');
+const ChatActions = require('../../actions/chat-actions.js');
 
 module.exports = function(chat) {
-  var menu = new Menu();
+  const menu = new Menu();
 
   menu.append(new MenuItem({
     label: 'Clear chat messages',

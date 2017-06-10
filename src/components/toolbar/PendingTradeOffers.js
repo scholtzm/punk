@@ -1,46 +1,48 @@
-var React = require('react');
+const React = require('react');
 
-var NotificationStore = require('../../stores/notification-store.js');
-var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
+const NotificationStore = require('../../stores/notification-store.js');
+const SteamCommunityWindow = require('../../ui/windows/steam-community.js');
 
-var PendingTradeOffers = React.createClass({
-  _onClick: function() {
-    SteamCommunityWindow.open('https://steamcommunity.com/my/tradeoffers/');
-  },
+class PendingTradeOffers extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _onChange: function() {
-    this.setState({ notifications: NotificationStore.get() });
-  },
-
-  getInitialState: function() {
-    return {
+    this.state = {
       notifications: NotificationStore.get()
     };
-  },
+  }
 
-  componentDidMount: function() {
-    NotificationStore.addChangeListener(this._onChange);
-  },
+  _onClick() {
+    SteamCommunityWindow.open('https://steamcommunity.com/my/tradeoffers/');
+  }
 
-  componentWillUnmount: function() {
-    NotificationStore.removeChangeListener(this._onChange);
-  },
+  _onChange() {
+    this.setState({ notifications: NotificationStore.get() });
+  }
 
-  render: function() {
-    var tradeOffers = this.state.notifications.tradeOffers;
-    var badge = <span/>;
+  componentDidMount() {
+    NotificationStore.addChangeListener(() => this._onChange());
+  }
+
+  componentWillUnmount() {
+    NotificationStore.removeChangeListener(() => this._onChange());
+  }
+
+  render() {
+    const tradeOffers = this.state.notifications.tradeOffers;
+    let badge = <span/>;
 
     if(tradeOffers && tradeOffers > 0) {
       badge = <span className="badge">{tradeOffers}</span>;
     }
 
     return (
-      <button className="btn btn-default" title="Pending trade offers" onClick={this._onClick}>
+      <button className="btn btn-default" title="Pending trade offers" onClick={(e) => this._onClick(e)}>
         <i className="fa fa-exchange"></i>
         {badge}
       </button>
     );
   }
-});
+};
 
 module.exports = PendingTradeOffers;

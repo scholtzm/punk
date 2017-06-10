@@ -1,4 +1,4 @@
-var UserActions = require('../../actions/user-actions.js');
+const UserActions = require('../../actions/user-actions.js');
 
 /**
  * Web Session
@@ -7,12 +7,12 @@ var UserActions = require('../../actions/user-actions.js');
 exports.name = 'punk-web-session';
 
 exports.plugin = function(API) {
-  var log = API.getLogger();
+  const log = API.getLogger();
 
   API.registerHandler({
     emitter: 'vapor',
     event: 'cookies'
-  }, function(cookies, sessionid) {
+  }, (cookies, sessionid) => {
     log.debug('Sending cookies to internal storage.');
     UserActions.setWebSession(cookies, sessionid);
   });

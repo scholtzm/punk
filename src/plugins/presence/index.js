@@ -1,5 +1,5 @@
-var Dispatcher = require('../../dispatcher');
-var Constants = require('../../constants');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
 
 /**
  * Presence
@@ -8,9 +8,9 @@ var Constants = require('../../constants');
 exports.name = 'punk-presence';
 
 exports.plugin = function(API) {
-  var steamFriends = API.getHandler('steamFriends');
+  const steamFriends = API.getHandler('steamFriends');
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.UserActions.USER_CHANGE_STATE:
         steamFriends.setPersonaState(action.state);
@@ -29,7 +29,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     Dispatcher.unregister(token);
   });
 };

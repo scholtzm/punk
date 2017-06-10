@@ -1,7 +1,7 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
 
-var ChatActions = {
+const ChatActions = {
 
   newIncomingMessage: function(message) {
     Dispatcher.dispatch({

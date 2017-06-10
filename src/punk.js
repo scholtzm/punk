@@ -1,35 +1,36 @@
-var app = require('electron').remote.app;
+const app = require('electron').remote.app;
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var vapor = require('vapor');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const vapor = require('vapor');
 
-var Loader = require('./components/misc/Loader.js');
-var Login = require('./components/login/Login.js');
+const Loader = require('./components/misc/Loader.js');
+const Login = require('./components/login/Login.js');
 
-var updateChecker = require('./utils/update-checker.js');
-var Storage = require('./utils/storage.js');
-var Logger = require('./utils/logger.js')('punk');
-var plugins = require('./plugins');
+const updateChecker = require('./utils/update-checker.js');
+const Storage = require('./utils/storage.js');
+const Logger = require('./utils/logger.js')('punk');
+const plugins = require('./plugins');
 
 function Punk() {
   this.client = vapor();
 }
 
 Punk.prototype.start = function() {
-  var self = this;
+  const self = this;
 
   Logger.info('Starting %s v%s', app.getName(), app.getVersion());
 
   updateChecker();
 
-  Storage.get({ fileName: 'user.json' }, function(error, data) {
+  Storage.get({ fileName: 'user.json' }, (error, data) => {
     if(error) {
       // assume the file does not exist
       ReactDOM.render(<Login />, document.getElementById('app'));
     } else {
+      let user;
       try {
-        var user = JSON.parse(data);
+        user = JSON.parse(data);
       } catch(e) {
         // ignore the data
         ReactDOM.render(<Login />, document.getElementById('app'));
@@ -41,7 +42,7 @@ Punk.prototype.start = function() {
 
       ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
-      self.init(user, function() {
+      self.init(user, () => {
         self.loadPlugins();
         self.connect();
       });
@@ -50,18 +51,18 @@ Punk.prototype.start = function() {
 };
 
 Punk.prototype.init = function(options, next) {
-  var self = this;
-  var sanitizedUsername = options.username.toLowerCase();
+  const self = this;
+  const sanitizedUsername = options.username.toLowerCase();
 
   // set logonID to something unique
   // official client obfuscates private IP address but we probably don't want this
   options.logonID = Math.floor(new Date() / 1000);
 
-  Storage.get({ prefix: sanitizedUsername, fileName: 'servers.json' }, function(error, data) {
+  Storage.get({ prefix: sanitizedUsername, fileName: 'servers.json' }, (error, data) => {
     if(error) {
       Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
     } else {
-      var servers;
+      let servers;
       try {
         servers = JSON.parse(data);
       } catch(e) {

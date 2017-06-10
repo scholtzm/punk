@@ -1,9 +1,9 @@
-var Constants = require('../../constants');
-var Dispatcher = require('../../dispatcher');
-var ChatActions = require('../../actions/chat-actions.js');
-var ChatStore = require('../../stores/chat-store.js');
+const Constants = require('../../constants');
+const Dispatcher = require('../../dispatcher');
+const ChatActions = require('../../actions/chat-actions.js');
+const ChatStore = require('../../stores/chat-store.js');
 
-var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
+const SteamCommunityWindow = require('../../ui/windows/steam-community.js');
 
 /**
  * Trade
@@ -12,16 +12,16 @@ var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
 exports.name = 'punk-trade';
 
 exports.plugin = function(API) {
-  var Steam = API.getSteam();
-  var log = API.getLogger();
-  var utils = API.getUtils();
-  var steamFriends = API.getHandler('steamFriends');
-  var steamTrading = API.getHandler('steamTrading');
+  const Steam = API.getSteam();
+  const log = API.getLogger();
+  const utils = API.getUtils();
+  const steamFriends = API.getHandler('steamFriends');
+  const steamTrading = API.getHandler('steamTrading');
 
-  var callbacks = {};
+  const callbacks = {};
 
   callbacks[Steam.EMsg.EconTrading_InitiateTradeProposed] = function(body) {
-    var response = Steam.Internal.CMsgTrading_InitiateTradeRequest.decode(body);
+    const response = Steam.Internal.CMsgTrading_InitiateTradeRequest.decode(body);
     log.debug('Received trade request %s from %s.', response.trade_request_id, response.other_steamid);
 
     // Steam sends us trade requests from anyone, even people who are not on our friends list
@@ -30,19 +30,19 @@ exports.plugin = function(API) {
     }
 
     // response.other_name is always null so we use personaStates if possible
-    var username = response.other_steamid;
-    var persona = steamFriends.personaStates[response.other_steamid];
+    let username = response.other_steamid;
+    const persona = steamFriends.personaStates[response.other_steamid];
     if(persona) {
       username = persona.player_name;
     }
 
     // trade request is just a special type of message with extra meta data
-    var message = {
+    const message = {
       type: Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST,
       sender: response.other_steamid, // SteamID64 string
       username: username,             // display name if possible
       date: new Date(),
-      text: username + ' has invited you to trade items.',
+      text: `${username } has invited you to trade items.`,
       meta: {
         tradeRequestId: response.trade_request_id
       }
@@ -55,8 +55,8 @@ exports.plugin = function(API) {
   // We will NOT receive this message for trade requests which we explicitly accept/decline
   // Sometimes when the sender cancels their trade request, we still don't receive this message, thanks Valve
   callbacks[Steam.EMsg.EconTrading_InitiateTradeResult] = function(body) {
-    var response = Steam.Internal.CMsgTrading_InitiateTradeResponse.decode(body);
-    var description = utils.enumToString(response.response, Steam.EEconTradeResponse);
+    const response = Steam.Internal.CMsgTrading_InitiateTradeResponse.decode(body);
+    const description = utils.enumToString(response.response, Steam.EEconTradeResponse);
 
     log.debug('Response to trade request %s: %d (%s).', response.trade_request_id, response.response, description);
 
@@ -66,7 +66,7 @@ exports.plugin = function(API) {
       if(response.trade_request_id !== 0) {
         steamTrading.respondToTrade(response.trade_request_id, false);
       } else {
-        var tradeRequestId = ChatStore.getLastIncomingTradeRequestId(response.other_steamid);
+        const tradeRequestId = ChatStore.getLastIncomingTradeRequestId(response.other_steamid);
         if(tradeRequestId) {
           log.debug('Declined cancelled trade request.');
           steamTrading.respondToTrade(tradeRequestId, false);
@@ -74,14 +74,14 @@ exports.plugin = function(API) {
       }
     }
 
-    var response = {
+    const tradeRequestResponse = {
       response: response.response,
       responseEnum: description,
       tradeRequestId: response.trade_request_id, // this is 0 sometimes
       id: response.other_steamid
     };
 
-    ChatActions.incomingTradeRequestResponse(response);
+    ChatActions.incomingTradeRequestResponse(tradeRequestResponse);
 
     // TODO make use of this info
     // steamguard_required_days: 15,
@@ -93,14 +93,14 @@ exports.plugin = function(API) {
   };
 
   callbacks[Steam.EMsg.EconTrading_StartSession] = function(body) {
-    var response = Steam.Internal.CMsgTrading_StartSession.decode(body);
+    const response = Steam.Internal.CMsgTrading_StartSession.decode(body);
     log.debug('Trading session with %s has started.', response.other_steamid);
 
     // must be http otherwise 'tradestatus' (and possibly other stuff) does not work
-    SteamCommunityWindow.open('http://steamcommunity.com/trade/' + response.other_steamid);
+    SteamCommunityWindow.open(`http://steamcommunity.com/trade/${ response.other_steamid}`);
   };
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
         steamTrading.respondToTrade(action.message.meta.tradeRequestId, action.response);
@@ -109,7 +109,7 @@ exports.plugin = function(API) {
 
       case Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST:
         steamTrading.trade(action.friend.id);
-        log.debug('Sent a trade request to ' + action.friend.username);
+        log.debug(`Sent a trade request to ${ action.friend.username}`);
         break;
 
       case Constants.ChatActions.CHAT_CANCEL_TRADE_REQUEST:
@@ -125,7 +125,7 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'client',
     event: 'message'
-  }, function(header, body) {
+  }, (header, body) => {
     if(header.msg in callbacks) {
       callbacks[header.msg](body);
     }
@@ -135,7 +135,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     Dispatcher.unregister(token);
   });
 };

@@ -1,8 +1,8 @@
-var SteamID = require('steamid');
+const SteamID = require('steamid');
 
-var FriendsActions = require('../../actions/friends-actions.js');
-var UserActions = require('../../actions/user-actions.js');
-var FriendsStore = require('../../stores/friends-store.js');
+const FriendsActions = require('../../actions/friends-actions.js');
+const UserActions = require('../../actions/user-actions.js');
+const FriendsStore = require('../../stores/friends-store.js');
 
 /**
  * Persona State
@@ -14,12 +14,12 @@ var FriendsStore = require('../../stores/friends-store.js');
 exports.name = 'punk-personastate';
 
 exports.plugin = function(API) {
-  var CACHE_FILE_NAME = 'friendslist-cache.json';
-  var EMPTY_AVATAR_HASH = '0000000000000000000000000000000000000000';
-  var DEFAULT_AVATAR_HASH = 'fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb';
-  var EMPTY_FRIEND = { persona: {} };
+  const CACHE_FILE_NAME = 'friendslist-cache.json';
+  const EMPTY_AVATAR_HASH = '0000000000000000000000000000000000000000';
+  const DEFAULT_AVATAR_HASH = 'fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb';
+  const EMPTY_FRIEND = { persona: {} };
 
-  var PERSONA_STATES = [
+  const PERSONA_STATES = [
     'Offline',
     'Online',
     'Busy',
@@ -29,14 +29,14 @@ exports.plugin = function(API) {
     'Looking to Play'
   ];
 
-  var Steam = API.getSteam();
-  var client = API.getClient();
-  var log = API.getLogger();
-  var username = API.getConfig().username;
-  var sanitizedUsername = username.toLowerCase();
+  const Steam = API.getSteam();
+  const client = API.getClient();
+  const log = API.getLogger();
+  const username = API.getConfig().username;
+  const sanitizedUsername = username.toLowerCase();
 
-  var steamFriends = API.getHandler('steamFriends');
-  var pendingWrite = false;
+  const steamFriends = API.getHandler('steamFriends');
+  let pendingWrite = false;
 
   function persistFriendsList() {
     if(pendingWrite) {
@@ -44,10 +44,10 @@ exports.plugin = function(API) {
     }
 
     pendingWrite = true;
-    var friends = FriendsStore.getAll();
+    const friends = FriendsStore.getAll();
 
     if(API.hasHandler('writeFile')) {
-      API.emitEvent('writeFile', { prefix: sanitizedUsername, fileName: CACHE_FILE_NAME, value: JSON.stringify(friends) }, function(error) {
+      API.emitEvent('writeFile', { prefix: sanitizedUsername, fileName: CACHE_FILE_NAME, value: JSON.stringify(friends) }, (error) => {
         if(error) {
           log.error('Failed to persist friends list to cache.');
           log.debug(error);
@@ -63,7 +63,7 @@ exports.plugin = function(API) {
   FriendsStore.addChangeListener(persistFriendsList);
 
   if(API.hasHandler('readFile')) {
-    API.emitEvent('readFile', { prefix: sanitizedUsername, fileName: CACHE_FILE_NAME }, function(error, data) {
+    API.emitEvent('readFile', { prefix: sanitizedUsername, fileName: CACHE_FILE_NAME }, (error, data) => {
       if(error) {
         if(error.code !== 'ENOENT') {
           log.warn('Couldn\'t retrieve friends list from cache.');
@@ -71,9 +71,9 @@ exports.plugin = function(API) {
         }
       } else {
         try {
-          var friends = JSON.parse(data);
+          const friends = JSON.parse(data);
           // assume everyone is offline
-          friends.forEach(function(friend) {
+          friends.forEach((friend) => {
             friend.state = 'Offline';
             friend.stateEnum = Steam.EPersonaState.Offline;
             friend.inGame = false;
@@ -90,12 +90,12 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'relationships'
-  }, function() {
+  }, () => {
     // let's validate cache first
-    var friends = FriendsStore.getAll();
-    var validatedFriends = [];
+    const friends = FriendsStore.getAll();
+    const validatedFriends = [];
 
-    friends.forEach(function(friend) {
+    friends.forEach((friend) => {
       if(steamFriends.friends[friend.id]) {
         validatedFriends.push(friend);
       }
@@ -103,9 +103,9 @@ exports.plugin = function(API) {
 
     FriendsActions.init(validatedFriends);
 
-    var toBeRequested = [];
+    const toBeRequested = [];
 
-    for(var id in steamFriends.friends) {
+    for(const id in steamFriends.friends) {
       if(id === client.steamID) {
         continue;
       }
@@ -117,7 +117,7 @@ exports.plugin = function(API) {
       }
 
       // at this point, we just check FriendsStore
-      var friend = FriendsStore.getById(id);
+      const friend = FriendsStore.getById(id);
       if(!friend) {
         toBeRequested.push(id);
       }
@@ -132,7 +132,7 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'friend'
-  }, function(user, type) {
+  }, (user, type) => {
     if(type === Steam.EFriendRelationship.None) {
       FriendsActions.purge(user);
     } else if(type === Steam.EFriendRelationship.RequestInitiator) {
@@ -143,8 +143,8 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'personaState'
-  }, function(persona) {
-    var id = new SteamID(persona.friendid);
+  }, (persona) => {
+    const id = new SteamID(persona.friendid);
 
     // they use these for groups too, we will ignore them for now
     // perhaps this information can be used later
@@ -153,10 +153,10 @@ exports.plugin = function(API) {
     }
 
     // get old data if we have them
-    var currentFriend = FriendsStore.getById(persona.friendid) || EMPTY_FRIEND;
+    const currentFriend = FriendsStore.getById(persona.friendid) || EMPTY_FRIEND;
 
     // request new data if we are missing avatar
-    var requestNewData = persona.avatar_hash === undefined;
+    const requestNewData = persona.avatar_hash === undefined;
 
     // fix persona since not all fields are sent by Steam
     persona.persona_state = persona.persona_state === undefined
@@ -168,16 +168,16 @@ exports.plugin = function(API) {
     persona.avatar_hash = persona.avatar_hash || currentFriend.persona.avatar_hash || EMPTY_AVATAR_HASH;
 
     // get avatar
-    var hash = persona.avatar_hash.toString('hex');
+    let hash = persona.avatar_hash.toString('hex');
     if(hash === EMPTY_AVATAR_HASH) {
       hash = DEFAULT_AVATAR_HASH;
     }
-    var avatarUrl = 'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/' + hash.substring(0, 2) + '/' + hash + '.jpg';
+    const avatarUrl = `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/${ hash.substring(0, 2) }/${ hash }.jpg`;
 
     // relationship
-    var relationship = steamFriends.friends[persona.friendid];
+    const relationship = steamFriends.friends[persona.friendid];
 
-    var user = {
+    const user = {
       id: persona.friendid,
       username: persona.player_name,
       avatar: avatarUrl,
@@ -211,7 +211,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     FriendsStore.removeChangeListener(persistFriendsList);
   });
 };

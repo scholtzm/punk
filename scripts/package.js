@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
-var path = require('path');
-var packager = require('electron-packager');
-var rimraf = require('rimraf');
-var shell = require('shelljs');
-var packageJson = require('./../package.json');
+const path = require('path');
+const packager = require('electron-packager');
+const rimraf = require('rimraf');
+const shell = require('shelljs');
+const packageJson = require('./../package.json');
 
-var productName = packageJson.productName;
-var appVersion = packageJson.version;
-var electronVersion = packageJson.dependencies['electron'];
-var outputFolder = 'package';
+const productName = packageJson.productName;
+const appVersion = packageJson.version;
+const electronVersion = packageJson.dependencies['electron'];
+const outputFolder = 'package';
 
-var platform = 'darwin';
-var arch = 'x64';
-var icon = 'resources/icon.icns';
+let platform = 'darwin';
+let arch = 'x64';
+let icon = 'resources/icon.icns';
 
 if (process.argv[2] === '--win32') {
   platform = 'win32';
@@ -21,7 +21,7 @@ if (process.argv[2] === '--win32') {
   icon = 'resources/icon.ico';
 }
 
-var options = {
+const options = {
   asar: true,
   dir: '.',
   name: productName,
@@ -39,25 +39,25 @@ var options = {
   ]
 };
 
-rimraf(path.join('.', outputFolder), function(removeErr) {
+rimraf(path.join('.', outputFolder), (removeErr) => {
   if(removeErr) {
     console.log('Failed to remove files');
     console.log(removeErr);
     process.exit(1);
   }
 
-  packager(options, function(error, appPaths) {
-    var appPath = appPaths[0];
+  packager(options, (error, appPaths) => {
+    const appPath = appPaths[0];
 
     if(error) {
       console.log('electron-packager failed with the following error:');
       console.log(error);
       process.exit(1);
     } else {
-      console.log('electron-packager finished packaging ' + productName);
-      console.log('App path: ' + appPath);
-      console.log('Platform: ' + platform);
-      console.log('Arch: ' + arch);
+      console.log(`electron-packager finished packaging ${ productName}`);
+      console.log(`App path: ${ appPath}`);
+      console.log(`Platform: ${ platform}`);
+      console.log(`Arch: ${ arch}`);
 
       if(platform === 'darwin') {
         createOsxPackage(appPath);
@@ -71,11 +71,11 @@ rimraf(path.join('.', outputFolder), function(removeErr) {
 function createOsxPackage(appPath) {
   process.chdir(path.join('.', appPath));
 
-  var zipName = productName + '-v' + appVersion + '-osx.zip';
-  var appName = productName + '.app';
-  var dittoCommand = 'ditto -c -k --sequesterRsrc --keepParent ' + appName + ' ' + zipName;
+  const zipName = `${productName }-v${ appVersion }-osx.zip`;
+  const appName = `${productName }.app`;
+  const dittoCommand = `ditto -c -k --sequesterRsrc --keepParent ${ appName } ${ zipName}`;
 
-  shell.exec(dittoCommand, function(code) {
+  shell.exec(dittoCommand, (code) => {
     console.log('Ditto command exit code:', code);
   });
 }
@@ -83,16 +83,16 @@ function createOsxPackage(appPath) {
 function createWindowsPackage() {
   process.chdir(path.join('.', outputFolder));
 
-  var folderName = productName + '-' + platform + '-' + arch;
-  var appName = productName + '-v' + appVersion + '-' + platform;
-  var zipName = appName + '.zip';
+  const folderName = `${productName }-${ platform }-${ arch}`;
+  const appName = `${productName }-v${ appVersion }-${ platform}`;
+  const zipName = `${appName }.zip`;
 
-  shell.exec('rename ' + folderName + ' ' + appName, function(renameExitCode) {
+  shell.exec(`rename ${ folderName } ${ appName}`, (renameExitCode) => {
     console.log('Rename exit code:', renameExitCode);
 
     // assumes 7z.exe is in PATH
-    shell.exec('7z a ' + zipName + ' ' + appName + ' > nul', function(zipExitCode) {
-      console.log('7zip exit code: ' + zipExitCode);
+    shell.exec(`7z a ${ zipName } ${ appName } > nul`, (zipExitCode) => {
+      console.log(`7zip exit code: ${ zipExitCode}`);
     });
   });
 }

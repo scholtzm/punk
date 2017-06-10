@@ -4,10 +4,10 @@
 exports.name = 'punk-essentials';
 
 exports.plugin = function(API) {
-  var log = API.getLogger();
-  var Steam = API.getSteam();
-  var steamFriends = API.getHandler('steamFriends');
-  var utils = API.getUtils();
+  const log = API.getLogger();
+  const Steam = API.getSteam();
+  const steamFriends = API.getHandler('steamFriends');
+  const utils = API.getUtils();
 
   API.registerHandler({ emitter: 'steamFriends', event: 'friend' }, friend);
   API.registerHandler({ emitter: 'steamFriends', event: 'group' }, group);
@@ -30,7 +30,7 @@ exports.plugin = function(API) {
   }
 
   function relationships() {
-    for(var user in steamFriends.friends) {
+    for(const user in steamFriends.friends) {
       if(steamFriends.friends[user] === Steam.EFriendRelationship.RequestRecipient) {
         log.info('New user (%s) added me while I was offline.', user);
       }

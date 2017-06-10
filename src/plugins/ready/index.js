@@ -1,7 +1,7 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var Main = require('../../components/main/Main.js');
+const Main = require('../../components/main/Main.js');
 
 /**
  * Ready
@@ -10,12 +10,12 @@ var Main = require('../../components/main/Main.js');
 exports.name = 'punk-ready';
 
 exports.plugin = function(API) {
-  var Steam = API.getSteam();
+  const Steam = API.getSteam();
 
   API.registerHandler({
     emitter: 'client',
     event: 'logOnResponse'
-  }, function(response) {
+  }, (response) => {
     if(response.eresult === Steam.EResult.OK) {
       ReactDOM.render(<Main />, document.getElementById('app'));
     }

@@ -1,6 +1,6 @@
-var shell = require('electron').shell;
+const shell = require('electron').shell;
 
-var urlHelper = {};
+const urlHelper = {};
 
 urlHelper.steamUrlRegex = /^https?:\/\/(?:www\.)?(?:steamcommunity|store\.steampowered)\.com\/(?!linkfilter).*$/;
 

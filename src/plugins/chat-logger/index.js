@@ -1,10 +1,10 @@
-var util = require('util');
-var moment = require('moment');
-var path = require('path');
+const util = require('util');
+const moment = require('moment');
+const path = require('path');
 
-var Dispatcher = require('../../dispatcher');
-var Constants = require('../../constants');
-var Storage = require('../../utils/storage.js');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
+const Storage = require('../../utils/storage.js');
 
 /**
  * Chat Logger
@@ -14,25 +14,25 @@ var Storage = require('../../utils/storage.js');
 exports.name = 'punk-chat-logger';
 
 exports.plugin = function(API) {
-  var client = API.getClient();
-  var steamFriends = API.getHandler('steamFriends');
-  var log = API.getLogger();
-  var username = API.getConfig().username;
-  var sanitizedUsername = username.toLowerCase();
+  const client = API.getClient();
+  const steamFriends = API.getHandler('steamFriends');
+  const log = API.getLogger();
+  const username = API.getConfig().username;
+  const sanitizedUsername = username.toLowerCase();
 
   function getKey(id) {
-    return id + '.log';
+    return `${id }.log`;
   }
 
   function formatMessage(id, message) {
-    var displayName = id || '<unknown>';
+    let displayName = id || '<unknown>';
 
-    var persona = steamFriends.personaStates[id];
+    const persona = steamFriends.personaStates[id];
     if(persona) {
       displayName = persona.player_name;
     }
 
-    var timestamp = new Date();
+    const timestamp = new Date();
 
     return util.format('[%s] %s: %s\n', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), displayName, message);
   }
@@ -52,7 +52,7 @@ exports.plugin = function(API) {
     }
   }
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
         Storage.append(createOptions(action.message.target, client.steamID, action.message.text), appendCallback);
@@ -75,7 +75,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     Dispatcher.unregister(token);
   });
 };

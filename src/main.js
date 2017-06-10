@@ -1,27 +1,29 @@
-var electron = require('electron');
-var app = electron.app;
-var BrowserWindow = electron.BrowserWindow;
-var appMenu = require('./ui/menus/app-menu.js');
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const appMenu = require('./ui/menus/app-menu.js');
 
-var Logger = require('./utils/logger.js')('main');
-var Settings = require('./utils/settings.js');
+const Logger = require('./utils/logger.js')('main');
+const Settings = require('./utils/settings.js');
 
 // get this working later? requires submit URL
 // require('crash-reporter').start();
 
-var mainWindow = null;
-var title = app.getName() + ' [v' + app.getVersion() + ']';
-var WINDOW_STATE_KEY = 'lastMainWindowState';
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-app.on('window-all-closed', function() {
+let mainWindow = null;
+const title = `${app.getName() } [v${ app.getVersion() }]`;
+const WINDOW_STATE_KEY = 'lastMainWindowState';
+
+app.on('window-all-closed', () => {
   if(process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on('ready', function() {
-  Settings.get(WINDOW_STATE_KEY, function(err, data) {
-    var lastWindowsState = err && { width: 800, height: 600 } || data;
+app.on('ready', () => {
+  Settings.get(WINDOW_STATE_KEY, (err, data) => {
+    const lastWindowsState = err && { width: 800, height: 600 } || data;
 
     mainWindow = new BrowserWindow({
       x: lastWindowsState.x,
@@ -33,28 +35,28 @@ app.on('ready', function() {
       autoHideMenuBar: true
     });
 
-    mainWindow.loadURL('file://' + __dirname + '/../../static/index.html');
+    mainWindow.loadURL(`file://${ __dirname }/../../static/index.html`);
 
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', () => {
       mainWindow = null;
     });
 
-    mainWindow.webContents.on('did-finish-load', function() {
+    mainWindow.webContents.on('did-finish-load', () => {
       mainWindow.setTitle(title);
       if(lastWindowsState.maximized) {
         mainWindow.maximize();
       }
     });
 
-    mainWindow.on('focus', function() {
+    mainWindow.on('focus', () => {
       mainWindow.flashFrame(false);
     });
 
     function preserveWindowState() {
-      var currentWindowsState = mainWindow.getBounds();
+      const currentWindowsState = mainWindow.getBounds();
       currentWindowsState.maximized = mainWindow.isMaximized();
 
-      Settings.set(WINDOW_STATE_KEY, currentWindowsState, function(setErr) {
+      Settings.set(WINDOW_STATE_KEY, currentWindowsState, (setErr) => {
         if(setErr) {
           Logger.error('Failed to save last window state.');
           Logger.error(setErr);

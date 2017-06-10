@@ -1,7 +1,7 @@
-var Dispatcher = require('../../dispatcher');
-var Constants = require('../../constants');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
 
-var FriendsActions = require('../../actions/friends-actions.js');
+const FriendsActions = require('../../actions/friends-actions.js');
 
 /**
  * Friends
@@ -11,11 +11,11 @@ var FriendsActions = require('../../actions/friends-actions.js');
 exports.name = 'punk-friends';
 
 exports.plugin = function(API) {
-  var Steam = API.getSteam();
-  var steamFriends = API.getHandler('steamFriends');
-  var log = API.getLogger();
+  const Steam = API.getSteam();
+  const steamFriends = API.getHandler('steamFriends');
+  const log = API.getLogger();
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.FriendsActions.FRIENDS_ADD:
         steamFriends.addFriend(action.id);
@@ -28,7 +28,7 @@ exports.plugin = function(API) {
         break;
 
       case Constants.FriendsActions.FRIENDS_BLOCK:
-        steamFriends.setIgnoreFriend(action.friend.id, true, function(result) {
+        steamFriends.setIgnoreFriend(action.friend.id, true, (result) => {
           if(result === Steam.EResult.OK) {
             FriendsActions.purge(action.friend.id);
             log.info('User %s has been blocked.', action.friend.id);
@@ -47,7 +47,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     Dispatcher.unregister(token);
   });
 };

@@ -1,14 +1,11 @@
-var remote = require('electron').remote;
+const remote = require('electron').remote;
 
-var React = require('react');
-var classNames = require('classnames');
+const React = require('react');
+const PropTypes = require('prop-types');
+const classNames = require('classnames');
 
-var CurrentUser = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object.isRequired
-  },
-
-  _getStateClassName: function() {
+class CurrentUser extends React.Component {
+  _getStateClassName() {
     if(!this.props.user.stateEnum) {
       return 'offline';
     }
@@ -23,23 +20,23 @@ var CurrentUser = React.createClass({
       default:
         return 'online';
     }
-  },
+  }
 
-  _onClick: function() {
-    var menu = require('../../ui/menus/current-user-menu.js')(this.props.user);
+  _onClick() {
+    const menu = require('../../ui/menus/current-user-menu.js')(this.props.user);
     menu.popup(remote.getCurrentWindow());
-  },
+  }
 
-  render: function() {
-    var className = classNames('fa', 'fa-circle', this._getStateClassName());
-    var userName = this.props.user.username
-      ? this.props.user.username + ' '
+  render() {
+    const className = classNames('fa', 'fa-circle', this._getStateClassName());
+    const userName = this.props.user.username
+      ? `${this.props.user.username } `
       : 'Loading...';
-    var caret = this.props.user.username ? <i className="fa fa-caret-down"></i> : '';
-    var title = this.props.user.state;
+    const caret = this.props.user.username ? <i className="fa fa-caret-down"></i> : '';
+    const title = this.props.user.state;
 
     return (
-      <button className="btn btn-default" onClick={this._onClick} title={title}>
+      <button className="btn btn-default" onClick={(e) => this._onClick(e)} title={title}>
         <i className={className}></i>
         {' '}
         {userName}
@@ -47,6 +44,10 @@ var CurrentUser = React.createClass({
       </button>
     );
   }
-});
+};
+
+CurrentUser.propTypes = {
+  user: PropTypes.object.isRequired
+};
 
 module.exports = CurrentUser;

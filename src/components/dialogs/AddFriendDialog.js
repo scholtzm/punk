@@ -1,32 +1,41 @@
-var React = require('react');
+const React = require('react');
 
-var UIActions = require('../../actions/ui-actions.js');
-var FriendsActions = require('../../actions/friends-actions.js');
-var UIStore = require('../../stores/ui-store.js');
+const UIActions = require('../../actions/ui-actions.js');
+const FriendsActions = require('../../actions/friends-actions.js');
+const UIStore = require('../../stores/ui-store.js');
 
-var ENTER_KEY = 13;
+const ENTER_KEY = 13;
 
-var AddFriendDialog = React.createClass({
-  _onChange: function() {
+class AddFriendDialog extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      uiState: UIStore.get(),
+      friendId: ''
+    };
+  }
+
+  _onChange() {
     this.setState({ uiState: UIStore.get() });
-  },
+  }
 
-  _onFriendIdChange: function(event) {
+  _onFriendIdChange(event) {
     this.setState({ friendId: event.target.value });
-  },
+  }
 
-  _onCancel: function() {
+  _onCancel() {
     UIActions.addFriendCloseDialog();
-  },
+  }
 
-  _onSubmit: function(event) {
+  _onSubmit(event) {
     if(event.keyCode === ENTER_KEY) {
       this._onSave();
     }
-  },
+  }
 
-  _onSave: function() {
-    var id = this.state.friendId.trim();
+  _onSave() {
+    const id = this.state.friendId.trim();
 
     if(id !== '') {
       FriendsActions.add(id);
@@ -34,30 +43,23 @@ var AddFriendDialog = React.createClass({
 
       this.setState({ displayName: '' });
     }
-  },
+  }
 
-  getInitialState: function() {
-    return {
-      uiState: UIStore.get(),
-      friendId: ''
-    };
-  },
+  componentDidMount() {
+    UIStore.addChangeListener(() => this._onChange());
+  }
 
-  componentDidMount: function() {
-    UIStore.addChangeListener(this._onChange);
-  },
-
-  componentDidUpdate: function() {
-    if(this.refs.friendId) {
-      this.refs.friendId.focus();
+  componentDidUpdate() {
+    if(this._friendId) {
+      this._friendId.focus();
     }
-  },
+  }
 
-  componentWillUnmount: function() {
-    UIStore.removeChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    UIStore.removeChangeListener(() => this._onChange());
+  }
 
-  render: function() {
+  render() {
     if(!this.state.uiState.isAddFriendDialogOpen) {
       return null;
     }
@@ -73,20 +75,20 @@ var AddFriendDialog = React.createClass({
               type="text"
               className="form-control"
               placeholder="SteamID64"
-              ref="friendId"
+              ref={(c) => { this._friendId = c; }}
               value={this.state.friendId}
-              onChange={this._onFriendIdChange} />
+              onChange={(e) => this._onFriendIdChange(e)} />
         </div>
 
         <footer className="toolbar toolbar-footer">
             <div className="toolbar-actions">
-                <button className="btn btn-default" onClick={this._onCancel}>Cancel</button>
-                <button className="btn btn-primary pull-right" onClick={this._onSave}>Save</button>
+                {/* <button className="btn btn-default" onClick={(e) => this._onCancel(e)}>Cancel</button> */}
+                <button className="btn btn-primary pull-right" onClick={(e) => this._onSave(e)}>Save</button>
             </div>
         </footer>
       </dialog>
     );
   }
-});
+};
 
 module.exports = AddFriendDialog;

@@ -1,25 +1,22 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const PropTypes = require('prop-types');
 
-var Loader = require('../../components/misc/Loader.js');
+const Loader = require('../../components/misc/Loader.js');
 
-var SteamGuard = React.createClass({
-  propTypes: {
-    callback: React.PropTypes.func
-  },
-
-  _proceedSteamGuard: function(event) {
+class SteamGuard extends React.Component {
+  _proceedSteamGuard(event) {
     event.preventDefault();
 
-    this.props.callback(this.refs.authCode.value);
+    this.props.callback(this._authCode.value);
     ReactDOM.render(<Loader message="Connecting..." />, document.getElementById('app'));
-  },
+  }
 
-  componentDidMount: function(){
-    this.refs.authCode.focus();
-  },
+  componentDidMount(){
+    this._authCode.focus();
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="window">
         <div className="window-content">
@@ -28,15 +25,19 @@ var SteamGuard = React.createClass({
             <form>
               <div className="form-group">
                 <label>SteamGuard Auth Code</label>
-                <input type="text" name="steamguard" ref="authCode" className="form-control" placeholder="XXXXX"/>
+                <input type="text" name="steamguard" ref={(c) => { this._authCode = c; }} className="form-control" placeholder="XXXXX"/>
               </div>
-              <button className="btn btn-large btn-default" onClick={this._proceedSteamGuard}>Continue</button>
+              <button className="btn btn-large btn-default" onClick={(e) => this._proceedSteamGuard(e)}>Continue</button>
             </form>
           </div>
         </div>
       </div>
     );
   }
-});
+};
+
+SteamGuard.propTypes = {
+  callback: PropTypes.func
+};
 
 module.exports = SteamGuard;

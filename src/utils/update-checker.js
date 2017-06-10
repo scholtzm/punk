@@ -9,7 +9,7 @@ const Logger = require('./logger.js')('updater');
 module.exports = function() {
   Logger.debug('Checking for updates');
 
-  var options = {
+  const options = {
     uri: pkg.repository.updateUrl,
     json: true,
     headers: {

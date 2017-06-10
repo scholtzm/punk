@@ -1,62 +1,59 @@
-var remote = require('electron').remote;
+const remote = require('electron').remote;
 
-var React = require('react');
+const React = require('react');
+const PropTypes = require('prop-types');
 
-var ChatMessage = require('./ChatMessage.js');
+const ChatMessage = require('./ChatMessage.js');
 
-var ChatWindow = React.createClass({
-  propTypes: {
-    chats: React.PropTypes.object.isRequired
-  },
-
-  _findVisibleChat: function() {
-    for(var id in this.props.chats) {
+class ChatWindow extends React.Component {
+  _findVisibleChat() {
+    for(const id in this.props.chats) {
       if(this.props.chats[id].visible) {
         return this.props.chats[id];
       }
     }
-  },
+  }
 
-  _onContextMenu: function(event) {
+  _onContextMenu(event) {
     event.preventDefault();
 
-    var chat = this._findVisibleChat();
+    const chat = this._findVisibleChat();
 
     if(!chat) {
       return;
     }
 
-    var menu = require('../../ui/menus/chat-menu.js')(chat);
+    const menu = require('../../ui/menus/chat-menu.js')(chat);
     menu.popup(remote.getCurrentWindow());
-  },
+  }
 
-  componentWillUpdate: function() {
-    var node = this.refs.content;
+  componentWillUpdate() {
+    const node = this._content;
     this._shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
-  },
+  }
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     if(!this._shouldScrollBottom) {
       return;
     }
 
-    var node = this.refs.content;
+    const node = this._content;
     node.scrollTop = node.scrollHeight;
-  },
+  }
 
-  render: function() {
-    var chat = this._findVisibleChat();
-    var messages;
+  render() {
+    const chat = this._findVisibleChat();
+    let messages;
 
     if(chat) {
-      messages = chat.messages.map(function(message) {
+      messages = chat.messages.map((message) => {
         return <ChatMessage key={message.id} chat={chat} message={message} />;
       });
     }
 
     return (
       <div className="chat-window">
-        <div className="chat-window-content" ref="content" onContextMenu={this._onContextMenu}>
+        <div className="chat-window-content" ref={(c) => { this._content = c; }} onContextMenu={(e) => this._onContextMenu(e)}>
           <ul>
             {messages}
           </ul>
@@ -64,6 +61,10 @@ var ChatWindow = React.createClass({
       </div>
     );
   }
-});
+};
+
+ChatWindow.propTypes = {
+  chats: PropTypes.object.isRequired
+};
 
 module.exports = ChatWindow;

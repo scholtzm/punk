@@ -1,33 +1,41 @@
-var React = require('react');
+const React = require('react');
 
-var ChatStore = require('../../stores/chat-store.js');
+const ChatStore = require('../../stores/chat-store.js');
 
-var Tab = require('./Tab.js');
-var ChatWindow = require('./ChatWindow.js');
-var MessageComposer = require('./MessageComposer.js');
+const Tab = require('./Tab.js');
+const ChatWindow = require('./ChatWindow.js');
+const MessageComposer = require('./MessageComposer.js');
 
-var Chat = React.createClass({
-  _tabbedCount: function() {
-    var count = 0;
+class Chat extends React.Component {
+  constructor(props) {
+    super(props);
 
-    for(var id in this.state.chats) {
+    this.state = {
+      chats: ChatStore.getAll()
+    };
+  }
+
+  _tabbedCount() {
+    let count = 0;
+
+    for(const id in this.state.chats) {
       if(this.state.chats[id].tabbed) {
         count++;
       }
     }
 
     return count;
-  },
+  }
 
-  _onChange: function() {
+  _onChange() {
     this.setState({ chats: ChatStore.getAll() });
-  },
+  }
 
-  _createTabs: function() {
-    var self = this;
+  _createTabs() {
+    const self = this;
 
     if(self._tabbedCount() > 0) {
-      var tabs = Object.keys(self.state.chats).map(function(id) {
+      const tabs = Object.keys(self.state.chats).map((id) => {
         // 'id' is SteamID64
         if(self.state.chats[id].tabbed) {
           return <Tab key={id} chat={self.state.chats[id]} />;
@@ -42,31 +50,28 @@ var Chat = React.createClass({
     }
 
     return <div/>;
-  },
+  }
 
-  getInitialState: function() {
-    return { chats: ChatStore.getAll() };
-  },
 
-  componentDidMount: function() {
-    ChatStore.addChangeListener(this._onChange);
-  },
+  componentDidMount() {
+    ChatStore.addChangeListener(() => this._onChange());
+  }
 
-  componentWillUnmount: function() {
-    ChatStore.removeChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    ChatStore.removeChangeListener(() => this._onChange());
+  }
 
-  render: function() {
-    var tabs = this._createTabs();
+  render() {
+    const tabs = this._createTabs();
 
     return (
-      <div className="chat">
-        {tabs}
-        <ChatWindow chats={this.state.chats}/>
-        <MessageComposer chats={this.state.chats}/>
-      </div>
+        <div className="chat">
+          {tabs}
+          <ChatWindow chats={this.state.chats}/>
+          <MessageComposer chats={this.state.chats}/>
+        </div>
     );
   }
-});
+}
 
 module.exports = Chat;

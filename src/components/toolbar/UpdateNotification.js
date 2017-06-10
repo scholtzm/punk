@@ -3,39 +3,41 @@ const React = require('react');
 const UIStore = require('../../stores/ui-store.js');
 const urlHelper = require('../../utils/url-helper.js');
 
-const UpdateNotification = React.createClass({
-  _onChange: function() {
-    this.setState({ isUpdateAvailable: UIStore.get().isUpdateAvailable });
-  },
+class UpdateNotification extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _onClick: function() {
+    this.state = { isUpdateAvailable: UIStore.get().isUpdateAvailable };
+  }
+
+  _onChange() {
+    this.setState({ isUpdateAvailable: UIStore.get().isUpdateAvailable });
+  }
+
+  _onClick() {
     // TODO: Move all URLs to some config
     urlHelper.openExternal('http://github.com/scholtzm/punk/releases');
-  },
+  }
 
-  getInitialState: function() {
-    return { isUpdateAvailable: UIStore.get().isUpdateAvailable };
-  },
+  componentDidMount() {
+    UIStore.addChangeListener(() => this._onChange());
+  }
 
-  componentDidMount: function() {
-    UIStore.addChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    UIStore.removeChangeListener(() => this._onChange());
+  }
 
-  componentWillUnmount: function() {
-    UIStore.removeChangeListener(this._onChange);
-  },
-
-  render: function() {
+  render() {
     if(!this.state.isUpdateAvailable) {
       return null;
     }
 
     return (
-      <button className="btn btn-default pull-right" title="Update available" onClick={this._onClick}>
+      <button className="btn btn-default pull-right" title="Update available" onClick={(e) => this._onClick(e)}>
         <i className="fa fa-rocket"></i> Update available
       </button>
     );
   }
-});
+};
 
 module.exports = UpdateNotification;

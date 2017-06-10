@@ -1,7 +1,6 @@
-var Dispatcher = require('../../dispatcher');
-var Constants = require('../../constants');
-var ChatActions = require('../../actions/chat-actions.js');
-var Constants = require('../../constants');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
+const ChatActions = require('../../actions/chat-actions.js');
 const FriendsStore = require('../../stores/friends-store.js');
 
 /**
@@ -11,12 +10,12 @@ const FriendsStore = require('../../stores/friends-store.js');
 exports.name = 'punk-offline-messages';
 
 exports.plugin = function(API) {
-  var client = API.getClient();
-  var log = API.getLogger();
-  var Steam = API.getSteam();
-  var utils = API.getUtils();
+  const client = API.getClient();
+  const log = API.getLogger();
+  const Steam = API.getSteam();
+  const utils = API.getUtils();
 
-  var token = Dispatcher.register(function(action) {
+  const token = Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_REQUEST_OFFLINE_MESSAGES:
         log.debug('Requesting unread messages.');
@@ -37,29 +36,29 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'client',
     event: 'message'
-  }, function(header, body) {
+  }, (header, body) => {
     // this will trigger for every person separately
     if(header.msg === Steam.EMsg.ClientFSGetFriendMessageHistoryResponse) {
-      var response = Steam.Internal.CMsgClientFSGetFriendMessageHistoryResponse.decode(body);
+      const response = Steam.Internal.CMsgClientFSGetFriendMessageHistoryResponse.decode(body);
 
-      var unreadMessages = response.messages.filter(function(message) {
+      const unreadMessages = response.messages.filter((message) => {
         return message.unread;
       });
 
       log.debug('# of unread chat messages: %d', unreadMessages.length);
 
-      unreadMessages.forEach(function(message) {
-        var id = utils.accountIDToSteamID(message.accountid);
+      unreadMessages.forEach((message) => {
+        const id = utils.accountIDToSteamID(message.accountid);
 
         // get username if possible
-        var username = id;
+        let username = id;
         const friend = FriendsStore.getById(id);
         if(friend) {
           username = friend.username;
         }
 
         // create message
-        var message = {
+        const incomingMessage = {
           type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
           sender: id,         // SteamID64 string
           username: username, // display name if possible
@@ -67,7 +66,7 @@ exports.plugin = function(API) {
           text: message.message
         };
 
-        ChatActions.newIncomingMessage(message);
+        ChatActions.newIncomingMessage(incomingMessage);
       });
     }
   });
@@ -76,7 +75,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     Dispatcher.unregister(token);
   });
 };

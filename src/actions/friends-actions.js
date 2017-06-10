@@ -1,7 +1,7 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
 
-var FriendsActions = {
+const FriendsActions = {
 
   init: function(friends) {
     Dispatcher.dispatch({

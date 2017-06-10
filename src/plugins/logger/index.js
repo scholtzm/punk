@@ -1,4 +1,4 @@
-var Logger = require('../../utils/logger.js')('vapor');
+const Logger = require('../../utils/logger.js')('vapor');
 
 /**
  * Logger
@@ -10,28 +10,28 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: '*',
     event: 'message:debug'
-  }, function(message) {
+  }, (message) => {
     Logger.debug(message);
   });
 
   API.registerHandler({
     emitter: '*',
     event: 'message:info'
-  }, function(message) {
+  }, (message) => {
     Logger.info(message);
   });
 
   API.registerHandler({
     emitter: '*',
     event: 'message:warn'
-  }, function(message) {
+  }, (message) => {
     Logger.warn(message);
   });
 
   API.registerHandler({
     emitter: '*',
     event: 'message:error'
-  }, function(message) {
+  }, (message) => {
     Logger.error(message);
   });
 };

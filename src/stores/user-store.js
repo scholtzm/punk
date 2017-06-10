@@ -1,13 +1,13 @@
-var Dispatcher = require('../dispatcher');
-var Constants = require('../constants');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
+const EventEmitter = require('events').EventEmitter;
+const assign = require('object-assign');
 
-var CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
-var _user = {};
-var _cookies = [];
-var _sessionid;
+let _user = {};
+let _cookies = [];
+let _sessionid;
 
 function update(user) {
   _user = user;
@@ -24,7 +24,7 @@ function setWebSession(cookies, sessionid) {
   _sessionid = sessionid;
 }
 
-var UserStore = assign({}, EventEmitter.prototype, {
+const UserStore = assign({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -51,7 +51,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
 
 });
 
-UserStore.dispatchToken = Dispatcher.register(function(action) {
+UserStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.UserActions.USER_UPDATE:
       update(action.user);

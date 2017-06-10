@@ -1,5 +1,5 @@
-var request = require('request');
-var NotificationActions = require('../../actions/notification-actions.js');
+const request = require('request');
+const NotificationActions = require('../../actions/notification-actions.js');
 
 /**
  * Notifications
@@ -9,23 +9,23 @@ var NotificationActions = require('../../actions/notification-actions.js');
 exports.name = 'punk-notifications';
 
 exports.plugin = function(API) {
-  var TIMEOUT = 20000;
-  var STEAMCOMMUNITY = 'https://steamcommunity.com';
-  var NOTIFICATIONS_URL = STEAMCOMMUNITY + '/actions/GetNotificationCounts';
+  const TIMEOUT = 20000;
+  const STEAMCOMMUNITY = 'https://steamcommunity.com';
+  const NOTIFICATIONS_URL = `${STEAMCOMMUNITY }/actions/GetNotificationCounts`;
 
-  var log = API.getLogger();
-  var jar = request.jar();
-  var req = request.defaults({ jar: jar });
+  const log = API.getLogger();
+  const jar = request.jar();
+  const req = request.defaults({ jar: jar });
 
-  var interval;
+  let interval;
 
   function getNotifications() {
-    var options = {
+    const options = {
       uri: NOTIFICATIONS_URL,
       json: true
     };
 
-    req.get(options, function(error, response, body) {
+    req.get(options, (error, response, body) => {
       if(body === null || body === undefined) {
         clearInterval(interval);
         // Vapor will keep repeating until successful
@@ -38,7 +38,7 @@ exports.plugin = function(API) {
         return;
       }
 
-      var notifications = {
+      const notifications = {
         tradeOffers: body.notifications[1] || 0,
         gameTurns: body.notifications[2] || 0,
         moderatorMessages: body.notifications[3] || 0,
@@ -59,8 +59,8 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'vapor',
     event: 'cookies'
-  }, function(cookies) {
-    cookies.forEach(function(cookie) {
+  }, (cookies) => {
+    cookies.forEach((cookie) => {
       jar.setCookie(request.cookie(cookie), STEAMCOMMUNITY);
     });
 
@@ -72,7 +72,7 @@ exports.plugin = function(API) {
   API.registerHandler({
     emitter: 'steamUser',
     event: 'tradeOffers'
-  }, function(count) {
+  }, (count) => {
     log.debug('Pending trade offer count: %d.', count);
     NotificationActions.updateTradeOfferCount(count);
   });
@@ -81,7 +81,7 @@ exports.plugin = function(API) {
     emitter: 'plugin',
     plugin: '*',
     event: 'logout'
-  }, function() {
+  }, () => {
     clearInterval(interval);
   });
 };

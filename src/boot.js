@@ -1,8 +1,8 @@
 require('./utils/monkey-patch');
 
-var Punk = require('./punk.js');
+const Punk = require('./punk.js');
 
-var punk = new Punk();
+const punk = new Punk();
 punk.start();
 
 window.punk = punk;

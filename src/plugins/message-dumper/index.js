@@ -5,17 +5,17 @@
 exports.name = 'punk-message-dumper';
 
 exports.plugin = function(API) {
-  var log = API.getLogger();
-  var utils = API.getUtils();
-  var Steam = API.getSteam();
+  const log = API.getLogger();
+  const utils = API.getUtils();
+  const Steam = API.getSteam();
 
-  var ignored = {};
+  const ignored = {};
   ignored[Steam.EMsg.Multi] = true;
 
   API.registerHandler({
     emitter: 'client',
     event: 'message'
-  }, function(header) {
+  }, (header) => {
     if(header.msg in ignored) {
       return;
     }

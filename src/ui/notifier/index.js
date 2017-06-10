@@ -1,22 +1,22 @@
-var notifier = require('node-notifier');
-var remote = require('electron').remote;
+const notifier = require('node-notifier');
+const remote = require('electron').remote;
 
-var Constants = require('../../constants');
-var ChatActions = require('../../actions/chat-actions.js');
-var SteamCommunityWindow = require('../windows/steam-community.js');
-var urlHelper = require('../../utils/url-helper.js');
+const Constants = require('../../constants');
+const ChatActions = require('../../actions/chat-actions.js');
+const SteamCommunityWindow = require('../windows/steam-community.js');
+const urlHelper = require('../../utils/url-helper.js');
 
-var soundPath = 'sounds/beep.mp3';
-var iconPath = __dirname + '/../../../../static/image/icon.png';
+const soundPath = 'sounds/beep.mp3';
+const iconPath = `${__dirname }/../../../../static/image/icon.png`;
 
-notifier.on('click', function(notifierObject, options) {
+notifier.on('click', (notifierObject, options) => {
   if(!options.meta) {
     return;
   }
 
   switch(options.meta.action) {
     case Constants.UIActions.UI_NOTIFICATION_OPEN_URL:
-      var url = options.meta.url;
+      const url = options.meta.url;
 
       if(urlHelper.isSteamUrl(url)) {
         SteamCommunityWindow.open(url);
@@ -34,7 +34,7 @@ notifier.on('click', function(notifierObject, options) {
   }
 });
 
-var notifications = {};
+const notifications = {};
 
 notifications.flash = function(mode) {
   mode = mode || 'informational';
@@ -46,12 +46,12 @@ notifications.flash = function(mode) {
 };
 
 notifications.playSound = function() {
-  var beep = new Audio(soundPath);
+  const beep = new Audio(soundPath);
   beep.play();
 };
 
 notifications.friend = function() {
-  var options = {
+  const options = {
     title: 'New friend request',
     message: 'You have received a friend request!',
     icon: iconPath,
@@ -65,7 +65,7 @@ notifications.friend = function() {
 };
 
 notifications.tradeOffer = function() {
-  var options = {
+  const options = {
     title: 'New trade offer',
     message: 'You have new pending trade offer!',
     icon: iconPath,
@@ -83,8 +83,8 @@ notifications.tradeOffer = function() {
 };
 
 notifications.message = function(options) {
-  var notificationOptions = {
-    title: options.username + ' says:',
+  const notificationOptions = {
+    title: `${options.username } says:`,
     message: options.text,
     icon: iconPath,
     wait: true,

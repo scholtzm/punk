@@ -17,19 +17,28 @@
     }
   },
   "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
-    "eqeqeq": 2,
-    "curly": 2,
-    "quotes": [2, "single"],
-    "no-unused-vars": 2,
-    "no-undef": 2,
-    "no-shadow": 2,
-    "comma-dangle": [2, "never"],
-    "semi": [2, "always"],
-    "space-before-function-paren": [2, "never"],
-    "object-curly-spacing": [2, "always"],
+    "indent": ["error", 2, {"SwitchCase": 1}],
+    "eqeqeq": "error",
+    "curly": "error",
+    "quotes": ["error", "single"],
+    "no-unused-vars": "error",
+    "no-undef": "error",
+    "no-multi-spaces": "error",
+    "no-empty": "error",
+    "comma-dangle": ["error", "never"],
+    "semi": ["error", "always"],
+    "wrap-iife": ["error", "inside"],
+    "linebreak-style": "error",
+    "comma-spacing": ["error", {"before": false, "after": true}],
+    "no-spaced-func": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "object-curly-spacing": ["error", "always"],
+    "prefer-arrow-callback": "error",
 
-    "import/no-unresolved": [2, { "commonjs": true }]
+    "import/no-unresolved": ["error", { "commonjs": true }]
+
   },
   "globals": {
     "punk": true

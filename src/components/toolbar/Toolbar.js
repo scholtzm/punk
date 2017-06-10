@@ -1,57 +1,59 @@
-var React = require('react');
+const React = require('react');
 
-var UIActions = require('../../actions/ui-actions.js');
-var UserStore = require('../../stores/user-store.js');
+const UIActions = require('../../actions/ui-actions.js');
+const UserStore = require('../../stores/user-store.js');
 
-var SteamCommunityWindow = require('../../ui/windows/steam-community.js');
+const SteamCommunityWindow = require('../../ui/windows/steam-community.js');
 
-var CurrentUser = require('./CurrentUser.js');
+const CurrentUser = require('./CurrentUser.js');
 const UpdateNotification = require('./UpdateNotification.js');
-var PendingTradeOffers = require('./PendingTradeOffers.js');
-var Notifications = require('./Notifications.js');
+const PendingTradeOffers = require('./PendingTradeOffers.js');
+const Notifications = require('./Notifications.js');
 
-var Toolbar = React.createClass({
-  _onChange: function() {
-    this.setState({ user: UserStore.get() });
-  },
+class Toolbar extends React.Component {
+  constructor(props) {
+    super(props);
 
-  _onLogout: function() {
-    UIActions.logout();
-  },
-
-  _onAddFriend: function() {
-    UIActions.addFriendOpenDialog();
-  },
-
-  _onOpenStore: function() {
-    SteamCommunityWindow.open('https://store.steampowered.com');
-  },
-
-  _onOpenProfile: function() {
-    SteamCommunityWindow.open('https://steamcommunity.com/my/');
-  },
-
-  getInitialState: function() {
-    return {
+    this.state = {
       user: UserStore.get()
     };
-  },
+  }
 
-  componentDidMount: function() {
-    UserStore.addChangeListener(this._onChange);
-  },
+  _onChange() {
+    this.setState({ user: UserStore.get() });
+  }
 
-  componentWillUnmount: function() {
-    UserStore.removeChangeListener(this._onChange);
-  },
+  _onLogout() {
+    UIActions.logout();
+  }
 
-  render: function() {
+  _onAddFriend() {
+    UIActions.addFriendOpenDialog();
+  }
+
+  _onOpenStore() {
+    SteamCommunityWindow.open('https://store.steampowered.com');
+  }
+
+  _onOpenProfile() {
+    SteamCommunityWindow.open('https://steamcommunity.com/my/');
+  }
+
+  componentDidMount() {
+    UserStore.addChangeListener(() => this._onChange());
+  }
+
+  componentWillUnmount() {
+    UserStore.removeChangeListener(() => this._onChange());
+  }
+
+  render() {
     return (
       <div className="toolbar-actions">
         <CurrentUser user={this.state.user}/>
 
         <div className="btn-group" title="Add a friend">
-          <button className="btn btn-default" onClick={this._onAddFriend}>
+          <button className="btn btn-default" onClick={(e) => this._onAddFriend(e)}>
             <i className="fa fa-user-plus"></i>
           </button>
           <button className="btn btn-default" title="Not implemented yet">
@@ -65,15 +67,15 @@ var Toolbar = React.createClass({
         </div>
 
         <div className="btn-group">
-          <button className="btn btn-default" title="Store" onClick={this._onOpenStore}>
+          <button className="btn btn-default" title="Store" onClick={(e) => this._onOpenStore(e)}>
             <i className="fa fa-shopping-cart"></i>
           </button>
-          <button className="btn btn-default" title="Profile" onClick={this._onOpenProfile}>
+          <button className="btn btn-default" title="Profile" onClick={(e) => this._onOpenProfile(e)}>
             <i className="fa fa-user"></i>
           </button>
         </div>
 
-        <button className="btn btn-default pull-right" title="Logout" onClick={this._onLogout}>
+        <button className="btn btn-default pull-right" title="Logout" onClick={(e) => this._onLogout(e)}>
           <i className="fa fa-sign-out"></i>
         </button>
 
@@ -81,6 +83,6 @@ var Toolbar = React.createClass({
       </div>
     );
   }
-});
+};
 
 module.exports = Toolbar;

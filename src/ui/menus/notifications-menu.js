@@ -1,9 +1,9 @@
-var remote = require('electron').remote;
-var Menu = remote.Menu;
-var MenuItem = remote.MenuItem;
+const remote = require('electron').remote;
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
 
-var ChatActions = require('../../actions/chat-actions.js');
-var SteamCommunityWindow = require('../windows/steam-community.js');
+const ChatActions = require('../../actions/chat-actions.js');
+const SteamCommunityWindow = require('../windows/steam-community.js');
 
 const labels = {
   gameTurns: 'Game turns',
@@ -43,7 +43,7 @@ function appendEmptyMenuItem(menu) {
 }
 
 module.exports = function(notifications) {
-  var menu = new Menu();
+  const menu = new Menu();
 
   const count = Object.keys(notifications)
     .map(key => notifications[key])
