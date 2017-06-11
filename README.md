@@ -45,7 +45,7 @@ After cloning the repo, run:
 
 ```sh
 npm install
-npm run build:dev
+npm run build
 # or
 npm run watch
 ```
