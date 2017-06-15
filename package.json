@@ -19,8 +19,8 @@
     "clean": "gulp clean",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
-    "start": "NODE_ENV=development electron .",
-    "start:prod": "NODE_ENV=production electron .",
+    "start": "cross-env NODE_ENV=development electron .",
+    "start:prod": "cross-env NODE_ENV=production electron .",
     "watch": "gulp watch",
     "package:osx": "npm run build && node scripts/package.js",
     "package:win": "npm run build && node scripts/package.js --win32"
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.0.1",
     "devtron": "^1.4.0",
     "electron": "^1.6.10",
     "electron-packager": "^8.7.1",
