@@ -1,8 +1,8 @@
+const { EventEmitter } = require('events');
+
 const Dispatcher = require('../dispatcher');
 const Constants = require('../constants');
 const notifier = require('../ui/notifier');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
 
 const CHANGE_EVENT = 'change';
 
@@ -64,35 +64,35 @@ function setRelationship(id, relationshipEnum) {
   }
 }
 
-const FriendsStore = assign({}, EventEmitter.prototype, {
+class FriendsStore extends EventEmitter {
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  getByIndex: function(index) {
+  getByIndex(index) {
     return _friends[index];
-  },
+  }
 
-  getById: function(id) {
+  getById(id) {
     return getById(id);
-  },
+  }
 
-  getAll: function() {
+  getAll() {
     return _friends;
-  },
+  }
 
   // this is probably slow af
   // perhaps prioritized sorting might be faster
-  getAllSorted: function() {
+  getAllSorted() {
     _friends = _friends.sort((a, b) => {
       if(a.relationshipEnum < b.relationshipEnum) {
         return -1;
@@ -121,39 +121,41 @@ const FriendsStore = assign({}, EventEmitter.prototype, {
     return _friends;
   }
 
-});
+};
+
+const friendsStore = new FriendsStore();
 
 FriendsStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.FriendsActions.FRIENDS_INIT:
       init(action.friends);
-      FriendsStore.emitChange();
+      friendsStore.emitChange();
       break;
 
     case Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE:
       insertOrUpdate(action.friend);
-      FriendsStore.emitChange();
+      friendsStore.emitChange();
       break;
 
     // we have to update this ourselves in case the user is offline when we accept the friend request
     case Constants.FriendsActions.FRIENDS_ADD:
       setRelationship(action.id, Constants.SteamEnums.EFriendRelationship.Friend);
-      FriendsStore.emitChange();
+      friendsStore.emitChange();
       break;
 
     case Constants.FriendsActions.FRIENDS_REMOVE:
       remove(action.friend.id);
-      FriendsStore.emitChange();
+      friendsStore.emitChange();
       break;
 
     case Constants.FriendsActions.FRIENDS_PURGE:
       remove(action.id);
-      FriendsStore.emitChange();
+      friendsStore.emitChange();
       break;
 
     case Constants.UIActions.UI_LOGOUT:
       clear();
-      FriendsStore.emitChange();
+      friendsStore.emitChange();
       break;
 
     default:
@@ -161,4 +163,4 @@ FriendsStore.dispatchToken = Dispatcher.register((action) => {
   }
 });
 
-module.exports = FriendsStore;
+module.exports = friendsStore;

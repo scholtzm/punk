@@ -1,6 +1,6 @@
+const { EventEmitter } = require('events');
+
 const Dispatcher = require('../dispatcher');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
 
 const CHANGE_EVENT = 'change';
 
@@ -8,25 +8,27 @@ const _settings = {
   checkForUpdatesOnStartup: true
 };
 
-const SettingsStore = assign({}, EventEmitter.prototype, {
+class SettingsStore extends EventEmitter {
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  get: function() {
+  get() {
     return _settings;
   }
 
-});
+};
+
+const settingsStore = new SettingsStore();
 
 SettingsStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
@@ -35,4 +37,4 @@ SettingsStore.dispatchToken = Dispatcher.register((action) => {
   }
 });
 
-module.exports = SettingsStore;
+module.exports = settingsStore;

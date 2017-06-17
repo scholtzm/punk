@@ -1,7 +1,6 @@
 const Dispatcher = require('../dispatcher');
 const Constants = require('../constants');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
+const { EventEmitter } = require('events');
 
 const CHANGE_EVENT = 'change';
 
@@ -24,48 +23,50 @@ function setWebSession(cookies, sessionid) {
   _sessionid = sessionid;
 }
 
-const UserStore = assign({}, EventEmitter.prototype, {
+class UserStore extends EventEmitter {
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  get: function() {
+  get() {
     return _user;
-  },
+  }
 
-  getWebSession: function() {
+  getWebSession() {
     return {
       cookies: _cookies,
       sessionid: _sessionid
     };
   }
 
-});
+};
+
+const userStore = new UserStore();
 
 UserStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.UserActions.USER_UPDATE:
       update(action.user);
-      UserStore.emitChange();
+      userStore.emitChange();
       break;
 
     case Constants.UserActions.USER_SET_WEBSESSION:
       setWebSession(action.cookies, action.sessionid);
-      // UserStore.emitChange();
+      // userStore.emitChange();
       break;
 
     case Constants.UIActions.UI_LOGOUT:
       clear();
-      UserStore.emitChange();
+      userStore.emitChange();
       break;
 
     default:
@@ -73,4 +74,4 @@ UserStore.dispatchToken = Dispatcher.register((action) => {
   }
 });
 
-module.exports = UserStore;
+module.exports = userStore;

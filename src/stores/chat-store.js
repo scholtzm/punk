@@ -1,9 +1,9 @@
-const Dispatcher = require('../dispatcher');
-const Constants = require('../constants');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
+const { EventEmitter } = require('events');
 const shortid = require('shortid');
 const remote = require('electron').remote;
+
+const Dispatcher = require('../dispatcher');
+const Constants = require('../constants');
 const notifier = require('../ui/notifier');
 
 const CHANGE_EVENT = 'change';
@@ -272,37 +272,37 @@ function clear() {
   _chats = {};
 }
 
-const ChatStore = assign({}, EventEmitter.prototype, {
+class ChatStore extends EventEmitter {
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  get: function(id) {
+  get(id) {
     return _chats[id];
-  },
+  }
 
-  getAll: function() {
+  getAll() {
     return _chats;
-  },
+  }
 
-  getVisible: function() {
+  getVisible() {
     for(const id in _chats) {
       if(_chats[id].visible) {
         return _chats[id];
       }
     }
-  },
+  }
 
-  getLastIncomingTradeRequestId: function(id) {
+  getLastIncomingTradeRequestId(id) {
     const incomingTradeRequests = _chats[id].messages.filter((message) => {
       if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST && message.meta && message.meta.tradeRequestId) {
         return true;
@@ -315,59 +315,61 @@ const ChatStore = assign({}, EventEmitter.prototype, {
     }
   }
 
-});
+};
+
+const chatStore = new ChatStore();
 
 ChatStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.ChatActions.CHAT_OPEN:
       openChat(action.user);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_SWITCH:
       switchChat(action.chat);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_CLOSE:
       closeChat(action.chat);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_CLEAR:
       clearChat(action.chat);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE:
       newIncomingMessage(action.message);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
     case Constants.ChatActions.CHAT_ECHO_MESSAGE:
       newOutgoingMessage(action.message);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
       respondToTradeRequest(action.chat, action.message, action.response);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE:
       incomingTradeRequestResponse(action.response);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.OTHER_USER_IS_TYPING:
       otherUserIsTyping(action.steamId);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.ChatActions.OTHER_USER_STOPPED_TYPING:
       otherUserStoppedTyping(action.steamId);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST:
@@ -383,22 +385,22 @@ ChatStore.dispatchToken = Dispatcher.register((action) => {
       };
 
       newOutgoingMessage(message);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.FriendsActions.FRIENDS_REMOVE:
       remove(action.friend.id);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.FriendsActions.FRIENDS_PURGE:
       remove(action.id);
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     case Constants.UIActions.UI_LOGOUT:
       clear();
-      ChatStore.emitChange();
+      chatStore.emitChange();
       break;
 
     default:
@@ -406,4 +408,4 @@ ChatStore.dispatchToken = Dispatcher.register((action) => {
   }
 });
 
-module.exports = ChatStore;
+module.exports = chatStore;

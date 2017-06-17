@@ -33,7 +33,6 @@
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
     "node-notifier": "^5.1.2",
-    "object-assign": "^4.1.1",
     "photon": "github:connors/photon#5a1a8ef12fa9e16559ac090baef667707399a1c3",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",

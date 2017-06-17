@@ -1,7 +1,7 @@
+const { EventEmitter } = require('events');
+
 const Dispatcher = require('../dispatcher');
 const Constants = require('../constants');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
 
 const CHANGE_EVENT = 'change';
 
@@ -15,51 +15,53 @@ function set(key, value) {
   _state[key] = value;
 }
 
-const UIStore = assign({}, EventEmitter.prototype, {
+class UIStore extends EventEmitter {
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  get: function() {
+  get() {
     return _state;
   }
 
-});
+};
+
+const uiStore = new UIStore();
 
 UIStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.UIActions.UI_CHANGE_NAME_OPEN_DIALOG:
       set('isChangeNameDialogOpen', true);
-      UIStore.emitChange();
+      uiStore.emitChange();
       break;
 
     case Constants.UIActions.UI_CHANGE_NAME_CLOSE_DIALOG:
       set('isChangeNameDialogOpen', false);
-      UIStore.emitChange();
+      uiStore.emitChange();
       break;
 
     case Constants.UIActions.UI_ADD_FRIEND_OPEN_DIALOG:
       set('isAddFriendDialogOpen', true);
-      UIStore.emitChange();
+      uiStore.emitChange();
       break;
 
     case Constants.UIActions.UI_ADD_FRIEND_CLOSE_DIALOG:
       set('isAddFriendDialogOpen', false);
-      UIStore.emitChange();
+      uiStore.emitChange();
       break;
 
     case Constants.UIActions.UI_UPDATE_AVAILABLE:
       set('isUpdateAvailable', true);
-      UIStore.emitChange();
+      uiStore.emitChange();
       break;
 
     default:
@@ -67,4 +69,4 @@ UIStore.dispatchToken = Dispatcher.register((action) => {
   }
 });
 
-module.exports = UIStore;
+module.exports = uiStore;;

@@ -1,7 +1,7 @@
+const { EventEmitter } = require('events');
+
 const Dispatcher = require('../dispatcher');
 const Constants = require('../constants');
-const EventEmitter = require('events').EventEmitter;
-const assign = require('object-assign');
 const notifier = require('../ui/notifier');
 
 const CHANGE_EVENT = 'change';
@@ -28,41 +28,43 @@ function clear() {
   _notifications = {};
 }
 
-const NotificationStore = assign({}, EventEmitter.prototype, {
+class NotificationStore extends EventEmitter {
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  get: function() {
+  get() {
     return _notifications;
   }
 
-});
+};
+
+const notificationStore = new NotificationStore();
 
 NotificationStore.dispatchToken = Dispatcher.register((action) => {
   switch(action.type) {
     case Constants.NotificationActions.NOTIFICATION_UPDATE_TRADEOFFER_COUNT:
       updateTradeOfferCount(action.count);
-      NotificationStore.emitChange();
+      notificationStore.emitChange();
       break;
 
     case Constants.NotificationActions.NOTIFICATION_UPDATE_ALL:
       updateAll(action.notifications);
-      NotificationStore.emitChange();
+      notificationStore.emitChange();
       break;
 
     case Constants.UIActions.UI_LOGOUT:
       clear();
-      NotificationStore.emitChange();
+      notificationStore.emitChange();
       break;
 
     default:
@@ -70,4 +72,4 @@ NotificationStore.dispatchToken = Dispatcher.register((action) => {
   }
 });
 
-module.exports = NotificationStore;
+module.exports = notificationStore;
