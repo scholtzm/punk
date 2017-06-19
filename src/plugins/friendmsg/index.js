@@ -57,7 +57,7 @@ exports.plugin = function(API) {
       const message = {
         type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
         sender: user,       // SteamID64 string
-        username: username, // display name if possible
+        username, // display name if possible
         date: new Date(),
         text: receivedText
       };
@@ -81,7 +81,7 @@ exports.plugin = function(API) {
       const echoMessage = {
         type: Constants.MessageTypes.CHAT_OUR_MESSAGE,
         target: user,
-        username: username,
+        username,
         date: new Date(),
         text: message
       };

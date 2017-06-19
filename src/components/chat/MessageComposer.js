@@ -45,7 +45,7 @@ class MessageComposer extends React.Component {
           target: targetChat.id,
           username: targetChat.username,
           date: new Date(),
-          text: text
+          text
         });
       }
       this.setState({ text: '' });

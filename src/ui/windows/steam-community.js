@@ -109,7 +109,7 @@ function open(url) {
 }
 
 const SteamCommunityWindow = {
-  open: open
+  open
 };
 
 module.exports = SteamCommunityWindow;

@@ -11,7 +11,7 @@ module.exports = function(friend) {
 
   menu.append(new MenuItem({
     label: 'View Steam profile',
-    click: function() {
+    click() {
       SteamCommunityWindow.open(`https://steamcommunity.com/profiles/${ friend.id}`);
     }
   }));
@@ -19,42 +19,42 @@ module.exports = function(friend) {
   if(friend.relationshipEnum === Constants.SteamEnums.EFriendRelationship.RequestRecipient) {
     menu.append(new MenuItem({
       label: 'Accept friend request',
-      click: function() {
+      click() {
         FriendsActions.add(friend.id);
       }
     }));
 
     menu.append(new MenuItem({
       label: 'Decline friend request',
-      click: function() {
+      click() {
         FriendsActions.remove(friend);
       }
     }));
   } else if(friend.relationshipEnum === Constants.SteamEnums.EFriendRelationship.Friend) {
     menu.append(new MenuItem({
       label: 'Send trade request',
-      click: function() {
+      click() {
         FriendsActions.sendTradeRequest(friend);
       }
     }));
 
     menu.append(new MenuItem({
       label: 'Remove from friends',
-      click: function() {
+      click() {
         FriendsActions.remove(friend);
       }
     }));
 
     menu.append(new MenuItem({
       label: 'Block communication',
-      click: function() {
+      click() {
         FriendsActions.block(friend);
       }
     }));
   } else if(friend.relationshipEnum === Constants.SteamEnums.EFriendRelationship.RequestInitiator) {
     menu.append(new MenuItem({
       label: 'Cancel outstanding friend request',
-      click: function() {
+      click() {
         FriendsActions.remove(friend);
       }
     }));

@@ -3,32 +3,32 @@ const Constants = require('../constants');
 
 const UserActions = {
 
-  update: function(user) {
+  update(user) {
     Dispatcher.dispatch({
       type: Constants.UserActions.USER_UPDATE,
-      user: user
+      user
     });
   },
 
-  changeState: function(state) {
+  changeState(state) {
     Dispatcher.dispatch({
       type: Constants.UserActions.USER_CHANGE_STATE,
-      state: state
+      state
     });
   },
 
-  changeName: function(name) {
+  changeName(name) {
     Dispatcher.dispatch({
       type: Constants.UserActions.USER_CHANGE_NAME,
-      name: name
+      name
     });
   },
 
-  setWebSession: function(cookies, sessionid) {
+  setWebSession(cookies, sessionid) {
     Dispatcher.dispatch({
       type: Constants.UserActions.USER_SET_WEBSESSION,
-      cookies: cookies,
-      sessionid: sessionid
+      cookies,
+      sessionid
     });
   }
 

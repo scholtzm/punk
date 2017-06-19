@@ -13,7 +13,7 @@ exports.plugin = function(API) {
     const username = API.getConfig().username;
 
     const user = {
-      username: username,
+      username,
       loginKey: loginKey.toString()
     };
 

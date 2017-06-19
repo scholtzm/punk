@@ -3,38 +3,38 @@ const Constants = require('../constants');
 
 const UIActions = {
 
-  changeNameOpenDialog: function() {
+  changeNameOpenDialog() {
     Dispatcher.dispatch({
       type: Constants.UIActions.UI_CHANGE_NAME_OPEN_DIALOG
     });
   },
 
-  changeNameCloseDialog: function() {
+  changeNameCloseDialog() {
     Dispatcher.dispatch({
       type: Constants.UIActions.UI_CHANGE_NAME_CLOSE_DIALOG
     });
   },
 
-  addFriendOpenDialog: function() {
+  addFriendOpenDialog() {
     Dispatcher.dispatch({
       type: Constants.UIActions.UI_ADD_FRIEND_OPEN_DIALOG
     });
   },
 
-  addFriendCloseDialog: function() {
+  addFriendCloseDialog() {
     Dispatcher.dispatch({
       type: Constants.UIActions.UI_ADD_FRIEND_CLOSE_DIALOG
     });
   },
 
-  logout: function(message) {
+  logout(message) {
     Dispatcher.dispatch({
       type: Constants.UIActions.UI_LOGOUT,
-      message: message
+      message
     });
   },
 
-  notifyUpdateAvailable: function() {
+  notifyUpdateAvailable() {
     Dispatcher.dispatch({
       type: Constants.UIActions.UI_UPDATE_AVAILABLE
     });

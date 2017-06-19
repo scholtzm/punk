@@ -3,59 +3,59 @@ const Constants = require('../constants');
 
 const FriendsActions = {
 
-  init: function(friends) {
+  init(friends) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_INIT,
-      friends: friends
+      friends
     });
   },
 
-  insertOrUpdate: function(friend) {
+  insertOrUpdate(friend) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_INSERT_OR_UPDATE,
-      friend: friend
+      friend
     });
   },
 
-  remove: function(friend) {
+  remove(friend) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_REMOVE,
-      friend: friend
+      friend
     });
   },
 
-  block: function(friend) {
+  block(friend) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_BLOCK,
-      friend: friend
+      friend
     });
   },
 
-  unblock: function(friend) {
+  unblock(friend) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_UNBLOCK,
-      friend: friend
+      friend
     });
   },
 
-  add: function(id) {
+  add(id) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_ADD,
-      id: id
+      id
     });
   },
 
-  sendTradeRequest: function(friend) {
+  sendTradeRequest(friend) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_SEND_TRADE_REQUEST,
-      friend: friend
+      friend
     });
   },
 
-  purge: function(id) {
+  purge(id) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_PURGE,
-      id: id
+      id
     });
   }
 

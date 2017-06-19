@@ -29,7 +29,7 @@ class ChatMessage extends React.Component {
       return (
         <p key={indexLine}>
           <Linkify properties={{
-            onClick: function(event) {
+            onClick(event) {
               const url = event.target.href;
 
               event.preventDefault();

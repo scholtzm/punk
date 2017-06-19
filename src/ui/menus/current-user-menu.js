@@ -13,12 +13,12 @@ module.exports = function(user) {
     const checked = state === user.stateEnum;
 
     menu.append(new MenuItem({
-      label: label,
-      click: function() {
+      label,
+      click() {
         UserActions.changeState(state);
       },
-      type: type,
-      checked: checked
+      type,
+      checked
     }));
   }
 
@@ -34,7 +34,7 @@ module.exports = function(user) {
 
   menu.append(new MenuItem({
     label: 'Change name',
-    click: function() {
+    click() {
       UIActions.changeNameOpenDialog();
     }
   }));

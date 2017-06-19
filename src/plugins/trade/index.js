@@ -40,7 +40,7 @@ exports.plugin = function(API) {
     const message = {
       type: Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST,
       sender: response.other_steamid, // SteamID64 string
-      username: username,             // display name if possible
+      username,             // display name if possible
       date: new Date(),
       text: `${username } has invited you to trade items.`,
       meta: {

@@ -195,7 +195,7 @@ exports.plugin = function(API) {
       relationshipEnum: relationship,
 
       // store the old persona object
-      persona: persona
+      persona
     };
 
     // let's ship the object

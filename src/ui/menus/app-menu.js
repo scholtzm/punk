@@ -51,7 +51,7 @@ const template = [
       {
         label: 'Reload',
         accelerator: 'CmdOrCtrl+R',
-        click: function(item, focusedWindow) {
+        click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.reload();
           }
@@ -66,7 +66,7 @@ const template = [
             return 'F11';
           }
         })(),
-        click: function(item, focusedWindow) {
+        click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
           }
@@ -81,7 +81,7 @@ const template = [
             return 'Ctrl+Shift+I';
           }
         })(),
-        click: function(item, focusedWindow) {
+        click(item, focusedWindow) {
           if (focusedWindow) {
             focusedWindow.toggleDevTools();
           }
@@ -111,13 +111,13 @@ const template = [
     submenu: [
       {
         label: 'Learn More',
-        click: function() {
+        click() {
           require('electron').shell.openExternal('http://github.com/scholtzm/punk');
         }
       },
       {
         label: 'Report an Issue',
-        click: function() {
+        click() {
           require('electron').shell.openExternal('http://github.com/scholtzm/punk/issues');
         }
       }
@@ -166,7 +166,7 @@ if (process.platform === 'darwin') {
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click: function() {
+        click() {
           app.quit();
         }
       }
@@ -185,7 +185,7 @@ if (process.platform === 'darwin') {
 }
 
 const self = {
-  register: function() {
+  register() {
     const appMenu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(appMenu);
   }

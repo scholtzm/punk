@@ -3,102 +3,102 @@ const Constants = require('../constants');
 
 const ChatActions = {
 
-  newIncomingMessage: function(message) {
+  newIncomingMessage(message) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE,
-      message: message
+      message
     });
   },
 
-  newOutgoingMessage: function(message) {
+  newOutgoingMessage(message) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE,
-      message: message
+      message
     });
   },
 
-  echoMessage: function(message) {
+  echoMessage(message) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_ECHO_MESSAGE,
-      message: message
+      message
     });
   },
 
-  openChat: function(user) {
+  openChat(user) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_OPEN,
-      user: user
+      user
     });
   },
 
-  switchChat: function(chat) {
+  switchChat(chat) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_SWITCH,
-      chat: chat
+      chat
     });
   },
 
-  closeChat: function(chat) {
+  closeChat(chat) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_CLOSE,
-      chat: chat
+      chat
     });
   },
 
-  clearChat: function(chat) {
+  clearChat(chat) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_CLEAR,
-      chat: chat
+      chat
     });
   },
 
-  requestOfflineMessages: function() {
+  requestOfflineMessages() {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_REQUEST_OFFLINE_MESSAGES
     });
   },
 
-  respondToTradeRequest: function(chat, message, response) {
+  respondToTradeRequest(chat, message, response) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST,
-      chat: chat,
-      message: message,
-      response: response
+      chat,
+      message,
+      response
     });
   },
 
-  incomingTradeRequestResponse: function(response) {
+  incomingTradeRequestResponse(response) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_INCOMING_TRADE_REQUEST_RESPONSE,
-      response: response
+      response
     });
   },
 
-  cancelTradeRequest: function(id) {
+  cancelTradeRequest(id) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.CHAT_CANCEL_TRADE_REQUEST,
-      id: id
+      id
     });
   },
 
-  otherUserIsTyping: function(steamId) {
+  otherUserIsTyping(steamId) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.OTHER_USER_IS_TYPING,
-      steamId: steamId
+      steamId
     });
   },
 
-  otherUserStoppedTyping: function(steamId) {
+  otherUserStoppedTyping(steamId) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.OTHER_USER_STOPPED_TYPING,
-      steamId: steamId
+      steamId
     });
   },
 
-  weAreTyping: function(steamId) {
+  weAreTyping(steamId) {
     Dispatcher.dispatch({
       type: Constants.ChatActions.WE_ARE_TYPING,
-      steamId: steamId
+      steamId
     });
   }
 };

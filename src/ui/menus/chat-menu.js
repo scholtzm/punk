@@ -9,7 +9,7 @@ module.exports = function(chat) {
 
   menu.append(new MenuItem({
     label: 'Clear chat messages',
-    click: function() {
+    click() {
       ChatActions.clearChat(chat);
     }
   }));

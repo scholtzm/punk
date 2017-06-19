@@ -61,7 +61,7 @@ exports.plugin = function(API) {
         const incomingMessage = {
           type: Constants.MessageTypes.CHAT_THEIR_MESSAGE,
           sender: id,         // SteamID64 string
-          username: username, // display name if possible
+          username, // display name if possible
           date: new Date(message.timestamp * 1000),
           text: message.message
         };

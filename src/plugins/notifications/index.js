@@ -15,7 +15,7 @@ exports.plugin = function(API) {
 
   const log = API.getLogger();
   const jar = request.jar();
-  const req = request.defaults({ jar: jar });
+  const req = request.defaults({ jar });
 
   let interval;
 
