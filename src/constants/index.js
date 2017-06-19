@@ -6,6 +6,9 @@ module.exports = {
     FRIENDS_BLOCK: 'FRIENDS_BLOCK',
     FRIENDS_ADD: 'FRIENDS_ADD',
     FRIENDS_SEND_TRADE_REQUEST: 'FRIENDS_SEND_TRADE_REQUEST',
+
+    // Does not trigger action on Steam client; only purges from stores
+    // TODO: Merge with FRIENDS_REMOVE and additional parameter
     FRIENDS_PURGE: 'FRIENDS_PURGE'
   },
 

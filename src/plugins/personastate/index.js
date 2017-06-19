@@ -35,6 +35,12 @@ exports.plugin = function(API) {
   const username = API.getConfig().username;
   const sanitizedUsername = username.toLowerCase();
 
+  const DEFAULT_INFO_REQUEST = Steam.EClientPersonaStateFlag.PlayerName |
+    Steam.EClientPersonaStateFlag.Presence |
+    Steam.EClientPersonaStateFlag.SourceID |
+    Steam.EClientPersonaStateFlag.GameExtraInfo |
+    Steam.EClientPersonaStateFlag.LastSeen;
+
   const steamFriends = API.getHandler('steamFriends');
   let pendingWrite = false;
 
@@ -78,6 +84,7 @@ exports.plugin = function(API) {
             friend.stateEnum = Steam.EPersonaState.Offline;
             friend.inGame = false;
           });
+
           FriendsActions.init(friends);
         } catch(e) {
           log.error('Failed to parse friends list cache data.');
@@ -87,22 +94,17 @@ exports.plugin = function(API) {
     });
   }
 
+  function isDefaultRelationGroup(relationship) {
+    return relationship === Steam.EFriendRelationship.RequestRecipient ||
+      relationship === Steam.EFriendRelationship.Friend ||
+      relationship === Steam.EFriendRelationship.RequestInitiator ||
+      relationship === Steam.EFriendRelationship.IgnoredFriend;
+  }
+
   API.registerHandler({
     emitter: 'steamFriends',
     event: 'relationships'
   }, () => {
-    // let's validate cache first
-    const friends = FriendsStore.getAll();
-    const validatedFriends = [];
-
-    friends.forEach((friend) => {
-      if(steamFriends.friends[friend.id]) {
-        validatedFriends.push(friend);
-      }
-    });
-
-    FriendsActions.init(validatedFriends);
-
     const toBeRequested = [];
 
     for(const id in steamFriends.friends) {
@@ -110,22 +112,20 @@ exports.plugin = function(API) {
         continue;
       }
 
-      if(steamFriends.friends[id] !== Steam.EFriendRelationship.RequestRecipient &&
-         steamFriends.friends[id] !== Steam.EFriendRelationship.Friend &&
-         steamFriends.friends[id] !== Steam.EFriendRelationship.RequestInitiator) {
-        continue;
-      }
-
-      // at this point, we just check FriendsStore
-      const friend = FriendsStore.getById(id);
-      if(!friend) {
+      // Regular Steam client shows only these 4 groups
+      if(isDefaultRelationGroup(steamFriends.friends[id])) {
         toBeRequested.push(id);
       }
     }
 
+    // Let's validate cache first
+    const friends = FriendsStore.getAll();
+    const validatedFriends = friends.filter(friend => toBeRequested.includes[friend.id]);
+    FriendsActions.init(validatedFriends);
+
     // we send a single request
     if(toBeRequested.length > 0) {
-      steamFriends.requestFriendData(toBeRequested);
+      steamFriends.requestFriendData(toBeRequested, DEFAULT_INFO_REQUEST);
     }
   });
 
@@ -135,8 +135,10 @@ exports.plugin = function(API) {
   }, (user, type) => {
     if(type === Steam.EFriendRelationship.None) {
       FriendsActions.purge(user);
-    } else if(type === Steam.EFriendRelationship.RequestInitiator) {
-      steamFriends.requestFriendData([user]);
+    }
+
+    if(isDefaultRelationGroup(type)) {
+      steamFriends.requestFriendData([user], DEFAULT_INFO_REQUEST);
     }
   });
 
@@ -183,9 +185,11 @@ exports.plugin = function(API) {
       avatar: avatarUrl,
       inGame: persona.gameid !== '0',
 
-      state: persona.gameid !== '0'
-        ? (persona.game_name !== '' ? persona.game_name : 'In-Game') // sometimes this will be empty, no idea why
-        : PERSONA_STATES[persona.persona_state],
+      state: relationship === Steam.EFriendRelationship.IgnoredFriend
+        ? 'Blocked'
+        : persona.gameid !== '0'
+          ? (persona.game_name !== '' ? persona.game_name : 'In-Game') // sometimes this will be empty, no idea why
+          : PERSONA_STATES[persona.persona_state],
       stateEnum: persona.persona_state,
 
       relationshipEnum: relationship,
@@ -203,7 +207,7 @@ exports.plugin = function(API) {
 
     if(requestNewData) {
       log.debug('Requesting new data.');
-      steamFriends.requestFriendData([persona.friendid]);
+      steamFriends.requestFriendData([persona.friendid], DEFAULT_INFO_REQUEST);
     }
   });
 

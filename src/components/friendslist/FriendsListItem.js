@@ -9,6 +9,10 @@ const Constants = require('../../constants');
 
 class FriendsListItem extends React.Component {
   _getOnlineStateClassName() {
+    if(this.props.user.relationshipEnum === Constants.SteamEnums.EFriendRelationship.IgnoredFriend) {
+      return 'blocked-border';
+    }
+
     if(this.props.user.inGame) {
       return 'in-game-border';
     }
