@@ -35,6 +35,16 @@ exports.plugin = function(API) {
         });
         break;
 
+      case Constants.FriendsActions.FRIENDS_UNBLOCK:
+        steamFriends.setIgnoreFriend(action.friend.id, false, (result) => {
+          if(result === Steam.EResult.OK) {
+            log.info('User %s has been unblocked.', action.friend.id);
+          } else {
+            log.warn('Failed to unblock %s with EResult %d.', action.friend.id, result);
+          }
+        });
+        break;
+
       default:
         // ignore
     }

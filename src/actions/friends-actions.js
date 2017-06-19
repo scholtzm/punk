@@ -31,6 +31,13 @@ const FriendsActions = {
     });
   },
 
+  unblock: function(friend) {
+    Dispatcher.dispatch({
+      type: Constants.FriendsActions.FRIENDS_UNBLOCK,
+      friend: friend
+    });
+  },
+
   add: function(id) {
     Dispatcher.dispatch({
       type: Constants.FriendsActions.FRIENDS_ADD,
