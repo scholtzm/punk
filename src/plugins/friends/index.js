@@ -1,8 +1,6 @@
 const Dispatcher = require('../../dispatcher');
 const Constants = require('../../constants');
 
-const FriendsActions = require('../../actions/friends-actions.js');
-
 /**
  * Friends
  * Adds support for friends list actions such as adding, removing
@@ -30,7 +28,6 @@ exports.plugin = function(API) {
       case Constants.FriendsActions.FRIENDS_BLOCK:
         steamFriends.setIgnoreFriend(action.friend.id, true, (result) => {
           if(result === Steam.EResult.OK) {
-            FriendsActions.purge(action.friend.id);
             log.info('User %s has been blocked.', action.friend.id);
           } else {
             log.warn('Failed to block %s with EResult %d.', action.friend.id, result);
