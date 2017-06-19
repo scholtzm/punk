@@ -88,22 +88,6 @@ textarea {
   color: $in-game-color !important;
 }
 
-.online-border {
-  border: 2px solid $online-color;
-}
-
-.offline-border {
-  border: 2px solid $offline-color;
-}
-
-.in-game-border {
-  border: 2px solid $in-game-color;
-}
-
-.blocked-border {
-  border: 2px solid $brand-color-red;
-}
-
 .brand {
   font-family: 'Lobster', cursive;
 }
@@ -158,20 +142,59 @@ textarea {
   left: 0;
   display: flex;
 
-  // EFriendRelationship.RequestRecipient
-  .relationship-2 {
-    border-right: 5px solid $brand-color-red;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: lighten(#f5f5f4, 10%);
+  .list-group-header {
+    border-bottom: 1px solid #ddd;
   }
 
-  // EFriendRelationship.RequestInitiator
-  .relationship-4 {
-    border-right: 5px solid $brand-color-yellow;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: lighten(#f5f5f4, 10%);
+  .list-group-item {
+    border-top: 0px;
+
+    &.online-border {
+      border-left: 5px solid $online-color;
+    }
+
+    &.offline-border {
+      border-left: 5px solid $offline-color;
+    }
+
+    &.in-game-border {
+      border-left: 5px solid $in-game-color;
+    }
+
+    // EFriendRelationship.RequestRecipient
+    &.relationship-2 {
+      border-left: 5px solid $brand-color-yellow;
+      background-color: lighten(#f5f5f4, 10%);
+    }
+
+    // EFriendRelationship.RequestInitiator
+    &.relationship-4 {
+      border-left: 5px solid $brand-color-yellow;
+      background-color: lighten(#f5f5f4, 10%);
+    }
+
+    &.relationship-6 {
+      border-left: 5px solid $brand-color-red;
+      background-color: lighten(#f5f5f4, 10%);
+    }
+  }
+
+  img {
+    &.online-border {
+      border: 2px solid $online-color;
+    }
+
+    &.offline-border {
+      border: 2px solid $offline-color;
+    }
+
+    &.in-game-border {
+      border: 2px solid $in-game-color;
+    }
+
+    &.blocked-border {
+      border: 2px solid $brand-color-red;
+    }
   }
 }
 

@@ -43,7 +43,7 @@ class FriendsListItem extends React.Component {
   }
 
   render() {
-    const classNameItem = classNames('list-group-item', this._getRelationshipStateClassName());
+    const classNameItem = classNames('list-group-item', this._getRelationshipStateClassName(), this._getOnlineStateClassName());
     const classNameAvatar = classNames('img-circle', 'media-object', 'pull-left', this._getOnlineStateClassName());
 
     return (
