@@ -11,6 +11,8 @@ const Storage = require('../../utils/storage.js');
  * Automatically logs all chat messages to file.
  * In the future, users should be able to disable plugins like this one.
  */
+const os = require('os');
+
 exports.name = 'punk-chat-logger';
 
 exports.plugin = function(API) {
@@ -33,8 +35,9 @@ exports.plugin = function(API) {
     }
 
     const timestamp = new Date();
+    const eol = os.EOL;
 
-    return util.format('[%s] %s: %s\n', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), displayName, message);
+    return util.format('[%s] %s: %s%s', moment(timestamp).format('YYYY-MM-DD HH:mm:ss'), displayName, message, eol);
   }
 
   function createOptions(id, sender, text) {
