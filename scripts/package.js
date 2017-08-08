@@ -47,17 +47,17 @@ rimraf(path.join('.', outputFolder), (removeErr) => {
   }
 
   packager(options, (error, appPaths) => {
-    const appPath = appPaths[0];
-
     if(error) {
       console.log('electron-packager failed with the following error:');
       console.log(error);
       process.exit(1);
     } else {
+      const appPath = appPaths[0];
+
       console.log(`electron-packager finished packaging ${ productName}`);
-      console.log(`App path: ${ appPath}`);
-      console.log(`Platform: ${ platform}`);
-      console.log(`Arch: ${ arch}`);
+      console.log(`App path: ${appPath}`);
+      console.log(`Platform: ${platform}`);
+      console.log(`Arch: ${arch}`);
 
       if(platform === 'darwin') {
         createOsxPackage(appPath);
