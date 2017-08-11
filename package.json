@@ -15,7 +15,7 @@
     "updateUrl": "https://api.github.com/repos/scholtzm/punk/releases"
   },
   "scripts": {
-    "build": "gulp",
+    "build": "gulp build",
     "clean": "gulp clean",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
@@ -47,15 +47,15 @@
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
     "cross-env": "^5.0.1",
+    "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^1.6.10",
     "electron-packager": "^8.7.1",
     "eslint": "^3.19.0",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-react": "^7.0.1",
-    "gulp": "^3.9.1",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
-    "gulp-rimraf": "^0.2.1",
     "gulp-sass": "^3.1.0",
     "rimraf": "^2.6.1",
     "shelljs": "^0.7.8"

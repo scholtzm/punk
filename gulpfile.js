@@ -1,43 +1,13 @@
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const sass = require('gulp-sass');
-const rimraf = require('gulp-rimraf');
+const { task, series, parallel } = require('gulp');
 
-const jsPath = ['src/**/*.js', 'src/**/*.jsx'];
-const sassPath = 'style/**/*.scss';
-const fontPath = 'style/fonts/*.*';
+const clean = require('./tasks/clean');
+const buildJs = require('./tasks/build-js');
+const buildSass = require('./tasks/build-sass');
+const copyFonts = require('./tasks/copy-fonts');
+const watch = require('./tasks/watch');
 
-gulp.task('default', ['clean'], () => {
-  gulp.start('transpile-js', 'transpile-sass', 'copy-fonts');
-});
+const build = parallel(buildJs, buildSass, copyFonts);
 
-gulp.task('watch', ['default'], () => {
-  gulp.watch(jsPath, ['transpile-js']);
-  gulp.watch(sassPath, ['transpile-sass']);
-});
-
-gulp.task('clean', () => {
-  return gulp.src(['dist/css', 'dist/js'], { read: false })
-    .pipe(rimraf());
-});
-
-gulp.task('transpile-js', () => {
-  return gulp.src(jsPath)
-    .pipe(babel())
-    .on('error', function(error) {
-      console.log(error.stack);
-      this.emit('end');
-    })
-    .pipe(gulp.dest('dist/js'));
-});
-
-gulp.task('transpile-sass', () => {
-  gulp.src(sassPath)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('dist/css'));
-});
-
-gulp.task('copy-fonts', () => {
-  gulp.src(fontPath)
-    .pipe(gulp.dest('dist/css/fonts'));
-});
+task('clean', clean);
+task('build', series(clean, build));
+task('watch', series(clean, build, watch));

@@ -29,7 +29,7 @@ const options = {
   out: outputFolder,
   platform,
   arch,
-  version: electronVersion,
+  electronVersion,
   prune: true,
   icon,
   ignore: [
@@ -54,7 +54,7 @@ rimraf(path.join('.', outputFolder), (removeErr) => {
     } else {
       const appPath = appPaths[0];
 
-      console.log(`electron-packager finished packaging ${ productName}`);
+      console.log(`electron-packager finished packaging ${productName}`);
       console.log(`App path: ${appPath}`);
       console.log(`Platform: ${platform}`);
       console.log(`Arch: ${arch}`);
@@ -71,9 +71,9 @@ rimraf(path.join('.', outputFolder), (removeErr) => {
 function createOsxPackage(appPath) {
   process.chdir(path.join('.', appPath));
 
-  const zipName = `${productName }-v${ appVersion }-osx.zip`;
-  const appName = `${productName }.app`;
-  const dittoCommand = `ditto -c -k --sequesterRsrc --keepParent ${ appName } ${ zipName}`;
+  const zipName = `${productName}-v${appVersion}-osx.zip`;
+  const appName = `${productName}.app`;
+  const dittoCommand = `ditto -c -k --sequesterRsrc --keepParent ${appName} ${zipName}`;
 
   shell.exec(dittoCommand, (code) => {
     console.log('Ditto command exit code:', code);
@@ -83,16 +83,16 @@ function createOsxPackage(appPath) {
 function createWindowsPackage() {
   process.chdir(path.join('.', outputFolder));
 
-  const folderName = `${productName }-${ platform }-${ arch}`;
-  const appName = `${productName }-v${ appVersion }-${ platform}`;
-  const zipName = `${appName }.zip`;
+  const folderName = `${productName}-${platform}-${arch}`;
+  const appName = `${productName}-v${appVersion}-${platform}`;
+  const zipName = `${appName}.zip`;
 
-  shell.exec(`rename ${ folderName } ${ appName}`, (renameExitCode) => {
+  shell.exec(`rename ${folderName} ${appName}`, (renameExitCode) => {
     console.log('Rename exit code:', renameExitCode);
 
     // assumes 7z.exe is in PATH
-    shell.exec(`7z a ${ zipName } ${ appName } > nul`, (zipExitCode) => {
-      console.log(`7zip exit code: ${ zipExitCode}`);
+    shell.exec(`7z a ${zipName} ${appName} > nul`, (zipExitCode) => {
+      console.log(`7zip exit code: ${zipExitCode}`);
     });
   });
 }
