@@ -1,8 +1,8 @@
-const { src, dest } = require('gulp');
+const gulp = require('gulp');
 
 const config = require('./config');
 
 module.exports = function copyFonts() {
-  return src(config.fontPath)
-    .pipe(dest(config.outputFontPath));
+  return gulp.src(config.fontPath)
+    .pipe(gulp.dest(config.outputFontPath));
 };

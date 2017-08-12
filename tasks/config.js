@@ -8,3 +8,5 @@ exports.outputCssPath = `${exports.outputFolder}/css`;
 
 exports.fontPath = 'style/fonts/*.*';
 exports.outputFontPath = `${exports.outputCssPath}/fonts`;
+
+exports.outputPackagePath = 'package';

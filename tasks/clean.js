@@ -1,11 +1,11 @@
-const { join } = require('path');
+const path = require('path');
 const del = require('del');
 
 const config = require('./config');
 
 module.exports = function clean(callback) {
   const toDelete = [
-    join(config.outputFolder, '**', '*')
+    path.join(config.outputFolder, '**', '*')
   ];
 
   del(toDelete)

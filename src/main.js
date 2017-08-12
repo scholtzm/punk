@@ -35,7 +35,7 @@ app.on('ready', () => {
       autoHideMenuBar: true
     });
 
-    mainWindow.loadURL(`file://${ __dirname }/../../static/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/../../static/index.html`);
 
     mainWindow.on('closed', () => {
       mainWindow = null;
