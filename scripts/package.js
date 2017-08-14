@@ -8,7 +8,7 @@ const packageJson = require('./../package.json');
 
 const productName = packageJson.productName;
 const appVersion = packageJson.version;
-const electronVersion = packageJson.dependencies['electron'];
+const electronVersion = packageJson.devDependencies['electron'].replace('^', '');
 const outputFolder = 'package';
 
 let platform = 'darwin';

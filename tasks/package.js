@@ -18,13 +18,13 @@ module.exports = function package(callback) {
     .then(() => {
       const productName = packageJson.productName;
       const appVersion = packageJson.version;
-      const electronVersion = packageJson.dependencies['electron'];
+      const electronVersion = packageJson.devDependencies['electron'].replace('^', '');
       const outputFolder = 'package';
 
       const platform = os.platform();
 
-      const arch = 'x64';
-      const icon = 'resources/icon.icns';
+      let arch = 'x64';
+      let icon = 'resources/icon.icns';
 
       if (platform === 'win32') {
         arch = 'ia32';
