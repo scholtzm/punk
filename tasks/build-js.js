@@ -5,8 +5,10 @@ const config = require('./config');
 
 module.exports = function buildJs() {
   return gulp.src(config.jsPath)
-    .pipe(babel())
-    .on('error', function(error) {
+    .pipe(babel({
+      presets: ['react']
+    }))
+    .on('error', (error) => {
       console.log(error.stack);
       this.emit('end');
     })

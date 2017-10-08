@@ -68,7 +68,7 @@ module.exports = function package(callback) {
           console.log(`Arch: ${arch}`);
 
           gulp.src(path.join(appPath, '**', '*'))
-            .pipe(zip(`${productName}-v${appVersion}-${platform}.zip`))
+            .pipe(zip(`${productName}-v${appVersion}-${platform}-ev${electronVersion}.zip`))
             .pipe(gulp.dest(outputFolder))
             .on('error', (gulpErr) => callback(gulpErr))
             .on('end', () => callback());
