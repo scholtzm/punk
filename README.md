@@ -61,12 +61,16 @@ npm start
 ### Building the packages
 
 ```sh
-npm run package:osx
-# or
-npm run package:win
+npm run package
 ```
 
-A `package` folder will be created.
+This will build package for your current platform in `package/{platform}`.
+
+You can also override your current platform by passing it as a command line argument.
+
+```sh
+npm run package -- --platform={win32,darwin}
+```
 
 ## Data
 

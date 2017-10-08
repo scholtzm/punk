@@ -4,14 +4,18 @@ const os = require('os');
 const del = require('del');
 const packager = require('electron-packager');
 const zip = require('gulp-zip');
+const { argv } = require('yargs');
 
 const packageJson = require('../package.json');
 
 const config = require('./config');
 
+const platform = argv.platform || os.platform();
+const outputFolder = path.join(config.outputPackagePath, platform);
+
 module.exports = function package(callback) {
   const toDelete = [
-    path.join(config.outputPackagePath, '**', '*')
+    path.join(outputFolder, '**', '*')
   ];
 
   del(toDelete)
@@ -19,16 +23,17 @@ module.exports = function package(callback) {
       const productName = packageJson.productName;
       const appVersion = packageJson.version;
       const electronVersion = packageJson.devDependencies['electron'].replace('^', '');
-      const outputFolder = 'package';
 
-      const platform = os.platform();
-
-      let arch = 'x64';
-      let icon = 'resources/icon.icns';
-
-      if (platform === 'win32') {
+      let arch;
+      let icon;
+      if(platform === 'darwin') {
+        arch = 'x64';
+        icon = 'resources/icon.icns';
+      } else if (platform === 'win32') {
         arch = 'ia32';
         icon = 'resources/icon.ico';
+      } else {
+        throw new Error(`Platform not supported: ${platform}`);
       }
 
       const options = {
@@ -64,8 +69,8 @@ module.exports = function package(callback) {
 
           gulp.src(path.join(appPath, '**', '*'))
             .pipe(zip(`${productName}-v${appVersion}-${platform}.zip`))
-            .pipe(gulp.dest(config.outputPackagePath))
-            .on('error', (error) => callback(error))
+            .pipe(gulp.dest(outputFolder))
+            .on('error', (gulpErr) => callback(gulpErr))
             .on('end', () => callback());
         }
       });

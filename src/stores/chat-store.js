@@ -220,15 +220,15 @@ function incomingTradeRequestResponse(response) {
       message.meta.response = response.responseEnum;
     }
   } else {
-    const message = _getTradeRequestById(response.id, response.tradeRequestId);
+    const messageById = _getTradeRequestById(response.id, response.tradeRequestId);
 
-    if(message) {
-      message.meta.response = response.responseEnum;
+    if(messageById) {
+      messageById.meta.response = response.responseEnum;
     } else {
       // trade request ID did not match, this is probably a trade request which we sent
-      const message = _getLastTradeRequest(response.id, true);
-      if(message) {
-        message.meta.response = response.responseEnum;
+      const messageLastTradeReq = _getLastTradeRequest(response.id, true);
+      if(messageLastTradeReq) {
+        messageLastTradeReq.meta.response = response.responseEnum;
       }
     }
   }

@@ -22,9 +22,7 @@
     "start": "cross-env NODE_ENV=development electron .",
     "start:prod": "cross-env NODE_ENV=production electron .",
     "watch": "gulp watch",
-    "package": "gulp package",
-    "package:osx": "npm run build && node scripts/package.js",
-    "package:win": "npm run build && node scripts/package.js --win32"
+    "package": "npm run build && gulp package"
   },
   "dependencies": {
     "classnames": "^2.2.5",

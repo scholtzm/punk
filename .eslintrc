@@ -37,6 +37,7 @@
     "object-curly-spacing": ["error", "always"],
     "prefer-arrow-callback": "error",
     "object-shorthand": ["error", "always"],
+    "no-shadow": "error",
 
     "import/no-unresolved": ["error", { "commonjs": true }]
   },
