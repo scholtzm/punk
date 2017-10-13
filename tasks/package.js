@@ -50,7 +50,9 @@ module.exports = function package(callback) {
         ignore: [
           '/src($|/)',
           '/tasks($|/)',
-          '/style($|/)'
+          '/style($|/)',
+          '/package($|/)',
+          '/resources($|/)'
         ]
       };
 
