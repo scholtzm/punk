@@ -48,9 +48,13 @@ Punk.prototype.start = function() {
 
       ReactDOM.render(<Loader message="Logging in..."/>, document.getElementById('app'));
 
-      this.client.logOn(user);
+      this.logOn(user);
     }
   });
+};
+
+Punk.prototype.logOn = function(details) {
+  this.client.logOn(details);
 };
 
 Punk.prototype.loadPlugins = function() {
