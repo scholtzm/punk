@@ -5,6 +5,7 @@ const path = require('path');
 const Dispatcher = require('../../dispatcher');
 const Constants = require('../../constants');
 const Storage = require('../../utils/storage.js');
+const Logger = require('../../utils/logger.js')('plugin:chat-logger');
 
 /**
  * Chat Logger
@@ -13,15 +14,7 @@ const Storage = require('../../utils/storage.js');
  */
 const os = require('os');
 
-exports.name = 'punk-chat-logger';
-
-exports.plugin = function(API) {
-  const client = API.getClient();
-  const steamFriends = API.getHandler('steamFriends');
-  const log = API.getLogger();
-  const username = API.getConfig().username;
-  const sanitizedUsername = username.toLowerCase();
-
+module.exports = function chatLoggerPlugin(steamUser) {
   function getKey(id) {
     return `${id }.log`;
   }
@@ -29,7 +22,7 @@ exports.plugin = function(API) {
   function formatMessage(id, message) {
     let displayName = id || '<unknown>';
 
-    const persona = steamFriends.personaStates[id];
+    const persona = steamUser.users[id];
     if(persona) {
       displayName = persona.player_name;
     }
@@ -41,8 +34,10 @@ exports.plugin = function(API) {
   }
 
   function createOptions(id, sender, text) {
+    const accountName = steamUser._logOnDetails.account_name;
+
     return {
-      prefix: path.join(sanitizedUsername, 'logs'),
+      prefix: path.join(accountName.toLowerCase(), 'logs'),
       fileName: getKey(id),
       value: formatMessage(sender, text)
     };
@@ -50,15 +45,15 @@ exports.plugin = function(API) {
 
   function appendCallback(error) {
     if(error) {
-      log.error('Failed to save chat message.');
-      log.error(error);
+      Logger.error('Failed to save chat message.');
+      Logger.error(error);
     }
   }
 
   Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
-        Storage.append(createOptions(action.message.target, client.steamID, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.target, steamUser.steamID, action.message.text), appendCallback);
         break;
 
       case Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE:
@@ -66,7 +61,7 @@ exports.plugin = function(API) {
         break;
 
       case Constants.ChatActions.CHAT_ECHO_MESSAGE:
-        Storage.append(createOptions(action.message.target, client.steamID, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.target, steamUser.steamID, action.message.text), appendCallback);
         break;
 
       default:
