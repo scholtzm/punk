@@ -13,11 +13,7 @@ const Logger = require('./utils/logger.js')('punk');
 const plugins = require('./plugins');
 
 function Punk() {
-  this.client = new SteamUser({
-    autoRelogin: false,
-    promptSteamGuardCode: false
-  });
-
+  this.client = new SteamUser({ promptSteamGuardCode: false });
   this.loadPlugins();
 }
 
@@ -40,50 +36,26 @@ Punk.prototype.start = function() {
         return;
       }
 
+      // compatibility
+      user.accountName = user.accountName || user.username;
+
       // explicitly set this option
       user.rememberPassword = true;
 
-      ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
+      // set logonID to something unique
+      // official client obfuscates private IP address but we probably don't want this
+      user.logonID = Math.floor(new Date() / 1000);
 
-      this.init(user, () => {
-        this.loadPlugins();
-        this.connect();
-      });
-    }
-  });
-};
+      ReactDOM.render(<Loader message="Logging in..."/>, document.getElementById('app'));
 
-Punk.prototype.init = function(options, next) {
-  const self = this;
-  const sanitizedUsername = options.username.toLowerCase();
-
-  // set logonID to something unique
-  // official client obfuscates private IP address but we probably don't want this
-  options.logonID = Math.floor(new Date() / 1000);
-
-  Storage.get({ prefix: sanitizedUsername, fileName: 'servers.json' }, (error, data) => {
-    if(error) {
-      Logger.warn('Failed to load server list from cache. Falling back to built-in cache...');
-    } else {
-      let servers;
-      try {
-        servers = JSON.parse(data);
-        self.client.servers = servers;
-      } catch(e) {
-        // ignore
-      }
-    }
-
-    self.client.init(options);
-
-    if(typeof next === 'function') {
-      next();
+      this.client.logOn(user);
     }
   });
 };
 
 Punk.prototype.loadPlugins = function() {
   plugins.file(this.client);
+  plugins.disconnected(this.client);
   plugins.loggedOn(this.client);
   plugins.loginKey(this.client);
   plugins.logout(this.client);
@@ -96,7 +68,6 @@ Punk.prototype.loadPlugins = function() {
   this.client.use(plugins.friends);
   this.client.use(plugins.notifications);
   this.client.use(plugins.webSession);
-  this.client.use(plugins.disconnected);
   this.client.use(plugins.offlineMessages);
   this.client.use(plugins.trade);
 };

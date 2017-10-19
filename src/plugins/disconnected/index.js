@@ -1,48 +1,35 @@
+const SteamUser = require('steam-user');
 const React = require('react');
 const ReactDOM = require('react-dom');
 
+const Logger = require('../../utils/logger.js')('plugin:error');
 const Loader = require('../../components/misc/Loader.js');
-
 const UIActions = require('../../actions/ui-actions.js');
 
 /**
- * Disconnected
- * Automatically reconnects Vapor client after we get disconnected.
+ * Disconnected Plugin
+ * Automatically reconnects client after we get disconnected.
  */
-exports.name = 'punk-disconnected';
-
-exports.plugin = function(API) {
-  const log = API.getLogger();
-  const Steam = API.getSteam();
-  const utils = API.getUtils();
-
+module.exports = function errorPlugin(steamUser) {
   let tryCount = 0;
 
-  API.registerHandler({
-    emitter: 'client',
-    event: 'logOnResponse'
-  }, (response) => {
-    if(response.eresult === Steam.EResult.OK) {
+  steamUser.on('loggedOn', (response) => {
+    if (response.eresult === SteamUser.EResult.OK) {
       tryCount = 0;
     }
   });
 
-  API.registerHandler({
-    emitter: 'vapor',
-    event: 'disconnected'
-  }, (error) => {
-    const enumString = utils.enumToString(error.eresult, Steam.EResult);
-    log.warn('Got disconnected. EResult: %d (%s)', error.eresult, enumString);
+  steamUser.on('disconnected', (eresult) => {
+    const enumString = SteamUser.EResult[eresult];
+    const message = `Got disconnected: ${eresult} (${enumString}). Retrying... (${++tryCount})`;
 
-    if(error.eresult === Steam.EResult.InvalidPassword ||
-      error.eresult === Steam.EResult.InvalidLoginAuthCode) {
-      const message = `Login error: ${ enumString}`;
-      UIActions.logout(message);
-    } else {
-      setTimeout(() => { API.connect(); }, 3000);
+    ReactDOM.render(<Loader message={message} />, document.getElementById('app'));
+  });
 
-      const message = `Got disconnected: ${ error.eresult } (${ enumString }). Retrying... (${ ++tryCount })`;
-      ReactDOM.render(<Loader message={message} />, document.getElementById('app'));
-    }
+  steamUser.on('error', (error) => {
+    const enumString = SteamUser.EResult[error.eresult];
+
+    Logger.warn('Got disconnected. EResult: %d (%s)', error.eresult, enumString);
+    UIActions.logout(`Login error: ${enumString}`);
   });
 };
