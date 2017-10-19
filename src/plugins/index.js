@@ -6,6 +6,7 @@ module.exports = {
   file: require('./file'),
   loginKey: require('./loginkey'),
   messageDumper: require('./message-dumper'),
+  steamGuard: require('./steamguard'),
 
   disconnected: require('./disconnected'),
   friendMsg: require('./friendmsg'),
@@ -17,7 +18,6 @@ module.exports = {
   personaState: require('./personastate'),
   presence: require('./presence'),
   ready: require('./ready'),
-  steamGuard: require('./steamguard'),
   trade: require('./trade'),
   webSession: require('./web-session')
 };
