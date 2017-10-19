@@ -13,7 +13,7 @@ exports.plugin = function(API) {
   const steamFriends = API.getHandler('steamFriends');
   const log = API.getLogger();
 
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.FriendsActions.FRIENDS_ADD:
         steamFriends.addFriend(action.id);

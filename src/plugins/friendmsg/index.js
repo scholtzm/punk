@@ -16,7 +16,7 @@ exports.plugin = function(API) {
   const steamFriends = API.getHandler('steamFriends');
   const typingTimeouts = {};
 
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
         steamFriends.sendMessage(action.message.target, action.message.text);

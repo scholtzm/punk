@@ -15,7 +15,7 @@ exports.plugin = function(API) {
   const Steam = API.getSteam();
   const utils = API.getUtils();
 
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_REQUEST_OFFLINE_MESSAGES:
         log.debug('Requesting unread messages.');

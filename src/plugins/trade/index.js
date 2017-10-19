@@ -100,7 +100,7 @@ exports.plugin = function(API) {
     SteamCommunityWindow.open(`http://steamcommunity.com/trade/${ response.other_steamid}`);
   };
 
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_RESPOND_TO_TRADE_REQUEST:
         steamTrading.respondToTrade(action.message.meta.tradeRequestId, action.response);

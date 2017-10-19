@@ -55,7 +55,7 @@ exports.plugin = function(API) {
     }
   }
 
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
         Storage.append(createOptions(action.message.target, client.steamID, action.message.text), appendCallback);

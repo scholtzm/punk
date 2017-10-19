@@ -65,15 +65,15 @@ Punk.prototype.loadPlugins = function() {
   plugins.logout(this.client);
   plugins.steamGuard(this.client);
 
-  this.client.use(plugins.chatLogger);
-  this.client.use(plugins.personaState);
-  this.client.use(plugins.friendMsg);
-  this.client.use(plugins.presence);
-  this.client.use(plugins.friends);
-  this.client.use(plugins.notifications);
-  this.client.use(plugins.webSession);
-  this.client.use(plugins.offlineMessages);
-  this.client.use(plugins.trade);
+  // this.client.use(plugins.chatLogger);
+  // this.client.use(plugins.personaState);
+  // this.client.use(plugins.friendMsg);
+  // this.client.use(plugins.presence);
+  // this.client.use(plugins.friends);
+  // this.client.use(plugins.notifications);
+  // this.client.use(plugins.webSession);
+  // this.client.use(plugins.offlineMessages);
+  // this.client.use(plugins.trade);
 };
 
 Punk.prototype.connect = function() {

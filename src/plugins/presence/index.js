@@ -10,7 +10,7 @@ exports.name = 'punk-presence';
 exports.plugin = function(API) {
   const steamFriends = API.getHandler('steamFriends');
 
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.UserActions.USER_CHANGE_STATE:
         steamFriends.setPersonaState(action.state);

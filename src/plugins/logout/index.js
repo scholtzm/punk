@@ -7,7 +7,6 @@ const Dispatcher = require('../../dispatcher');
 const Constants = require('../../constants');
 const Storage = require('../../utils/storage.js');
 const Logger = require('../../utils/logger.js')('plugin:logout');
-const pluginEmitter = require('../plugin-emitter');
 
 /**
  * Logout plugin
