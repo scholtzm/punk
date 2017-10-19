@@ -58,12 +58,13 @@ Punk.prototype.logOn = function(details) {
 };
 
 Punk.prototype.loadPlugins = function() {
-  plugins.file(this.client);
   plugins.disconnected(this.client);
+  plugins.file(this.client);
   plugins.loggedOn(this.client);
   plugins.loginKey(this.client);
   plugins.logout(this.client);
   plugins.steamGuard(this.client);
+  plugins.webSession(this.client);
 
   // this.client.use(plugins.chatLogger);
   // this.client.use(plugins.personaState);
@@ -71,7 +72,6 @@ Punk.prototype.loadPlugins = function() {
   // this.client.use(plugins.presence);
   // this.client.use(plugins.friends);
   // this.client.use(plugins.notifications);
-  // this.client.use(plugins.webSession);
   // this.client.use(plugins.offlineMessages);
   // this.client.use(plugins.trade);
 };
