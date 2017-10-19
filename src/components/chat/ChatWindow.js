@@ -46,9 +46,7 @@ class ChatWindow extends React.Component {
     let messages;
 
     if(chat) {
-      messages = chat.messages.map((message) => {
-        return <ChatMessage key={message.id} chat={chat} message={message} />;
-      });
+      messages = chat.messages.map((message) => <ChatMessage key={message.id} chat={chat} message={message} />);
     }
 
     return (

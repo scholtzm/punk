@@ -2,7 +2,7 @@ const app = require('electron').remote.app;
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const vapor = require('vapor');
+const SteamUser = require('steam-user');
 
 const Loader = require('./components/misc/Loader.js');
 const Login = require('./components/login/Login.js');
@@ -13,12 +13,15 @@ const Logger = require('./utils/logger.js')('punk');
 const plugins = require('./plugins');
 
 function Punk() {
-  this.client = vapor();
+  this.client = new SteamUser({
+    autoRelogin: false,
+    promptSteamGuardCode: false
+  });
+
+  this.loadPlugins();
 }
 
 Punk.prototype.start = function() {
-  const self = this;
-
   Logger.info('Starting %s v%s', app.getName(), app.getVersion());
 
   updateChecker();
@@ -42,9 +45,9 @@ Punk.prototype.start = function() {
 
       ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
-      self.init(user, () => {
-        self.loadPlugins();
-        self.connect();
+      this.init(user, () => {
+        this.loadPlugins();
+        this.connect();
       });
     }
   });
@@ -65,12 +68,9 @@ Punk.prototype.init = function(options, next) {
       let servers;
       try {
         servers = JSON.parse(data);
+        self.client.servers = servers;
       } catch(e) {
         // ignore
-      }
-
-      if(servers) {
-        self.client.servers = servers;
       }
     }
 
@@ -83,17 +83,14 @@ Punk.prototype.init = function(options, next) {
 };
 
 Punk.prototype.loadPlugins = function() {
-  // load these 3 plugins ASAP (order matters)
-  this.client.use(plugins.logger);
-  this.client.use(plugins.essentials);
-  this.client.use(plugins.file);
+  plugins.file(this.client);
+  plugins.loginKey(this.client);
 
   this.client.use(plugins.chatLogger);
   this.client.use(plugins.steamGuard);
   this.client.use(plugins.ready);
   this.client.use(plugins.personaState);
   this.client.use(plugins.friendMsg);
-  this.client.use(plugins.loginKey);
   this.client.use(plugins.logout);
   this.client.use(plugins.presence);
   this.client.use(plugins.friends);

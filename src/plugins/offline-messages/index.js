@@ -40,10 +40,7 @@ exports.plugin = function(API) {
     // this will trigger for every person separately
     if(header.msg === Steam.EMsg.ClientFSGetFriendMessageHistoryResponse) {
       const response = Steam.Internal.CMsgClientFSGetFriendMessageHistoryResponse.decode(body);
-
-      const unreadMessages = response.messages.filter((message) => {
-        return message.unread;
-      });
+      const unreadMessages = response.messages.filter((message) => message.unread);
 
       log.debug('# of unread chat messages: %d', unreadMessages.length);
 

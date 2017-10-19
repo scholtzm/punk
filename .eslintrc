@@ -38,6 +38,7 @@
     "prefer-arrow-callback": "error",
     "object-shorthand": ["error", "always"],
     "no-shadow": "error",
+    "arrow-body-style": ["error", "as-needed"],
 
     "import/no-unresolved": ["error", { "commonjs": true }]
   },

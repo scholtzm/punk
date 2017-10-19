@@ -24,28 +24,26 @@ class ChatMessage extends React.Component {
   render() {
     const message = this.props.message;
 
-    const text = message.text.split('\n').map((line, indexLine) => {
-      // using index as a key shouldn't be an issue here
-      return (
-        <p key={indexLine}>
-          <Linkify properties={{
-            onClick(event) {
-              const url = event.target.href;
+    // using index as a key shouldn't be an issue here
+    const text = message.text.split('\n').map((line, indexLine) => (
+      <p key={indexLine}>
+        <Linkify properties={{
+          onClick(event) {
+            const url = event.target.href;
 
-              event.preventDefault();
+            event.preventDefault();
 
-              if(urlHelper.isSteamUrl(url)) {
-                SteamCommunityWindow.open(url);
-              } else {
-                urlHelper.openExternal(url);
-              }
+            if(urlHelper.isSteamUrl(url)) {
+              SteamCommunityWindow.open(url);
+            } else {
+              urlHelper.openExternal(url);
             }
-          }}>
-            {line}
-          </Linkify>
-        </p>
-      );
-    });
+          }
+        }}>
+          {line}
+        </Linkify>
+      </p>
+    ));
 
     let extra;
     if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST) {

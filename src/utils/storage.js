@@ -13,11 +13,8 @@ const _defaultDir = path.join(app.getPath('userData'), 'data');
 const _storage = {};
 
 function getPath(options) {
-  if(options.prefix) {
-    return path.join(_defaultDir, options.prefix, options.fileName);
-  }
-
-  return path.join(_defaultDir, options.fileName);
+  const prefix = options.prefix || '';
+  return path.join(_defaultDir, prefix, options.fileName);
 }
 
 function ensureDirectoryExists(dir) {

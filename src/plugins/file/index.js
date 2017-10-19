@@ -1,24 +1,19 @@
 const Storage = require('../../utils/storage.js');
 
 /**
- * File
- * Proxies all file events from Vapor to our Storage module.
+ * File plugin
+ * Proxies all file events from SteamUser to our Storage module.
  */
-exports.name = 'punk-file';
+module.exports = function filePlugin(steamUser) {
+  // FIXME: Do not access private properties
+  const accountName = steamUser._logOnDetails.account_name;
+  const sanitizedAccountName = accountName.toLowerCase();
 
-exports.plugin = function(API) {
-  const username = API.getConfig().username;
-  const sanitizedUsername = username.toLowerCase();
-
-  API.registerHandler({ emitter: 'vapor', event: 'readFile' }, (fileName, callback) => {
-    Storage.get({ prefix: sanitizedUsername, fileName }, callback);
+  steamUser.storage.on('read', (fileName, callback) => {
+    Storage.get({ prefix: sanitizedAccountName, fileName }, callback);
   });
 
-  API.registerHandler({ emitter: 'plugin', plugin: '*', event: 'readFile' }, Storage.get);
-
-  API.registerHandler({ emitter: 'vapor', event: 'writeFile' }, (fileName, value, callback) => {
-    Storage.set({ prefix: sanitizedUsername, fileName, value }, callback);
+  steamUser.storage.on('save', (fileName, value, callback) => {
+    Storage.set({ prefix: sanitizedAccountName, fileName, value }, callback);
   });
-
-  API.registerHandler({ emitter: 'plugin', plugin: '*', event: 'writeFile' }, Storage.set);
 };

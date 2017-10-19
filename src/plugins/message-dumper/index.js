@@ -1,25 +1,19 @@
+const SteamUser = require('steam-user');
+const Logger = require('../../utils/logger.js')('plugin:message-dumper');
+
 /**
  * Message Dumper
  * Helps with debugging by logging every single Steam message.
  */
-exports.name = 'punk-message-dumper';
-
-exports.plugin = function(API) {
-  const log = API.getLogger();
-  const utils = API.getUtils();
-  const Steam = API.getSteam();
-
+module.exports = function messageDumperPlugin(steamUser) {
   const ignored = {};
-  ignored[Steam.EMsg.Multi] = true;
+  ignored[SteamUser.EMsg.Multi] = true;
 
-  API.registerHandler({
-    emitter: 'client',
-    event: 'message'
-  }, (header) => {
-    if(header.msg in ignored) {
+  steamUser.client.on('message', header => {
+    if(ignored[header.msg]) {
       return;
     }
 
-    log.debug('Received message %d (%s).', header.msg, utils.enumToString(header.msg, Steam.EMsg));
+    Logger.debug('Received message %d (%s).', header.msg, SteamUser.EMsg[header.msg]);
   });
 };
