@@ -86,13 +86,12 @@ Punk.prototype.loadPlugins = function() {
   plugins.file(this.client);
   plugins.loggedOn(this.client);
   plugins.loginKey(this.client);
+  plugins.logout(this.client);
   plugins.steamGuard(this.client);
 
   this.client.use(plugins.chatLogger);
-  this.client.use(plugins.ready);
   this.client.use(plugins.personaState);
   this.client.use(plugins.friendMsg);
-  this.client.use(plugins.logout);
   this.client.use(plugins.presence);
   this.client.use(plugins.friends);
   this.client.use(plugins.notifications);

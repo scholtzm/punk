@@ -210,12 +210,4 @@ exports.plugin = function(API) {
       steamFriends.requestFriendData([persona.friendid], DEFAULT_INFO_REQUEST);
     }
   });
-
-  API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, () => {
-    FriendsStore.removeChangeListener(persistFriendsList);
-  });
 };

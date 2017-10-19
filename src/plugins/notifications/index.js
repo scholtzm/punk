@@ -76,12 +76,4 @@ exports.plugin = function(API) {
     log.debug('Pending trade offer count: %d.', count);
     NotificationActions.updateTradeOfferCount(count);
   });
-
-  API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, () => {
-    clearInterval(interval);
-  });
 };

@@ -6,29 +6,26 @@ const Login = require('../../components/login/Login.js');
 const Dispatcher = require('../../dispatcher');
 const Constants = require('../../constants');
 const Storage = require('../../utils/storage.js');
+const Logger = require('../../utils/logger.js')('plugin:logout');
+const pluginEmitter = require('../plugin-emitter');
 
 /**
- * Logout
+ * Logout plugin
  * Handles logout action invoked from the UI.
  */
-exports.name = 'punk-logout';
-
-exports.plugin = function(API) {
-  const log = API.getLogger();
-
+module.exports = function logoutPlugin(steamUser) {
   const token = Dispatcher.register((action) => {
-    switch(action.type) {
+    switch (action.type) {
       case Constants.UIActions.UI_LOGOUT:
         Dispatcher.unregister(token);
 
         Storage.delete({ fileName: 'user.json' }, (error) => {
-          if(error && error.code !== 'ENOENT') {
-            log.error(error);
+          if (error && error.code !== 'ENOENT') {
+            Logger.error(error);
           }
         });
 
-        API.emitEvent('logout');
-        API.disconnect();
+        steamUser.logOff();
 
         ReactDOM.render(<Login message={action.message} />, document.getElementById('app'));
         break;

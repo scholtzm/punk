@@ -130,12 +130,4 @@ exports.plugin = function(API) {
       callbacks[header.msg](body);
     }
   });
-
-  API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, () => {
-    Dispatcher.unregister(token);
-  });
 };

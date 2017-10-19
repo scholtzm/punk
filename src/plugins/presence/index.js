@@ -24,12 +24,4 @@ exports.plugin = function(API) {
         // ignore
     }
   });
-
-  API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, () => {
-    Dispatcher.unregister(token);
-  });
 };

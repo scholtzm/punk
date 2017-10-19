@@ -89,12 +89,4 @@ exports.plugin = function(API) {
       ChatActions.echoMessage(echoMessage);
     }
   });
-
-  API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, () => {
-    Dispatcher.unregister(token);
-  });
 };
