@@ -4,6 +4,7 @@
  */
 module.exports = {
   file: require('./file'),
+  loggedOn: require('./loggedon'),
   loginKey: require('./loginkey'),
   messageDumper: require('./message-dumper'),
   steamGuard: require('./steamguard'),
@@ -17,7 +18,6 @@ module.exports = {
   offlineMessages: require('./offline-messages'),
   personaState: require('./personastate'),
   presence: require('./presence'),
-  ready: require('./ready'),
   trade: require('./trade'),
   webSession: require('./web-session')
 };

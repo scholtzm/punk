@@ -84,6 +84,7 @@ Punk.prototype.init = function(options, next) {
 
 Punk.prototype.loadPlugins = function() {
   plugins.file(this.client);
+  plugins.loggedOn(this.client);
   plugins.loginKey(this.client);
   plugins.steamGuard(this.client);
 
