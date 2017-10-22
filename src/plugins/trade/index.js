@@ -34,7 +34,7 @@ module.exports = function(steamUser) {
     const message = {
       type: Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST,
       sender: id, // SteamID64 string
-      username,             // display name if possible
+      username,   // display name if possible
       date: new Date(),
       text: `${username} has invited you to trade items.`,
       meta: {
@@ -50,20 +50,6 @@ module.exports = function(steamUser) {
     const description = SteamUser.EEconTradeResponse[response];
 
     Logger.debug('Response to trade request: %d (%s).', response, description);
-
-    // if (response === SteamUser.EEconTradeResponse.Cancel) {
-    //   // we need to decline the trade request for whatever reason
-    //   // this is also how official Steam client does things
-    //   if (response.trade_request_id !== 0) {
-    //     steamTrading.respondToTrade(response.trade_request_id, false);
-    //   } else {
-    //     const tradeRequestId = ChatStore.getLastIncomingTradeRequestId(response.other_steamid);
-    //     if (tradeRequestId) {
-    //       log.debug('Declined cancelled trade request.');
-    //       steamTrading.respondToTrade(tradeRequestId, false);
-    //     }
-    //   }
-    // }
 
     const tradeRequestResponse = {
       response,
