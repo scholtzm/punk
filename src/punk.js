@@ -65,10 +65,10 @@ Punk.prototype.loadPlugins = function() {
   plugins.loginKey(this.client);
   plugins.logout(this.client);
   plugins.presence(this.client);
+  plugins.personaState(this.client);
   plugins.steamGuard(this.client);
   plugins.webSession(this.client);
 
-  // this.client.use(plugins.personaState);
   // this.client.use(plugins.friendMsg);
   // this.client.use(plugins.friends);
   // this.client.use(plugins.notifications);

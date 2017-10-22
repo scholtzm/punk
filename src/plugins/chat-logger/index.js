@@ -53,7 +53,7 @@ module.exports = function chatLoggerPlugin(steamUser) {
   Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.ChatActions.CHAT_NEW_OUTGOING_MESSAGE:
-        Storage.append(createOptions(action.message.target, steamUser.steamID, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.target, steamUser.steamID.getSteamID64(), action.message.text), appendCallback);
         break;
 
       case Constants.ChatActions.CHAT_NEW_INCOMING_MESSAGE:
@@ -61,7 +61,7 @@ module.exports = function chatLoggerPlugin(steamUser) {
         break;
 
       case Constants.ChatActions.CHAT_ECHO_MESSAGE:
-        Storage.append(createOptions(action.message.target, steamUser.steamID, action.message.text), appendCallback);
+        Storage.append(createOptions(action.message.target, steamUser.steamID.getSteamID64(), action.message.text), appendCallback);
         break;
 
       default:

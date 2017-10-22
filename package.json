@@ -40,8 +40,7 @@
     "request": "^2.81.0",
     "semver": "^5.3.0",
     "shortid": "^2.2.8",
-    "steam-user": "^3.23.2",
-    "steamid": "^1.1.0"
+    "steam-user": "^3.23.2"
   },
   "devDependencies": {
     "babel-preset-react": "^6.24.1",
