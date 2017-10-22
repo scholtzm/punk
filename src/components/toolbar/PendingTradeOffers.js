@@ -10,6 +10,8 @@ class PendingTradeOffers extends React.Component {
     this.state = {
       notifications: NotificationStore.get()
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onClick() {
@@ -21,11 +23,11 @@ class PendingTradeOffers extends React.Component {
   }
 
   componentDidMount() {
-    NotificationStore.addChangeListener(() => this._onChange());
+    NotificationStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    NotificationStore.removeChangeListener(() => this._onChange());
+    NotificationStore.removeChangeListener(this._onChange);
   }
 
   render() {

@@ -13,6 +13,8 @@ class Chat extends React.Component {
     this.state = {
       chats: ChatStore.getAll()
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _tabbedCount() {
@@ -54,11 +56,11 @@ class Chat extends React.Component {
 
 
   componentDidMount() {
-    ChatStore.addChangeListener(() => this._onChange());
+    ChatStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    ChatStore.removeChangeListener(() => this._onChange());
+    ChatStore.removeChangeListener(this._onChange);
   }
 
   render() {

@@ -14,6 +14,8 @@ class AddFriendDialog extends React.Component {
       uiState: UIStore.get(),
       friendId: ''
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onChange() {
@@ -46,17 +48,17 @@ class AddFriendDialog extends React.Component {
   }
 
   componentDidMount() {
-    UIStore.addChangeListener(() => this._onChange());
+    UIStore.addChangeListener(this._onChange);
+  }
+
+  componentWillUnmount() {
+    UIStore.removeChangeListener(this._onChange);
   }
 
   componentDidUpdate() {
     if(this._friendId) {
       this._friendId.focus();
     }
-  }
-
-  componentWillUnmount() {
-    UIStore.removeChangeListener(() => this._onChange());
   }
 
   render() {
@@ -82,7 +84,7 @@ class AddFriendDialog extends React.Component {
 
         <footer className="toolbar toolbar-footer">
             <div className="toolbar-actions">
-                {/* <button className="btn btn-default" onClick={(e) => this._onCancel(e)}>Cancel</button> */}
+                <button className="btn btn-default" onClick={(e) => this._onCancel(e)}>Cancel</button>
                 <button className="btn btn-primary pull-right" onClick={(e) => this._onSave(e)}>Save</button>
             </div>
         </footer>
