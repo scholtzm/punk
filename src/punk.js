@@ -59,7 +59,6 @@ Punk.prototype.logOn = function(details) {
 
 Punk.prototype.loadPlugins = function() {
   plugins.chatLogger(this.client);
-  plugins.disconnected(this.client);
   plugins.file(this.client);
   plugins.friendMsg(this.client);
   plugins.friends(this.client);
