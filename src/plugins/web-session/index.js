@@ -6,7 +6,7 @@ const Logger = require('../../utils/logger.js')('plugin:websession');
  * Handles web session changes and sends them to internal store.
  */
 module.exports = function webSessionPlugin(steamUser) {
-  steamUser.on('webSession', (cookies, sessionid) => {
+  steamUser.on('webSession', (sessionid, cookies) => {
     Logger.debug('Sending cookies to internal storage.');
     UserActions.setWebSession(cookies, sessionid);
   });

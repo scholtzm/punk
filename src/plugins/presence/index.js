@@ -21,8 +21,8 @@ module.exports = function(steamUser) {
         break;
 
       case Constants.UserActions.USER_CHANGE_NAME:
-        // TODO: Not sure if `null` works; need to test
-        steamUser.setPersona(null, action.name);
+        const me = steamUser.users[steamUser.steamID.getSteamID64()];
+        steamUser.setPersona(me.persona_state, action.name);
         break;
 
       default:
