@@ -14,6 +14,8 @@ class AddFriendDialog extends React.Component {
       uiState: UIStore.get(),
       friendId: ''
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onChange() {
@@ -46,17 +48,17 @@ class AddFriendDialog extends React.Component {
   }
 
   componentDidMount() {
-    UIStore.addChangeListener(() => this._onChange());
+    UIStore.addChangeListener(this._onChange);
+  }
+
+  componentWillUnmount() {
+    UIStore.removeChangeListener(this._onChange);
   }
 
   componentDidUpdate() {
     if(this._friendId) {
       this._friendId.focus();
     }
-  }
-
-  componentWillUnmount() {
-    UIStore.removeChangeListener(() => this._onChange());
   }
 
   render() {

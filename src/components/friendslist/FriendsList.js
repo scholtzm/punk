@@ -15,6 +15,8 @@ class FriendsList extends React.Component {
       friends: FriendsStore.getAllSorted(),
       searchTerm: ''
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onChange() {
@@ -65,11 +67,11 @@ class FriendsList extends React.Component {
   }
 
   componentDidMount() {
-    FriendsStore.addChangeListener(() => this._onChange());
+    FriendsStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    FriendsStore.removeChangeListener(() => this._onChange());
+    FriendsStore.removeChangeListener(this._onChange);
   }
 
   render() {

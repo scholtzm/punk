@@ -17,6 +17,8 @@ class Toolbar extends React.Component {
     this.state = {
       user: UserStore.get()
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onChange() {
@@ -40,11 +42,11 @@ class Toolbar extends React.Component {
   }
 
   componentDidMount() {
-    UserStore.addChangeListener(() => this._onChange());
+    UserStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    UserStore.removeChangeListener(() => this._onChange());
+    UserStore.removeChangeListener(this._onChange);
   }
 
   render() {

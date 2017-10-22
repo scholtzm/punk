@@ -37,6 +37,9 @@ Punk.prototype.start = function() {
         return;
       }
 
+      // future compatibility
+      user.username = user.username || user.accountName;
+
       // explicitly set this option
       user.rememberPassword = true;
 

@@ -15,6 +15,8 @@ class ChangeNameDialog extends React.Component {
       uiState: UIStore.get(),
       displayName: ''
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onChange() {
@@ -53,11 +55,11 @@ class ChangeNameDialog extends React.Component {
   }
 
   componentDidMount() {
-    UIStore.addChangeListener(() => this._onChange());
+    UIStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    UIStore.removeChangeListener(() => this._onChange());
+    UIStore.removeChangeListener(this._onChange);
   }
 
   render() {

@@ -10,6 +10,8 @@ class Tab extends React.Component {
     super(props);
 
     this.state = { friend: FriendsStore.getById(this.props.chat.id) };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onClick(event) {
@@ -46,11 +48,11 @@ class Tab extends React.Component {
   }
 
   componentDidMount() {
-    FriendsStore.addChangeListener(() => this._onChange());
+    FriendsStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    FriendsStore.removeChangeListener(() => this._onChange());
+    FriendsStore.removeChangeListener(this._onChange);
   }
 
   render() {

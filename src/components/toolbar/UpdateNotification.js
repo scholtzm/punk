@@ -8,6 +8,8 @@ class UpdateNotification extends React.Component {
     super(props);
 
     this.state = { isUpdateAvailable: UIStore.get().isUpdateAvailable };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   _onChange() {
@@ -20,11 +22,11 @@ class UpdateNotification extends React.Component {
   }
 
   componentDidMount() {
-    UIStore.addChangeListener(() => this._onChange());
+    UIStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    UIStore.removeChangeListener(() => this._onChange());
+    UIStore.removeChangeListener(this._onChange);
   }
 
   render() {

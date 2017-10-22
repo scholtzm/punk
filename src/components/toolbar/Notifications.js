@@ -12,6 +12,8 @@ class Notifications extends React.Component {
     this.state= {
       notifications: this._getNotifications()
     };
+
+    this._onChange = this._onChange.bind(this);
   }
 
   // NOTE: We don't need trade offer notifications since those have a dedicated button.
@@ -29,11 +31,11 @@ class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    NotificationStore.addChangeListener(() => this._onChange());
+    NotificationStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
-    NotificationStore.removeChangeListener(() => this._onChange());
+    NotificationStore.removeChangeListener(this._onChange);
   }
 
   render() {
