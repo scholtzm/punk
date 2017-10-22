@@ -62,6 +62,7 @@ Punk.prototype.loadPlugins = function() {
   plugins.disconnected(this.client);
   plugins.file(this.client);
   plugins.friendMsg(this.client);
+  plugins.friends(this.client);
   plugins.loggedOn(this.client);
   plugins.loginKey(this.client);
   plugins.logout(this.client);
@@ -70,7 +71,6 @@ Punk.prototype.loadPlugins = function() {
   plugins.steamGuard(this.client);
   plugins.webSession(this.client);
 
-  // this.client.use(plugins.friends);
   // this.client.use(plugins.notifications);
   // this.client.use(plugins.offlineMessages);
   // this.client.use(plugins.trade);
