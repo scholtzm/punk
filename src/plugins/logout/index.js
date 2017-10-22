@@ -26,7 +26,7 @@ module.exports = function logoutPlugin(steamUser) {
           }
         });
 
-        steamUser.logOff();
+        steamUser.logOff(true);
         pluginEmitter.emit('logout');
 
         ReactDOM.render(<Login message={action.message} />, document.getElementById('app'));

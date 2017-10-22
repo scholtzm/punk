@@ -16,7 +16,7 @@ const os = require('os');
 
 module.exports = function chatLoggerPlugin(steamUser) {
   function getKey(id) {
-    return `${id }.log`;
+    return `${id}.log`;
   }
 
   function formatMessage(id, message) {
