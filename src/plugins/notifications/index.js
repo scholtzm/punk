@@ -3,7 +3,8 @@ const request = require('request');
 const Logger = require('../../utils/logger')('plugin:notifications');
 const NotificationActions = require('../../actions/notification-actions.js');
 
-const pluginEmitter = require('../plugin-emitter');
+const Dispatcher = require('../../dispatcher');
+const Constants = require('../../constants');
 
 /**
  * Notifications
@@ -71,5 +72,14 @@ module.exports = function(steamUser) {
     NotificationActions.updateTradeOfferCount(count);
   });
 
-  pluginEmitter.on('logout', () => clearInterval(interval));
+  Dispatcher.register((action) => {
+    switch (action.type) {
+      case Constants.UIActions.UI_LOGOUT:
+        clearInterval(interval);
+        break;
+
+      default:
+      // ignore
+    }
+  });
 };
