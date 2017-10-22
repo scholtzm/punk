@@ -7,7 +7,7 @@
 [![devDependencies Status](https://david-dm.org/scholtzm/punk/dev-status.svg)](https://david-dm.org/scholtzm/punk?type=dev)
 [![Steam Group](https://img.shields.io/badge/steam-group-blue.svg)](http://steamcommunity.com/groups/punkclient)
 
-**Punk** is a cross-platform Steam client for desktop built on top of [Vapor](https://github.com/scholtzm/vapor) and [Electron](http://electron.atom.io/).
+**Punk** is a cross-platform Steam client for desktop built on top of [SteamUser](https://github.com/DoctorMcKay/node-steam-user) and [Electron](http://electron.atom.io/).
 
 The UI is powered by [React](https://facebook.github.io/react/), [Flux](https://facebook.github.io/flux/) and the visuals are handled by [Photon](http://photonkit.com/).
 
