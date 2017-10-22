@@ -74,8 +74,4 @@ Punk.prototype.loadPlugins = function() {
   plugins.webSession(this.client);
 };
 
-Punk.prototype.connect = function() {
-  this.client.connect();
-};
-
 module.exports = Punk;
