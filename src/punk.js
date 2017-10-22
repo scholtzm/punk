@@ -66,12 +66,12 @@ Punk.prototype.loadPlugins = function() {
   plugins.loggedOn(this.client);
   plugins.loginKey(this.client);
   plugins.logout(this.client);
+  plugins.notifications(this.client);
   plugins.presence(this.client);
   plugins.personaState(this.client);
   plugins.steamGuard(this.client);
   plugins.webSession(this.client);
 
-  // this.client.use(plugins.notifications);
   // this.client.use(plugins.offlineMessages);
   // this.client.use(plugins.trade);
 };
