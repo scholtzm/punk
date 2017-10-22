@@ -3,6 +3,8 @@ const request = require('request');
 const Logger = require('../../utils/logger')('plugin:notifications');
 const NotificationActions = require('../../actions/notification-actions.js');
 
+const pluginEmitter = require('../plugin-emitter');
+
 /**
  * Notifications
  * Handles Steam's notifications.
@@ -68,4 +70,6 @@ module.exports = function(steamUser) {
     Logger.debug('Pending trade offer count: %d.', count);
     NotificationActions.updateTradeOfferCount(count);
   });
+
+  pluginEmitter.on('logout', () => clearInterval(interval));
 };

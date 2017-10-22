@@ -8,6 +8,8 @@ const Constants = require('../../constants');
 const Storage = require('../../utils/storage.js');
 const Logger = require('../../utils/logger.js')('plugin:logout');
 
+const pluginEmitter = require('../plugin-emitter');
+
 /**
  * Logout plugin
  * Handles logout action invoked from the UI.
@@ -25,6 +27,7 @@ module.exports = function logoutPlugin(steamUser) {
         });
 
         steamUser.logOff();
+        pluginEmitter.emit('logout');
 
         ReactDOM.render(<Login message={action.message} />, document.getElementById('app'));
         break;
