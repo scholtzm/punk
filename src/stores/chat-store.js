@@ -207,6 +207,8 @@ function newOutgoingMessage(message) {
 function respondToTradeRequest(chat, message, response) {
   _invalidateTradeRequests(chat.id);
 
+  // Call the callback
+  message.meta.respond(response);
   message.meta.response = response ? 'Accepted' : 'Declined';
 }
 

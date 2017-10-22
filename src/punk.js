@@ -71,9 +71,8 @@ Punk.prototype.loadPlugins = function() {
   plugins.presence(this.client);
   plugins.personaState(this.client);
   plugins.steamGuard(this.client);
+  plugins.trade(this.client);
   plugins.webSession(this.client);
-
-  // this.client.use(plugins.trade);
 };
 
 Punk.prototype.connect = function() {
