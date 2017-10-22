@@ -18,7 +18,7 @@
   },
   "rules": {
     "indent": ["error", 2, {"SwitchCase": 1}],
-    "eqeqeq": "error",
+    "eqeqeq": ["error", "smart"],
     "curly": "error",
     "quotes": ["error", "single"],
     "no-unused-vars": "error",

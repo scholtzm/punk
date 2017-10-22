@@ -71,10 +71,10 @@ module.exports = function(steamUser) {
     const currentFriend = FriendsStore.getById(id) || EMPTY_FRIEND;
 
     // request new data if we are missing avatar
-    const requestNewData = persona.avatar_hash === undefined;
+    const requestNewData = persona.avatar_hash == null;
 
     // fix persona since not all fields are sent by Steam
-    persona.persona_state = persona.persona_state === undefined
+    persona.persona_state = persona.persona_state == null
       ? currentFriend.persona.persona_state || SteamUser.EPersonaState.Offline
       : persona.persona_state;
     // this is sometimes empty even if the other user is playing a game; no idea why
@@ -87,7 +87,7 @@ module.exports = function(steamUser) {
     if(hash === EMPTY_AVATAR_HASH) {
       hash = DEFAULT_AVATAR_HASH;
     }
-    const avatarUrl = `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/${ hash.substring(0, 2) }/${ hash }.jpg`;
+    const avatarUrl = `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/${hash.substring(0, 2)}/${hash}.jpg`;
 
     // relationship
     const relationship = steamUser.myFriends[id];
