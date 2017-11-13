@@ -84,7 +84,7 @@ class AddFriendDialog extends React.Component {
 
         <footer className="toolbar toolbar-footer">
             <div className="toolbar-actions">
-                {/* <button className="btn btn-default" onClick={(e) => this._onCancel(e)}>Cancel</button> */}
+                <button className="btn btn-default" onClick={(e) => this._onCancel(e)}>Cancel</button>
                 <button className="btn btn-primary pull-right" onClick={(e) => this._onSave(e)}>Save</button>
             </div>
         </footer>
