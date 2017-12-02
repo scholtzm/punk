@@ -336,6 +336,10 @@ textarea {
   padding: 5px;
   height: 110px;
 
+  textarea {
+    resize: none;
+  }
+
   > .extra-info {
     padding-bottom: 5px;
     font-size: 12px;

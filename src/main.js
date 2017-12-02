@@ -37,8 +37,13 @@ app.on('ready', () => {
 
     mainWindow.loadURL(`file://${__dirname}/../../static/index.html`);
 
-    mainWindow.on('closed', () => {
-      mainWindow = null;
+    mainWindow.on('close', (event) => {
+      if(process.platform === 'darwin' && !app.quitting) {
+        event.preventDefault();
+        mainWindow.hide();
+      } else {
+        mainWindow = null;
+      }
     });
 
     mainWindow.webContents.on('did-finish-load', () => {
@@ -70,4 +75,12 @@ app.on('ready', () => {
     // register main app menu
     appMenu.register();
   });
+});
+
+app.on('activate', () => {
+  mainWindow.show();
+});
+
+app.on('before-quit', () => {
+  app.quitting = true;
 });
