@@ -14,13 +14,10 @@ class Login extends React.Component {
 
     ReactDOM.render(<Loader message="Connecting..."/>, document.getElementById('app'));
 
-    punk.init({
-      username,
+    punk.logOn({
+      accountName: username,
       password,
       rememberPassword: rememberMe
-    }, () => {
-      punk.loadPlugins();
-      punk.connect();
     });
   }
 

@@ -1,3 +1,5 @@
+const SteamUser = require('steam-user');
+
 const Dispatcher = require('../../dispatcher');
 const Constants = require('../../constants');
 
@@ -5,31 +7,26 @@ const Constants = require('../../constants');
  * Presence
  * Handles online state and display name changes.
  */
-exports.name = 'punk-presence';
+module.exports = function(steamUser) {
+  steamUser.on('loggedOn', (response) => {
+    if (response.eresult === SteamUser.EResult.OK) {
+      steamUser.setPersona(SteamUser.EPersonaState.Online);
+    }
+  });
 
-exports.plugin = function(API) {
-  const steamFriends = API.getHandler('steamFriends');
-
-  const token = Dispatcher.register((action) => {
+  Dispatcher.register((action) => {
     switch(action.type) {
       case Constants.UserActions.USER_CHANGE_STATE:
-        steamFriends.setPersonaState(action.state);
+        steamUser.setPersona(action.state);
         break;
 
       case Constants.UserActions.USER_CHANGE_NAME:
-        steamFriends.setPersonaName(action.name);
+        const me = steamUser.users[steamUser.steamID.getSteamID64()];
+        steamUser.setPersona(me.persona_state, action.name);
         break;
 
       default:
         // ignore
     }
-  });
-
-  API.registerHandler({
-    emitter: 'plugin',
-    plugin: '*',
-    event: 'logout'
-  }, () => {
-    Dispatcher.unregister(token);
   });
 };

@@ -1,29 +1,30 @@
+const Storage = require('../../utils/storage.js');
+const Logger = require('../../utils/logger.js')('plugin:loginkey');
+
 /**
- * Login Key
+ * Login Key plugin
  * Saves user's credentials after we successfully log in.
  */
-exports.name = 'punk-loginkey';
-
-exports.plugin = function(API) {
-  API.registerHandler({
-    emitter: 'vapor',
-    event: 'loginKey'
-  }, (loginKey) => {
-    const log = API.getLogger();
-    const username = API.getConfig().username;
+module.exports = function loginKeyPlugin(steamUser) {
+  steamUser.on('loginKey', (loginKey) => {
+     // FIXME: Do not access private properties
+    const accountName = steamUser._logOnDetails.account_name;
 
     const user = {
-      username,
-      loginKey: loginKey.toString()
+      accountName,
+      loginKey
     };
 
-    log.debug('Received new login key.');
+    const userString = JSON.stringify(user, null, 2);
 
-    API.emitEvent('writeFile', { fileName: 'user.json', value: JSON.stringify(user, null, 2) }, (error) => {
-      if(error) {
-        log.warn('Failed to save user data.');
-        log.debug(error);
+    Logger.debug('Received new login key.');
+
+    Storage.set({ fileName: 'user.json', value: userString }, (error) => {
+      if (error) {
+        Logger.warn('Failed to save user data.');
+        Logger.debug(error);
       }
     });
+
   });
 };

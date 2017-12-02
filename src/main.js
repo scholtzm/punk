@@ -12,7 +12,7 @@ const Settings = require('./utils/settings.js');
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 let mainWindow = null;
-const title = `${app.getName() } [v${ app.getVersion() }]`;
+const title = `${app.getName()} [v${app.getVersion()}]`;
 const WINDOW_STATE_KEY = 'lastMainWindowState';
 
 app.on('window-all-closed', () => {
@@ -53,9 +53,7 @@ app.on('ready', () => {
       }
     });
 
-    mainWindow.on('focus', () => {
-      mainWindow.flashFrame(false);
-    });
+    mainWindow.on('focus', () => mainWindow.flashFrame(false));
 
     function preserveWindowState() {
       const currentWindowsState = mainWindow.getBounds();

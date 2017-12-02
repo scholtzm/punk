@@ -5,6 +5,7 @@ const remote = require('electron').remote;
 const Dispatcher = require('../dispatcher');
 const Constants = require('../constants');
 const notifier = require('../ui/notifier');
+const Logger = require('../utils/logger')('store:chat');
 
 const CHANGE_EVENT = 'change';
 
@@ -68,28 +69,13 @@ function _findFirstToMakeVisible(cannotBeMadeVisibleId) {
   }
 }
 
-function _invalidateTradeRequests(id) {
-  if(!_chats[id]) {
-    return;
-  }
-
-  _chats[id].messages.forEach((message) => {
-    if(message.meta && message.meta.tradeRequestId && !message.meta.response) {
-      message.meta.response = 'Invalid';
-    }
-  });
-}
-
-function _getLastTradeRequest(id, ourRequestsOnly) {
-  ourRequestsOnly = ourRequestsOnly || false;
-
+function _getLastTradeRequest(id) {
   const tradeRequests = _chats[id].messages.filter((message) => {
-    if(message.type === Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST) {
-      return true;
-    }
-
-    if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST && !ourRequestsOnly) {
-      return true;
+    if(message.type === Constants.MessageTypes.CHAT_OUR_TRADE_REQUEST ||
+      message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST) {
+      if (message.meta.response == null) {
+        return true;
+      }
     }
 
     return false;
@@ -97,20 +83,6 @@ function _getLastTradeRequest(id, ourRequestsOnly) {
 
   if(tradeRequests.length > 0) {
     return tradeRequests[tradeRequests.length - 1];
-  }
-}
-
-function _getTradeRequestById(userId, tradeRequestId) {
-  const messages = _chats[userId].messages.filter((message) => {
-    if(message.meta && message.meta.tradeRequestId === tradeRequestId) {
-      return true;
-    }
-    return false;
-  });
-
-  // this should always match only a single trade request (message)
-  if(messages.length > 0) {
-    return messages[0];
   }
 }
 
@@ -205,32 +177,17 @@ function newOutgoingMessage(message) {
 }
 
 function respondToTradeRequest(chat, message, response) {
-  _invalidateTradeRequests(chat.id);
-
+  // Call the callback
+  message.meta.respond(response);
   message.meta.response = response ? 'Accepted' : 'Declined';
 }
 
 function incomingTradeRequestResponse(response) {
-  _invalidateTradeRequests(response.id);
-
-  if(response.tradeRequestId === 0) {
-    // assume this concerns the very last trade request
-    const message = _getLastTradeRequest(response.id);
-    if(message) {
-      message.meta.response = response.responseEnum;
-    }
+  const messageLastTradeReq = _getLastTradeRequest(response.id);
+  if(messageLastTradeReq) {
+    messageLastTradeReq.meta.response = response.responseEnum;
   } else {
-    const messageById = _getTradeRequestById(response.id, response.tradeRequestId);
-
-    if(messageById) {
-      messageById.meta.response = response.responseEnum;
-    } else {
-      // trade request ID did not match, this is probably a trade request which we sent
-      const messageLastTradeReq = _getLastTradeRequest(response.id, true);
-      if(messageLastTradeReq) {
-        messageLastTradeReq.meta.response = response.responseEnum;
-      }
-    }
+    Logger.warn('Unknown trade request from %s', response.id);
   }
 }
 
@@ -301,20 +258,6 @@ class ChatStore extends EventEmitter {
       }
     }
   }
-
-  getLastIncomingTradeRequestId(id) {
-    const incomingTradeRequests = _chats[id].messages.filter((message) => {
-      if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST && message.meta && message.meta.tradeRequestId) {
-        return true;
-      }
-      return false;
-    });
-
-    if(incomingTradeRequests.length > 0) {
-      return incomingTradeRequests[incomingTradeRequests.length - 1].meta.tradeRequestId;
-    }
-  }
-
 };
 
 const chatStore = new ChatStore();

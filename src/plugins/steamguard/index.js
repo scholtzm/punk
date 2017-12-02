@@ -2,19 +2,16 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const Component = require('./component.js');
+const Logger = require('../../utils/logger.js')('plugin:steamguard');
 
 /**
  * SteamGuard
- * Handles Vapor's SteamGuard event: e-mail and mobile
+ * Handles SteamGuard event: e-mail and mobile
  * This plugin supplies its own React component
  */
-exports.name = 'punk-steamguard';
-
-exports.plugin = function(API) {
-  API.registerHandler({
-    emitter: 'vapor',
-    event: 'steamGuard'
-  }, (callback) => {
+module.exports = function steamGuardPlugin(steamUser) {
+  steamUser.on('steamGuard', (domain, callback) => {
+    Logger.info('Received SteamGuard request');
     ReactDOM.render(<Component callback={callback} />, document.getElementById('app'));
   });
 };

@@ -1,4 +1,4 @@
-require('./utils/monkey-patch');
+global._mckay_statistics_opt_out = true;
 
 const Punk = require('./punk.js');
 
