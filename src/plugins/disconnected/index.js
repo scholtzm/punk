@@ -39,7 +39,9 @@ exports.plugin = function(API) {
       const message = `Login error: ${ enumString}`;
       UIActions.logout(message);
     } else {
-      setTimeout(() => { API.connect(); }, 3000);
+      setTimeout(() => {
+        API.connect(); 
+      }, 3000);
 
       const message = `Got disconnected: ${ error.eresult } (${ enumString }). Retrying... (${ ++tryCount })`;
       ReactDOM.render(<Loader message={message} />, document.getElementById('app'));

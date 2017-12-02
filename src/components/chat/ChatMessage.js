@@ -24,9 +24,9 @@ class ChatMessage extends React.Component {
   render() {
     const message = this.props.message;
 
-    const text = message.text.split('\n').map((line, indexLine) => {
+    const text = message.text.split('\n').map((line, indexLine) =>
       // using index as a key shouldn't be an issue here
-      return (
+      (
         <p key={indexLine}>
           <Linkify properties={{
             onClick(event) {
@@ -44,8 +44,8 @@ class ChatMessage extends React.Component {
             {line}
           </Linkify>
         </p>
-      );
-    });
+      )
+    );
 
     let extra;
     if(message.type === Constants.MessageTypes.CHAT_THEIR_TRADE_REQUEST) {

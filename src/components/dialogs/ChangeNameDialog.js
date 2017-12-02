@@ -77,7 +77,9 @@ class ChangeNameDialog extends React.Component {
             <input
               type="text"
               className="form-control"
-              ref={(c) => { this._displayName = c; }}
+              ref={(c) => {
+                this._displayName = c; 
+              }}
               value={this.state.displayName}
               onChange={(e) => this._onDisplayNameChange(e)}
               onKeyDown={(e) => this._onSubmit(e)} />

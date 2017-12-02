@@ -41,8 +41,7 @@ app.on('ready', () => {
       if(process.platform === 'darwin' && !app.quitting) {
         event.preventDefault();
         mainWindow.hide();
-      }
-      else {
+      } else {
         mainWindow = null;
       }
     });

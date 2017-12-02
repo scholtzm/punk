@@ -46,14 +46,15 @@ class ChatWindow extends React.Component {
     let messages;
 
     if(chat) {
-      messages = chat.messages.map((message) => {
-        return <ChatMessage key={message.id} chat={chat} message={message} />;
-      });
+      messages = chat.messages
+        .map((message) => <ChatMessage key={message.id} chat={chat} message={message} />);
     }
 
     return (
       <div className="chat-window">
-        <div className="chat-window-content" ref={(c) => { this._content = c; }} onContextMenu={(e) => this._onContextMenu(e)}>
+        <div className="chat-window-content" ref={(c) => {
+          this._content = c;
+        }} onContextMenu={(e) => this._onContextMenu(e)}>
           <ul>
             {messages}
           </ul>
