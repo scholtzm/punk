@@ -33,15 +33,21 @@ class Login extends React.Component {
             <form>
               <div className="form-group">
                 <label>Username</label>
-                <input type="email" name="username" ref={(c) => { this._username = c; }} className="form-control" placeholder="Username"/>
+                <input type="email" name="username" ref={(c) => {
+                  this._username = c; 
+                }} className="form-control" placeholder="Username"/>
               </div>
               <div className="form-group">
                 <label>Password</label>
-                <input type="password" name="password" ref={(c) => { this._password = c; }} className="form-control" placeholder="Password"/>
+                <input type="password" name="password" ref={(c) => {
+                  this._password = c; 
+                }} className="form-control" placeholder="Password"/>
               </div>
               <div className="checkbox">
                 <label>
-                  <input type="checkbox" ref={(c) => { this._rememberMe = c; }} /> Remember Me
+                  <input type="checkbox" ref={(c) => {
+                    this._rememberMe = c; 
+                  }} /> Remember Me
                 </label>
               </div>
               <button className="btn btn-large btn-default" onClick={(e) => this._proceedLogin(e)} >Login</button>

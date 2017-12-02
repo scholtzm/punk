@@ -77,7 +77,9 @@ class AddFriendDialog extends React.Component {
               type="text"
               className="form-control"
               placeholder="SteamID64"
-              ref={(c) => { this._friendId = c; }}
+              ref={(c) => {
+                this._friendId = c; 
+              }}
               value={this.state.friendId}
               onChange={(e) => this._onFriendIdChange(e)} />
         </div>

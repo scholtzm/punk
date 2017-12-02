@@ -83,7 +83,9 @@ class MessageComposer extends React.Component {
       <div className="message-composer">
         {extraInfo}
         <textarea
-          ref={(c) => { this._textArea = c; }}
+          ref={(c) => {
+            this._textArea = c; 
+          }}
           rows="3"
           className="form-control"
           name="message"

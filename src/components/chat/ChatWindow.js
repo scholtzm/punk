@@ -51,7 +51,9 @@ class ChatWindow extends React.Component {
 
     return (
       <div className="chat-window">
-        <div className="chat-window-content" ref={(c) => { this._content = c; }} onContextMenu={(e) => this._onContextMenu(e)}>
+        <div className="chat-window-content" ref={(c) => {
+          this._content = c; 
+        }} onContextMenu={(e) => this._onContextMenu(e)}>
           <ul>
             {messages}
           </ul>

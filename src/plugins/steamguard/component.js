@@ -25,7 +25,9 @@ class SteamGuard extends React.Component {
             <form>
               <div className="form-group">
                 <label>SteamGuard Auth Code</label>
-                <input type="text" name="steamguard" ref={(c) => { this._authCode = c; }} className="form-control" placeholder="XXXXX"/>
+                <input type="text" name="steamguard" ref={(c) => {
+                  this._authCode = c; 
+                }} className="form-control" placeholder="XXXXX"/>
               </div>
               <button className="btn btn-large btn-default" onClick={(e) => this._proceedSteamGuard(e)}>Continue</button>
             </form>
